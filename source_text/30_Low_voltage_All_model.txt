@@ -1,0 +1,1364 @@
+Low Voltage
+All Model
+1. CAN                 4. วงจรจ่ ายกระแสไฟ
+
+2. OBD II              5. การเปลี่ยนกล่ องโมดูลควบคุมฝั่งซ้ ายและขวา
+
+3. กล่ องโมดูลควบคุม   6. การ Matching กุญแจ
+CANBUS & OBD2
+                 Controller Area Network หรือ CAN bus
+                เป็ นมาตรฐานการสือสารผ่ ่             ่
+                                              านสายทีออกแบบ
+                                      ่
+                มาให ้อุปกรณ์ใช ้สือสารกั   บอุปกรณ์
+                โดยเริมต่ ้นใช ้อยู่ในรถยนต ์เป็ นหลัก ใน
+                รถยนต ์แต่ละระบบจะมีส่วนควบคุม
+                (ไมโครคอนโทรลเลอร ์ หรือ กล่อง ECU)
+                                          ่
+                เป็ นของตัวเอง เช่น เครืองเล่  นเพลง ระบบที่
+                      ้
+                ปัดนาฝน                                 ่
+                            ระบบถุงลมนิ รภัย ระบบเครืองยนต   ์
+                และระบบอืน  ่ ๆ กว่า 70 ระบบ แต่ละระบบล ้วน
+                มีส่วนควบคุม
+                (กล่อง ECU) เป็ นของตัวเอง
+                    ่ ้รถยนต ์สามารถทางานได ้
+                เพือให
+                                            ่
+                ทุกระบบจึงจาเป็ นจะต ้องสือสารกั   น และการ
+                  ่
+                สือสารกั  นก็ทาผ่าน CAN bus นั่นเอง
+
+
+
+
+      3/ 81
+                      สาย CAN-H และ CAN-L ทางานแบบ differential
+                      wire คือใช ้ความแตกต่างของแรงดันไฟฟ้ าระหว่าง
+                      สาย 2 เส ้นในการร ับ-ส่งข ้อมูล โดยมีว ัตถุประสงค ์
+                          ่
+                      เพือลดสัญญาณรบกวน สัญญาณภายในสาย
+                      ประกอบด ้วย 2 สถานะ คือ
+                      สถานะ Dominant เกิดขึนเมื   ้ อแรงดั
+                                                      ่     นของสาย
+                                                          ่
+                      CAN-H มากกว่าสาย CAN-L ซึงแปลเป็ นสถานะส่ง
+                      ลอจิก 0
+                      สถานะ Recessive เกิดขึนเมื   ้ อแรงดั
+                                                        ่   นของสาย
+                      เส ้น CAN-H น้อยกว่าหรือเท่ากับ CAN-L แปลเป็ น
+                      สถานะส่งลอจิก 1
+
+
+
+
+        จากรูปที่ จะเห็นว่า
+        ในสถานะ Dominant (ส่งลอจิก 0)
+        แรงดันของสาย CANH มีค่าประมาณ 3.5V
+        ส่วน         CANL มีค่าประมาณ 1.5V
+
+        ในสถานะ Recessive (ส่งลอจิก 1)
+        แรงดันของสาย CANH และ CANL มีค่าเท่ากันคือ 2.5V
+        สาย CANH และ CANL มีแรงดันแตกต่างกัน 0V
+
+4/ 81
+                                                      CAN Frame & OBD II massage container
+
+
+
+
+SOF: Start of Frame (1 บิต) - ส่ง Dominant (ส่งลอจิก 0) เพื่อบอกให ้ทุก
+อุปกรณ์บนบัสร ับรู ้ว่ากาลังจะมีการส่งข ้อมูล
+                                                                                          ความเร็วในการร ับ-ส่งข ้อมูล
+ID: Identifier (11 บิต สาหร ับ Standard Frame) – หมายเลขเฉพาะของชุด
+ข ้อมูลนี ้ โดยอาจกาหนดเป็ นหมายเลขอุปกรณ์ หรือหมายเลขของข ้อมูลทีตั            ่ งขึ
+                                                                                  ้ นมา
+                                                                                      ้
+                                                                                          CAN เป็ นโปรโตคอลแบบ Asynchronous ความเร็วในการร ัับ-ส่งข ้อมูลถูกกาหนดโดย Data
+                                ้
+เฉพาะก็ได ้ โดยหมายเลขนี จะเป็ นตัวกาหนดความสาคัญของข ้อมูลด ้วย หากมีค่า                                            ่
+                                                                                          Rate หรือ Baud rate ซึงสามารถก          าหนดได ้ดังนี ้
+น้อย หมายถึงมีความสาคัญมาก
+RTR: Remote Transmission Request (1 บิต) – บิตกาหนดว่าเป็ น Remote                        12,500 (12.5 kbit/s)
+frame หรือไม่ ดังนี ้
+       RTR = Dominant (ลอจิก 0) หมายถึง ข ้อมูลชุดนี ้เป็ น Data frame                    16,000 (16 kbit/s)
+       RTR = Recessive (ลอจิก 1) หมายถึง ข ้อมูลชุดนี ้เป็ น Remote frame                 20,000 (20 kbit/s)
+Control (6 บิต) ประกอบไปด ้วย
+       IDE: Identifier extension bit (1 บิต) – ใช ้ตรวจจับว่าเป็ น Standard               25,000 (25 kbit/s)
+       Frame หรือ Extended Frame
+       Reserved (1 บิต) – สงวนบิตนี ไว ้ ้สาหร ับฟี เจอร ์ในอนาคต มีค่าเป็ น              50,000 (50 kbit/s)
+       Dominant (ลอจิก 0) เสมอ
+       DLC: Data Length Code (4 บิต) – แบ่งเป็ น 2 กรณี ด ังนี ้                          100,000 (100 kbit/s)
+               ถ ้า RTR = Dominant (ลอจิก 0, Data frame) ใช ้บอกความยาวของ
+                        ่ ง
+               ข ้อมูลทีส่
+                                                                                          125,000 (125 kbit/s) – โดยปกติใช ้ค่านี ้
+               ถ ้า RTR = Recessive (ลอจิก 1, Remote frame) ใช ้บอกความยาว                250,000 (250 kbit/s)
+               ของข ้อมูลที่ร ้องขอ
+Data (0 ถึง 64 บิต หรือ 0 ถึง 8 ไบต ์) – ข ้อมูลที่ต ้องการส่ง                            500,000 (500 kbit/s)
+CRC (16 บิต) – แบ่งดังนี ้
+       CRC (15 บิต)                                                                       800,000 (800 kbit/s)
+       CRC delimiter (1 บิต) – มีค่าเป็ น Recessive (ลอจิก 1) เสมอ
+ACK (2 บิต) – แบ่งดังนี ้
+                                                                                          1,000,000 (1 Mbit/s)
+       ACK slot (1 บิต) – ฝั่งส่งจะปล่อยให ้บัสเป็ นสถานะ Recessive (ลอจิก 1)             อุปกรณ์บนบัส CAN จาเป็ นจะต ้องกาหนด Data Rate หรือ Baud rate ให ้เท่ากันทุกตัว
+       หากมีอุปกรณ์ใด ๆ ในบัสได ้ร ับ และยืนยันว่าข ้อมูลทีส่
+       เป็ น Dominant (ลอจิก 0)
+                                                             ่ งถูกต ้อง บิตนี จะถู
+                                                                               ้ กดึง
+                                                                                             ่ ้สามาถร ับ-ส่
+                                                                                          เพือให          5/ง81
+                                                                                                              ข ้อมูลได ้ถูกต ้อง
+       ACK delimiter (1 บิต) – มีค่าเป็ น Recessive (ลอจิก 1) เสมอ
+                  Vehicle CAN Network ATTO3
+
+
+  REAR       OBD 2 port 16 Pin
+  BODY
+Controller
+
+
+
+
+                                                Right
+                                                BODY
+   Left                                       Controller
+  BODY
+Controller
+
+
+
+
+                                 6/68
+                 Vehicle CAN Network Dolphin
+
+
+                                                                                               DC
+                                             On-board                                          charging
+                           LV Fe battery                                                                  Diagnosis
+            A/C                               charger            BASU      MCU&PDC             subnet
+                                                                                                          interface
+            compressor                       OBC/DC                                                                     Chassis net
+                                                                                                                         (500kbps)
+
+
+            Rear body            EPS            Airbag        Gearshift    Electro-hydraulic   Yaw rate
+            control unit                                      mechanism    brake
+                                                                           (IPB)               sensor
+                                                              assembly
+
+
+
+
+Left body     Multi-       Steering        Display screen
+control       function     wheel           bracket assembly                                                                           Multimedia
+              switch       switch                                                                   Vehicle body net                  player
+(gateway)                                                                                              (500kbps)
+             Wireless        Diagnosi       Combinati
+             charging        s              on
+                             interface      instrument
+
+                                                                                                    OBD 2 port 16 Pin
+
+
+
+                                                                                                                         PEPS net
+            PEPS control
+                               Diagnosis                                                                                (500kbps)
+                unit
+                               interface
+
+
+                                                                                                                                      Constant
+
+                                                                                                                                       power
+
+
+                                                                    7/68
+Vehicle CAN Network Seals AWD
+   OBD 2 port 16 Pin
+
+   OBD II
+
+
+
+
+                       8
+                                 Vehicle CAN Network Seals RWD
+                                   OBD 2 port 16 Pin
+
+                                                                  ADAS
+                                    OBD II                       controlle
+                                                                    r
+
+
+
+
+                     Gateway
+                                                                                                                                                                Door light (RF)
+
+
+
+
+                                                                                                                                                               Skylight dimming
+
+
+
+
+                                                                                   LF radar           RF radar     LBSD     RBSD
+
+
+
+                      RBDC B1                                                                                                                                  Instrument panel
+                                                                                                                                                                 Ambient light
+
+
+
+
+                                                                                                                                                               foot light (LF&RF)
+
+
+
+                      RBDC B2
+                                                                                                                                       Chassis net      RBDC
+                                                                                    SRS                                   Yaw sensor                           Second floor light
+                                                                                                                                                                for instrument
+                                                                                                                                                                     panel
+
+
+
+                                                               Shift control     Shift control
+                                             Fe-12 battery                                            A/C driver
+                                                                  panel             panel                                                                      PAD ambient light
+
+
+
+Door light (LF)
+
+
+                                                                  FMCU              PDC                RMCU        OBC
+                                                                                                                          Charging       Power net
+                                                                                                                           module
+
+
+foot ambient light
+     (LF&RF)                                                                                                                                                    Door light (RR)
+
+
+                        LBDC
+
+  4 in 1 sensor                                                    Wireless                                                                                    Variable diameter
+                                                Green filter                                      Steer wheel                                                    throttle valve
+                                                                   charging     Combination SW
+                                                 system                                               SW
+                                                                    system
+
+
+ Door light (LR)                                                                                                                                                  Thermal
+                                                                                                                                                                 management
+                                                                                                                                             Body net              module
+                                                                 PAD remote
+                                                 Dashboard                      Power amplifier
+                                                                   motor
+
+
+
+                                                                                                                                                                  Active grid
+
+                                                 Intelligent   High frequency
+                                               access system      receiver
+
+
+
+                        Dilink
+                        host
+                                                                                                  9
+                          ตำแหน่งและกำรตรวจเช็คค่ำควำมต้ำนทำนมำตรฐำนของ CAN ที่ OBD II Port
+1. Intelligent-Net Pin1/2 (500kbps-2Mbps)
+
+   -Pin1/2 Ω 40 Ohm ➔ 120 Ohm parallel 3 unit (ถอดขั่วแบต12V)
+   -Pin1/Ground(4 or 5) ➔ 2.5-3.5 V
+   -Pin2/Ground(4 or 5) ➔ 1.5-2.5 V
+
+2. Comfort-Net(Body) Pin3/11 (125kbps)
+                                                                 OBD II Port
+   -Pin3/11 Ω 60 Ohm ➔ 120 Ohm parallel 2 unit (ถอดขั่วแบต12V)
+   -Pin3/Ground(4 or 5) ➔ 2.5-3.5 V
+   -Pin11/Ground(4 or 5) ➔ 1.5-2.5 V
+
+3. Chassis-Net Pin6/14 (250 kbps)
+
+   -Pin6/14 Ω 60 Ohm ➔ 120 Ohm parallel 2 unit (ถอดขั่วแบต12V)
+   -Pin6/Ground(4 or 5) ➔ 2.5-3.5 V
+   -Pin14/Ground(4 or 5) ➔ 1.5-2.5 V
+
+4. Charging-Net Pin9/10 (250 kbps)
+
+   -Pin9/10 Ω 60 Ohm ➔ 120 Ohm parallel 2 unit (ถอดขั่วแบต12V)
+   -Pin9/Ground(4 or 5) ➔ 2.5-3.5 V
+   -Pin10/Ground(4 or 5) ➔ 1.5-2.5 V
+
+5. Power-Net Pin12/13 (500 kbps)
+
+ -Pin12/13 Ω 60 Ohm ➔ 120 Ohm parallel 2 unit (ถอดขั่วแบต12V)
+ -Pin12/Ground(4 or 5) ➔ 2.5-3.5 V
+ -Pin13/Ground(4 or 5) ➔ 1.5-2.5 V
+                                                                        Noted*การวัด CAN จาก OBD port ทาได้ในเฉพาะรุ ่น ATTO3
+ตำแหน่งและกำรตรวจเช็คค่ำควำมต้ำนทำนมำตรฐำนของ CAN ที่ OBD II Port
+
+
+
+
+ 40 Ω                                  60 Ω
+                                                                    60 Ω
+
+
+
+
+                                                                       13.7 Vdc
+ 60 Ω                                         60 Ω
+                        ตัวอย่ำงตำแหน่งและกำรตรวจเช็คค่ำควำมต้ำนทำนมำตรฐำนของ CAN ที่ตำแหน่งอื่นๆ
+                                                                                        K51
+
+
+
+
+                                                                                       GND
+                           CAN-H      CAN-L                             CAN-H
+                                                                           CAN-L
+                                                  GND
+
+
+
+ Power-Net Connector-K51 Pin8(H)/9(L) (500 kbps) Pin 18(G)
+
+ K51
+  -Pin8 H / Pin9 L = 60 Ohm
+  -Pin8 H /Ground(K51-18) ➔ 2.5-3.5 V CAN-H
+  -Pin9 L /Ground(K51-18) ➔ 1.5-2.5 V CAN-L
+
+
+
+Noted*การวัด CAN รุ ่น Dolphin / Seal (ระบุหลังชื่อ ECU ว่า Pro) จะต้องวัดค่าที่ตัวอุปกรณ์โดยตรง จะวัดที่ Port OBD II โดยตรงไม่ได้ จะวัดค่าได้เฉพาะ Body-Net
+                                    Anode Fuse Box
+ตาแหน่ งติดตั้งกล่ องฟิ วส์ ATTO3
+
+
+
+
+    Front Component Fuse Box
+
+
+
+                                    Instrument Fuse Box
+ ตาแหน่ งติดตั้งกล่ องฟิ วส์            Anode Fuse Box
+         ATTO3
+
+
+
+
+Front Component Fuse Box
+
+
+
+
+                               Instrument Fuse Box
+ ตาแหน่ งติดตั้งกล่ องฟิ วส์            Anode Fuse Box
+    Dolphin , Seals
+
+
+
+
+Front Component Fuse Box
+
+
+
+
+                               Instrument Fuse Box
+                                            กล่องควบคุม
+
+
+➢ ตัวโดเมนควบคุมคืออะไร
+        เนื่องจำกกำรพัฒนำยำนพำหนะ มีอุปกรณ์ไฟฟ้ำที่รวมอยู่ในยำนพำหนะมำกขึ้นเรื่ อย ๆ อย่ำงที่เรำ
+ทรำบกันดีว่ำกำรควบคุมอุปกรณ์อิเล็กทรอนิ กส์ข้ ึนอยู่กับ ECU ที่หลำกหลำย วิธีกำรควบคุมแบบดั้งเดิมคือกำร
+ควบคุม ECU ที่แตกต่ำงกัน (Distributed Control) และ ECU เชื่อมต่อกันผ่ำนสำย CAN และ LIN อย่ำงไรก็
+ตำมกำรพัฒนำควำมฉลำดของยำนพำหนะ กำรควบคุมแบบกระจำยส่ วนมีควำมซับซ้อนมำกขึ้นเรื่ อย ๆ เพื่อ
+แก้ปัญหำผู ้คนเริ่ มพยำยำมรวมฟั งก์ชั่นบนแพลตฟอร์ มฮำร์ ดแวร์ ซ่ ึ งเรี ยกว่ำกำรควบคุมโดเมน
+                                              Layout of LV กล่ องควบคุม Appliances
+                                                           Electrical
+                                                                     Left domain controller กล่องควบคุมวงจรรวม กับ BCM (โมดูลควบคุมตัวถัง),
+        Front
+   compartment
+                                     Intelligent
+                                                                  ศูนย์กลางกุญแจ, การควบคุมเครื่ องปรับอากาศ, การตรวจสอบแรงดันลมยาง, การควบคุมแผง
+  distribution box
+                                   power domain
+                                                                  หน้าปัด, ระบบช่วยเหลือในการจอดรถ, กุญแจอัจฉริ ยะและโมดูลอื่น ๆ และเวอร์ชันขยาย
+                                                                  สามารถรองรับฟังก์ชัน่ ECU แบบกระจายได้สูงสุ ด 32 ฟังก์ชัน่ (หน่วยควบคุมอิเลก รรอนิกส์
+                                                                   Right domain controller: กล่องควบคุมวงจรรวม gateway, ปรับอากาศ, ไฟส่ องสว่าง,
+                     Left domain                   Right domain
+                      controller                     controller   ไฟโดยรอบคัน, ไฟภายในรถ, มอเตอร์ซันรู ฟ, การระบายอากาศรี่เบาะนั่งและการราความ
+Instrument panel
+                                                                  ร้อน ฯลฯ
+ distribution box              DiLink
+                                                                      Intelligent power domain: กล่องควบคุมวงจรรวม VCU (vehicle controller unit),
+                              multimedia
+                               system                             BMS (battery management system), MCU (micro control unit), OBC (vehicle
+                                                                  charger), DC-DC (DC converter).
+
+                        Rear domain     Auxiliary                    Auxiliary driving module: ติดตั้ง ACC (ระบบควบคุมความเรก วคงรี่แบบปรับได้),
+                         controller driving module
+                                                                  AEB (เบรกฉุ กเฉิ นอัตโนมัติ), LSS (ระบบความปลอดภัยอัจฉริ ยะ), BSD (ระบบตรวจจับ
+
+                                                                  จุดบอด), APA (ระบบจอดรถอัตโนมัติ) และฟังก์ชั่นอื่น ๆ
+                                                                      DiLink: กล่องควบคุมวงจรรวม user voice, จอสัมผัส, การป้ อนค่าติดตั้ง, สถานะรถ, จอ
+
+                                                                  และ function อื่นๆ.
+
+                                                                          17
+                                     ความหมายของกล่ อ งควบคุ ม
+
+จาแนกประเภทของกล่องควบคุม                                 รายละเอียดชนิดของ Left Body control
+ L= LEFT BODY CONTROL กล่องควบคุมซ้าย
+ R= RIGHT BODY CONTROL กล่องควบคุมขวา
+ B= REAR BODY CONTROL กล่องควบคุมหลัง
+
+ หากมีคาว่า                                               ตัวอย่าง
+ PRO ➔ ไม่สามารถอ่านจาก OBDII port ได้โดยตรง
+                                                                     Ex=➔SEAL
+จาแนกประเภทและชนิดของกล่องควบคุมในรถแต่ละรุ ่น
+
+
+
+
+                                                 18/ 81
+ตาแหน่ งติดตั้งกล่องโมดูลควบคุม ATTO3
+                                 กล่องควบคุมหลัง
+
+
+
+
+       กล่องควบคุมฝั่งขวำ
+
+
+
+
+                                                   กล่องควบคุมฝั่งซ้ำย
+                                ตาแหน่ งติดตั้งกล่องโมดูลควบคุม Dolphin
+กล่องควบคุมฝั่งซ้ำย
+
+
+
+
+                      กล่องควบคุมหลัง
+ตาแหน่ งติดตั้งกล่องโมดูลควบคุม Seals
+
+
+                                                          กล่องควบคุมหลัง
+                      กล่องควบคุมฝั่งขวำ
+
+
+
+
+                                           กล่องควบคุมฝั่งซ้ำย
+Left Domain Controller (ATTO3)
+    ตำแหน่งติดตั้ง : คอนโซลหน้ำด้ำนซ้ำย
+                                          Features:
+                                            ⚫ ระบบ A/C
+                                            ⚫ ปั ดน้ ำฝน
+                                            ⚫ ล๊อคประตู
+                                            ⚫ ไฟส่ องสว่ำง
+                                            ⚫ กระจกมองข้ำง
+                                            ⚫ ระบบระบำยอำกำศเบำะฝั่งคนขับ
+                                            ⚫ เรดำร์ถอยหลัง
+                                            ⚫ มอเตอร์ ป้องกันกำรหนีบกระจกหน้ำต่ำงหน้ำซ้ำย
+                                            ⚫ มอเตอร์กระจกซ้ำย
+                                            ⚫ ไฟพอร์ตชำร์จ
+                                            ⚫ มอเตอร์ ม่ำนบังแดด
+                                            ⚫ ระบบควบคุมแดชบอร์ด
+                                            ⚫ มอเตอร์กระจกขวำ
+                                            ⚫ เกตเวย์
+                                            ⚫ สัญญำณควำมถี่สูง
+                                            ⚫ ระบบกุญแจอัจฉริ ยะ
+                                            ⚫ ระบบไฟส่ องสว่ำงภำยในห้องโดยสำร
+                                            ⚫ ปั๊ มน้ ำหล่อเย็น
+                                 Left domain control （Dolphin）
+                                          ตาแหน่ ง: ด ้านซ ้ายของ dashboard
+Function:
+
+  ⚫ ระบบ A/C
+  ⚫ ปั ดน้ ำฝน
+  ⚫ ล๊อคประตู
+  ⚫ ไฟส่ องสว่ำง
+  ⚫ กระจกมองข้ำง
+  ⚫ ระบบระบำยอำกำศเบำะฝั่งคนขับ
+  ⚫ เรดำร์ถอยหลัง
+  ⚫ มอเตอร์ ป้องกันกำรหนีบกระจกหน้ำต่ำง
+  ⚫ ไฟพอร์ตชำร์จ
+  ⚫ มอเตอร์ ม่ำนบังแดด
+  ⚫ ระบบควบคุมแดชบอร์ด
+  ⚫ มอเตอร์กระจก
+  ⚫ เกตเวย์
+  ⚫ สัญญำณควำมถี่สูง
+  ⚫ ระบบกุญแจอัจฉริ ยะ
+  ⚫ ระบบไฟส่ องสว่ำงภำยในห้องโดยสำร
+  ⚫ ปั๊ มน้ ำหล่อเย็น
+
+                                                             23/68
+                      Left Body Domain Controller （Seals）
+ตัวควบคุมโดเมนด้านซ้าย (LBDC) รวมระบบไฟฟ้า LV รี่เกี่ยวข้องไว้รี่ด้านซ้ายของระบบ LV หลักในส่ วนควบคุมยานพาหนะ และควบคุมฟังก์ชันการควบคุมของระบบ LV ของ
+รถเปก นหลัก เช่น สัญญาณไฟเลี้ยว ไฟหน้า กระจกมองหลังด้านซ้าย มอเตอร์กระจกด้านซ้าย ไฟส่ องสว่างภายนอกด้านซ้าย เรดาร์ถอยหลัง และฟังก์ชั่นพื้นฐานอื่นๆ ประการรี่
+สอง LBDC ควบคุมฟังก์ชันหลักบางอย่างของรถ เช่น ตัวควบคุม IK การควบคุมอุปกรณ์ และการราความร้อนและการระบายอากาศของเบาะนั่งคนขับ
+โมดูลรี่เกี่ยวข้องของการรวมตัวควบคุมโดเมนด้านซ้ายมีดังนี้::
+                                             การระบายอากาศและ
+                          Instrument
+    IK (PEPS)
+                            control
+                                             การราความร้อนรี่นั่ง
+                                                  ผู ้โดยาร
+  สัญญาณไฟเลี้ยว
+                                                มอเตอร์ป้องกันกำรหนีบ
+    และไฟเตือน         ระบบไฟสัญญาณ            กระจกหน้ำต่ำงหน้ำซ้ำย
+     อันตราย
+                         กระจกมองข้าง
+    ระบบไฟหน้า                                มอเตอร์กระจกซ้าย
+                             ซ้าย
+                                              รี่ปัดน้ าฝนด้านหน้า
+  ไฟบรรยากาศซ้าย         เรดาร์ถอยหลัง
+                                                   และด้านหลัง
+                          ลกอคความ
+     Column
+    adjustment
+                        ปลอดภัยของเดก         ระบบแรงดันลมยาง
+                           ด้านซ้าย
+                         ไฟเร้าและไฟ         ลกอคอิเลก รรอนิกส์รี่         24
+   ปรับเบาะคนขับ
+                  การทา Active test ผ่าน VDS
+
+
+ขั้นตอน: 1.Scan VDS >> 2.เลือกกล่องโมดูลควบคุม >> 3.เลือกฟั งก์ช่ ัน Active test
+                Left Body Domain Controller Action Test
+
+
+
+
+                                                          การควบคุมไฟ
+                                                              หน้ า
+
+การควบคุมไฟ                                                การควบคุม
+   เท้ าซ้ าย                                              ไฟสัญญาณ
+
+การควบคุมไฟ                                                การควบคุม
+เลี้ยวสัญญาณ                                               แสงซาลูน
+                     Left Body Domain Controller Action Test
+การควบคุมแสง                                                    การควบคุมไฟ
+  บรรยากาศ                                                       พอร์ ตชาร์ จ
+กระจกมองข้ าง
+ ซ้ ายควบคุม
+
+                                                               การควบคุมที่ปัด
+                                                                น้ํ าฝนด้ านหน้ า
+  การควบคุม                                                      และด้ านหลัง
+มอเตอร์ หน้ าต่ าง
+   ด้ านซ้ าย
+การควบคุมล็อค
+   4 ประตู
+                   Left Body Domain Controller Action Test
+
+การควบคุมที่นั่ง                                             การควบคุม
+    คนขับ                                                      มิเตอร ์
+
+
+
+
+การควบคุมระบบ
+ แรงดันลมยาง
+                                Right Domain Controller (ATTO3)
+                                            ตำแหน่งติดตั้ง : คอนโซลหน้ำด้ำนขวำ
+Features:
+ ⚫ เกตเวย์ CANBUS ➔ Communication Arial Network
+ ⚫ ปั๊มน้ ำหล่อเย็น
+ ⚫ ระบบระบำยอำกำศเบำะฝั่งผู ้โดยสำร
+ ⚫ ระบบป้องกันกำรสะท้อนกระจกมองหลัง
+ ⚫ ใบปัดน้ ำฝนบริ เวณด้ำนหน้ำและหลัง
+ ⚫ ระบบป้องกันกระจกหนีบฝั่งขวำ
+ ⚫ ระบบ A/C
+ ⚫ ระบบไฟเลี้ยว
+ ⚫ มอเตอร์กระจกฝั่งขวำ
+ ⚫ ระบบปลดล๊อคประตูฝั่งขวำ
+ ⚫ ฝำปิ ดพอร์ตชำร์จ
+ ⚫ ไฟส่องสว่ำงบริ เวณเท้ำ
+ ⚫ ระบบหมุนเวียนน้ ำหล่อเย็น
+ ⚫ ระบบปรับตำแหน่งเบำะนั่งฝั่งผู ้โดยสำร
+ ⚫ ไฟเพดำนด้ำนหน้ำ
+ ⚫ ม่ำนบังแดด
+ ⚫ ระบบล๊อคประตูหลัง
+ ⚫ กระจกมองข้ำงฝั่งขวำ
+ ⚫ ไฟบริ เวณพอร์ตชำร์จ
+                                                         29/ 68
+                                     Right Body Domain Controller （Seals）
+ตัวควบคุมโดเมนด้านขวา (BDC ด้านขวา) จะรวมระบบไฟฟ้า LV รี่เกี่ยวข้องของตัวถังด้านขวา และควบคุมฟังก์ชันการควบคุมระบบไฟฟ้า LV รางด้านขวาของรถเปก นหลัก เช่น
+สัญญาณไฟเลี้ยว ไฟหน้า กระจกมองหลังด้านขวา , มอเตอร์กระจกด้านขวา, ไฟส่ องสว่างโดยรอบด้านขวา และฟังก์ชันพื้นฐานอื่นๆ ประการรี่สอง ควบคุมการรางานหลักบาง
+ประการของยานพาหนะ เช่น ตัวควบคุมเกตเวย์ ตัวควบคุมระบบปั๊มความร้อน การราความร้อนและการระบายอากาศของเบาะผู ้โดยสารด้านหน้า
+โมดูลรี่เกี่ยวข้องของการรวมตัวควบคุมโดเมนเนื้อหารี่ถูกต้องมีดังนี้ :
+                                                        ระบบระบายอากาศ
+      Gateway                  ปั๊ มน้ าหล่อเยกน
+                                                          เบาะฝั่งคนขับ
+   กระจกมองหลัง
+ ภายในพร้อมฟังก์ชั่น       ใบปั ดน้ าฝนบริ เวณ         มอเตอร์ป้องกันการ
+ ป้องกันแสงสะร้อน           ด้านหน้าและหลัง            หนีบกระจกด้านขวา
+      อัตโนมัติ
+                          สัญญาณไฟเลี้ยวและไฟ
+     ระบบ A/C                                          มอเตอร์กระจกมองข้ำงฝั่งขวำ
+                              เตือนอันตราย
+ ระบบปลดล๊อคประตู                                      การปลดลกอคและการ
+                           ไฟฝาปิ ดพอร์ตชาร์จ
+      ฝั่งขวา                                             ลกอคฝาครอบ
+
+   ไฟบรรยากาศขวา           ระบบหมุนเวียนน้ ำหล่อเย็น   ไฟส่ องสว่ำงบริ เวณเท้ำขวำ
+
+
+    ระบบปรับตำแหน่งเบำะ
+      นั่งฝั่งผู้โดยสำร
+                              มอเตอร์ม่ำนบังแดด              ลกอคฝาร้าย
+
+   มอเตอร์กระจกฝั่ง                                                                 30
+        ขวาr
+                   Right Body Domain Controller Action Test
+
+
+                                                              การควบคุมไฟหน้ า
+
+การควบคุมไฟเท้ า                                                 การควบคุม
+     ขวา                                                         ไฟสัญญาณ
+การควบคุมสัญญาณ                                                 การควบคุมแสง
+     ไฟเลี้ยว                                                       ซาลูน
+ การควบคุมแสง                                                 การควบคุมไฟพอร์ ต
+   บรรยากาศ                                                      ชาร์ จด้ านขวา
+การควบคุมกระจก
+    มองข้ าง                                                  การควบคุมมอเตอร์
+                                                               หน้ าต่ างด้ านขวา
+                   Right Body Domain Controller Action Test
+                                                              การควบคุมที่นั่ง
+                                                                 ผู้โดยสาร
+การควบคุมที่ปัด
+    น้ํ าฝน                                                   การควบคุมกระจก
+                                                                  มองหลัง
+ การควบคุมการ
+ไหลเวียนของน้ํ า
+    หล่อเย็น                                                  การควบคุมซันรูฟ
+
+การควบคุมล็อค                                                  การควบคุมปั๊ม
+    ประตู                                                        ความร้ อน
+
+
+
+การควบคุมระบบ
+     AC
+Rear Domain Controller ATTO3
+     ตำแหน่งติดตั้ง : ซุ ้มล้อด้ำนหลังขวำ
+
+                                            Features:
+                                              ⚫ ระบบเบรกมือไฟฟ้ำ
+                                              ⚫ ระบบเปิ ดปิ ดฝำท้ำย (ถ้ำมี)
+Rear Domain Controller Dolphin
+   ตำแหน่งติดตั้ง : ใต้เบำะผู ้โดยสำรข้ำงหลัง
+
+                                                Features:
+                                                  ⚫ ระบบเบรกมือไฟฟ้ำ
+Rear Body Domain Controller Seals
+   ตำแหน่งติดตั้ง : ด้ำนหลังเบำะผู ้โดยสำรหลัง
+
+
+                                                 ⚫ ระบบเบรกมือไฟฟ้ำ
+                                                 ⚫ ระบบเปิ ดปิ ดฝำท้ำย (ถ้ำมี)
+        Rear Body Domain Controller Action Test
+                             Rear Body Domain Controller A_B2(BYD)
+
+
+
+
+Module Information      Fault Detection                 Clear Fault       Data Flow
+                                                                                            การควบคุม
+                                                                                             ประตูท้าย
+                                                                                            การควบคุม
+EPB System Data Flow    Module Update                   Active Control
+                                                       Back door system
+                                                                           Active Control
+                                                                            EPB system
+                                                                                            ระบบ EPB
+
+
+
+
+     Erase tailgate
+    Mechanical height
+                          LV Power Supply Principle (ATTO3)
+                                                             Left Domain
+      2                                                        Control
+                                                                                                            USB Port
+LV Batt 13.7V                                                                            ACC Relay
+                                                                                                           Reserved
+                                          100A                              Right                                            ช่องเสียบเต้า 12 v
+Lead-acid       Anode Fuse                                                                                  Power
+                                                                           Domain
+ Battery           Box
+                                                                          Controller
+                                                                                                                                       Rear
+                                                                                                       EPS             IPB            Domain
+                60A                    200A                                              IG1 Relay
+                                100A                                                                   SRS          ADAS
+                 Instrument                                                  Front                    Air bag
+                                              Left Domain                                                         Radar Sensor
+                    panel                                                compartment
+                                               Controller
+                 distribution                                             distribution                  Electric
+                                                                                                                        Control board Set
+                     box                                                      box                     Compressor
+                                                                                         IG4 Relay
+                                                                                                       Humidity         อยู่แถวกล้องหน้า
+                                                                                                        Sensor
+                     LV
+                 Appliances
+                                                 1
+                                                                       13.7Vdc
+
+                                                                                           Rear
+                                                                          8in1(PDC)      Defrosting        Rear
+                                        Battery Pack                                                                         ระบบไล่ฝ้ากระจก
+                                                       403.2Vdc(EXT)        DC-DC          Relay         Defrosting
+                                                       332.8Vdc(STD)
+                                                                           Convertor
+                        LV Power Supply Principle (Dolphin)
+                                                                                           Left body     KG64A-4-1
+                                                                              BG64A-2-1
+Front compartment distribution box                                                          control
+                                                                                              unit                            Anode fuse
+                                                                                                                       200A
+                                                                                                                              box
+                                                      200A
+        60A   60A      60A     30A     60A                         70A     100A
+
+
+
+                                                                                                                     LV Lead Acid
+                                                  Eight-                                                              battery(TH)
+        IPB              PTC                                 EPS         Left body
+                                                 in-one
+                                                                          control
+                                                   (DC)
+                                                                            unit
+
+                               13.7Vdc           DC-DC
+                                                                                                             Dashboard
+                                                                                          30A    30A
+                                                                                                             fuse box
+
+
+
+                                                                         Left EPB motor         Right EPB motor
+                    Battery
+                     Pack
+                                     403.2Vdc(EXT)
+                                     332.8 Vdc(STD)
+                                        LV Power Supply Principle (SEAL)
+                                              60A
+                                                            Rear Body                              USB charging
+                                                             fuse box                                  port
+     13.7Vdc                                                                           ACC relay
+                                                                                                     Reserved
+         LV                                    100A                                                power supply
+                        Anode fuse                                      Right domain
+      LiFePo4
+                           box                                            controller
+      battery
+                                                                                                                  Rear domain
+                                                                                                   EPS      IPB    controller
+                250A   80A                                                             IG1 relay
+                                             200A
+                                                                                                   SRS     ADAS
+
+                        Instrument                      Front
+                        distribution                compartment         Left domain
+                            box                      distribution        controller                   Electric
+                                                         box                                        compressor
+                                                                                       IG4 relay
+                                                                                                    Four-in-one
+                                                                                                      sensor
+                        LV electrical
+                         appliances
+13.7Vdc
+
+                                         Performance/Premium 550.4Vdc
+      DC-DC            Power battery
+                                         Dynamic 409.6Vdc
+                               ้
+                             ขันตอนการเปลี
+                                         ยน่ Domain Controllers
+
+Replacement Flow of LBDC              Replacement Flow of RBDC         Replacement Flow of BBDC
+     Mileage(ODD) Backup
+                                        Right Body Domain Controller
+         I-key Clear
+                                                Replacement
+      เปลี่ยนกล่อง (LDC)
+         ECU P2P
+     Update latest version
+    Configuration Write in                                                  เปลี่ยนกล่องหลังได้ เลย
+
+        I-key Loading
+
+        Key Matching
+
+    Configuration Write in                 Configuration Write in
+
+       TPMS Matching
+                             ้
+                           ขันตอนการเปลี
+                                       ยน่ Left Domain Controller (Step1)
+
+
+
+
+Mileage backup
+                 ➢ เข้ำ Replacement center             ➢ เลือก BYD   ➢ เลือกที่ช่อง Write replacement mileage
+
+
+
+
+                 ➢ เลือก replacement mileage back up   ➢ เลือก Run   ➢ เลือก Run Update โปรแกรมรอจนขึ้นเป็ นสี เขียว
+                        ้
+                      ขันตอนการเปลี
+                                  ยน่ Left Domain Controller Replace (Step2)
+
+
+
+
+Clear secret Key
+                   ➢ เข้ำ Replacement center   ➢ เลือก Domain control secret key replacement   ➢ เลือกที่ช่อง Left domain controller และ
+                                                                                                   • กด refresh key
+                                                                                                   • กด clear secret key
+                                                                                                   • กด Run
+                                                                                               ➢ Disconnect ขั้วแบต 12V battery รอ 5 นำที,
+                                                                                                 ถอดเปลี่ยน LBC ใหม่
+                                                                                               ➢ ต่อขั้วแบต 12V และออกไปทำกำร ECU P2P
+                               ้
+                             ขันตอนการเปลี
+                                         ยน่ Left Domain Controller Replace (Step 3)
+
+
+
+
+P2P Left domain controller
+                                ➢ ECU P2P Update                       ➢ เลือก model
+
+
+
+
+                                 ➢ เลือก Left body domain controller   ➢ เลือก software
+                                  ้
+                                ขันตอนการเปลี
+                                            ยน่ Left Domain Controller Replace (Step 3)
+
+
+
+
+P2P Left domain controller
+                             ➢ เลือก software version   ➢ เลือกลูกศรเขียว   ➢ รอ software successfully ขึ้นสี เขียว
+                                                                            ➢ ออกไปขั้นตอนถัดไป
+                                                                            Note :
+                                                                            ▪ ATTO3 LBDC software ต้องสูงกว่ำ 3.00.44
+                                                                            ▪ DOLPHIN and SEAL ให้เลือกรุ่ นล่ำสุด
+
+                                                                            เพรำะอำจจะไม่จำค่ำเลขระยะหลักกิโลของรถถ้ำใช้
+                                                                            Version ต่ำ
+                            ้
+                          ขันตอนการเปลี
+                                      ยน่ Left Domain Controller Replace (Step 4)
+
+
+
+
+Configuration write -in
+                          ➢ เข้ำ Replacement center   ➢ เลือก Configuration write in                ➢ เลือกรุ่ นรถ
+
+
+
+
+                                                                                           ➢ เลือก โปรแกรม พื้นที่ ตำมไฟล์ด้ำนล่ำง
+
+
+
+                                                                                       4
+                            ้
+                          ขันตอนการเปลี
+                                      ยน่ Left Domain Controller Replace (Step 4)
+
+
+
+
+Configuration write -in
+                             5                          6
+
+                            ➢ ตรวจสอบ Code & Version   ➢ กด Have read
+
+
+
+
+                                                       ➢ กด Update โปรแกรมรอจนเสร็จจนขึ้นสี เขียว
+                                                       ➢ ออกไปทำกำร secret key อีกรอบ
+
+                              7
+                      ้
+                    ขันตอนการเปลี
+                                ยน่ Left Domain Controller Replace (Step 5)
+
+
+
+
+Write Secret Key   ➢ เข้ำ Replacement center   ➢ เลือก Domain control secret key replacement   ➢ เลือกที่ช่อง Left domain controller และ
+                                                                                                   • กด refresh key
+                                                                                                   • กด Write pin code
+                                                                                                   • กด Run
+                                                                                                   • ออกไป matching key
+                 ้
+               ขันตอนการเปลี
+                           ยน่ Left Domain Controller Replace (Step 6)
+
+
+
+
+Key Matching
+               ➢ เข้ำ Replacement Center                         ➢ เลือก Key Matching     ➢ รออ่ำน Vin
+                                                                                          ➢ กด Run
+                                                                                          ➢ วำงกุญแจในช่องที่เป็ นตำแหน่งที่จะ Matching
+                                                                                            กุญแจ เช่น Atto3 ในช่องเก๊ะตรงกลำง
+                                                                                          ➢ กด Matching key
+                                                                                          ➢ On เครื่ องรถ
+                                                                                          ➢ กลับไปทำ Configuration write in อีกรอบ
+               ** หมำยเหตุ : สำมำรถ Matched กุญแจ/NFC card ได้สูงสุด อย่ำงละ 4 ดอก/ใบ**
+                               ้
+                             ขันตอนการเปลี
+                                         ยน่ Left Domain Controller Replace (Step 7)
+
+
+
+
+Configuration write-in 2
+                           ➢ เข้ำ Replacement center   ➢ เลือก Configuration write in                ➢ เลือกรุ่ นรถ
+
+
+
+
+                                                                                            ➢ เลือก โปรแกรม พื้นที่ ตำมไฟล์ด้ำนล่ำง
+
+
+
+                                                                                        4
+                             ้
+                           ขันตอนการเปลี
+                                       ยน่ Left Domain Controller Replace (Step 7)
+
+
+
+
+Configuration write-in 2
+                              5                          6
+
+                             ➢ ตรวจสอบ Code & Version   ➢ กด Have read
+
+
+
+
+                                                        ➢ กด Update โปรแกรมรอจนเสร็จจนขึ้นสี เขียว
+                                                        ➢ ออกไปทำรำยกำรถัดไป
+
+                              7
+                                                      ้
+                                                    ขันตอนการเปลี
+                                                                ยน่ Left Domain Controller Replace (Step 8)
+
+
+
+
+C a l i b r a t i o n ส่ ว น ข อ ง T P M S ใ ห ม่
+                                                        ➢ VDS                     ➢ เลือกรุ่ นรถ
+
+
+
+
+                                                         ➢ Scan VDS               ➢ เลือกกล่อง LDC
+                                                        ้
+                                                      ขันตอนการเปลี
+                                                                  ยน่ Left Domain Controller Replace (Step 8)
+
+
+
+
+C a l i b r a t i o n ส่ ว น ข อ ง T P M S ใ ห ม่
+                                                      5                                      6                                             7
+                                                    ➢ เลือก Wheel matching new version     ➢ เตรี ยมปล่อยลมยำงตำมคำแนะนำของ VDS ใน       ➢ ปล่อยลมยำงตำมคำแนะนำของ VDS ใน
+                                                                                             ขณะเดียวกันขณะที่ กด VDS ให้ดำเนินกำร         ขณะเดียวกันกด VDS ให้ดำเนินกำร
+
+
+
+
+                                                                           8                                          9
+                                                                          ➢ กด Have read                           ➢ หำกดำเนินกำรไม่สำเร็จ ให้ทำซ้ ำขั้นตอนนี้จนกว่ำจะสำเร็จ
+                                                           ้
+                                                         ขันตอนการเปลี
+                                                                     ยน่ Left Domain Controller Replace (Step 9)
+
+
+
+
+ก า ร เ ขี ย น ค่ า แ ร ง ดั น ล ม ย า ง ม า ต ร ฐ า น
+                                                                                                           2                                      3
+                                                         ➢ ดูค่ำมำตรฐำนควำมดันลมยำงที่บริ เวณเสำ B         ➢ เลือกกล่องโมดูลควบคุมฝั่งซ้ำย       ➢ เลือก Calibration type pressure
+                                                           ของรถยนต์
+
+
+
+
+                                                          4                                                 5                                     6
+                                                         ➢ ฟังก์ชั่นกำรเขียนค่ำแรงดันลมยำงมำตรฐำนล้อหน้ำ   ➢ เขียนค่ำแรงดันลมยำงมำตรฐำนล้อหน้ำ   ➢ ยืนยันว่าแรงดันลมยางอยู่ในค่ามาตราฐาน
+                                       ้         ยน
+                                     ขันตอนการเปลี ่ Left Domain Controller Replace step10
+
+
+
+
+ก า ร กู้ คื น เ ล ข ห ลั ก กิ โ ล
+                                                                              ➔ยืนยัน ODO ก่อนเปลี่ยนหลังเปลี่ยน LDC
+                                                                               ตรงหรื อไม่โดยอนุญำตให้ +/- ไม่เกิน 50km
+                                                                              ➔หำกไม่ปกติให้ทำตำมขั้นตอน
+                                                                              1.เข้ำ Replacement center
+                                                                              2.เลือก BYD
+                                                                              3.เลือกที่ช่อง Write replacement mileage
+                                                                              4. เลือก Write replacement mileage
+                                                                              5.เลือก Run
+                                                                              6.เลือก Run Update โปรแกรมรอจนเสร็จจน
+                                                                              ขึ้นสี เขียว
+                                                              54/ 81
+             ้         ยน
+           ขันตอนการเปลี ่ Right Domain Controller Replace
+
+
+
+
+➢ เลือก Replacement Center                  ➢ เลือก Configuration write-in                       ➢ เลือกโมเดล ATTO3
+     • หลังจำกถอดขั่วแบตเตอรี่ 12V
+     • ติดตั้งกล่องโมดูลฝั่งขวำแล้ว > VDS                                                Right
+
+
+
+
+                                            ➢ เลือก Right domain Asia-pacific > Right wheel drive
+                                                      กำร ECU P2P Update ล้มเหลว
+วิธีกำรแก้ไขคือดังนี้:
+
+1. ทำกำรUpdateอีกครั้งหำกกระบวนกำรUpdateซอฟต์แวร์แล้วพบว่ำModule code เป็ นFFFFFF (กำรupdateล้มเหลว)
+2. ส่งข้อมูล VIN และ VDS UUID กลับไปยังผู ้จ ัดกำรทำงเทคนิคเพื่อรี เซ็ตรหัส
+
+**หลังจำกที่ ECU P2P Update ล้มเหลว, รถอำจจะไม่สำมำรถเปิ ด/ปิ ดได้ ในกรณี น้ ี, ควรทำกำรปิ ดเครื่ องทันที มิฉะนั้นมันอำจส่งผลกระทบต่อประสิ ทธิภำพของ
+แบตเตอรี่ แพ็คและแบตเตอรี่ สตำร์ท เนื่องจำกมีกำร Full discharging
+วิธีกำรเก็บข้อมูลผ่ำนVDCI
+
+
+
+
+1.เข้ำ Data collection center        2.เข้ำ Data customization mapping   3.กรอก Username, Password
+
+
+
+
+4.กรอก Ignition configuration > Ok   5.กด start mapping
+วิธีกำรเก็บข้อมูลผ่ำนVDCI
+
+
+
+
+6.เข้ำ VDCI center            7.รอ Update                                         8.กด VDCI off-line collection
+
+
+
+
+9.กด Configuration write-in   10.กด Write the vehicle configuration and collect   11.เลือก Diagnostic→ Dolphin
+                                                                                           Seal→Seal
+                                                                                     EC2E(หรื อเลขรุ่ น model) →ATTO3
+วิธีกำรเก็บข้อมูลผ่ำนVDCI
+
+
+
+
+12.เลือก Diagnostic network                          13.กด Switch to offline collection program   14.เสี ยบ USB ที่กล่อง VDCI > ดึงสำยที่ VDS ออก
+
+
+
+
+15.หลังเก็บข้อมูลเสร็จสิ้ น ให้เข้ำที่ VDCI center    16.VDCI program switching                   17.กด Diagnostic program
+วิธีกำรเก็บข้อมูลผ่ำนVDCI
+
+
+
+
+17.รอโหลดจนเสร็จสิ้ น       18.เข้ำที่ Data collection center   19.กด Stop mapping
+                                             วิธีกำรลงอัพเดต D-link
+
+
+
+1.）Load file package ของโปรแกรม Dilink รี่เปก นรุ่ นล่าสุ ดของ Model นั้นๆ
+2.）แก้ชื่อไฟล์ package นั้นๆเปก น updatefull
+3.) Format handy drive โดยเลือกเปก น FAT32
+4.) สร้างโฟร์เดอ สมมุติไดร์ของ handy drive คือไดร์ F: กกต้ ัง F:\BYDUpdatePackage\msm8953_64
+5.) Copy ไฟล์ package รี่แก้ช้ือเปก น updatefull ไว้ใน โฟร์เดอ msm8953_64 บน handy drive
+
+
+
+
+    เสี ยบ handy drive รี่ USB-A              Program จะ Run อัตโนมัติ                   รอจน Pad Restart แล้วดึง
+                                                                                     handy drive รี่ USB-A ออก เปก นอันเสรกจ
+วิธีกำรเก็บข้อมูล D-link
+
+
+
+
+1.เข้ำตั้งค่ำรถยนต์        2.คลิ๊กที่รำยละเอียดมัลติมีเดียว 10ครั้ง
+
+
+
+
+3.คลิ๊ก BydLogTools        4.รอจนกว่ำกำรอัพโหลดจะเสร็จสิ้น
+วิธีกำรเก็บข้อมูล D-link
+
+
+
+
+5.เข้ำเครื่ องมือ > ตัวจัดกำรไฟล์   6.เข้ำ File Logs > เสี ยบ USB
+
+
+
+
+7.เลือกไฟล์ที่ต ้องกำรแล้ว Copy     8.วำงไฟล์ที่ค ัดลอกมำลงใน USB
+การสอบเที ย บค่ า กล้ อง Panoramic
+                                                       พื ้นที่แนะนา
+                                                     ต้องเรียบไม่ลาด
+                                                            เอียง    12.0 m                                                 10.8 m
+
+                                                        กว้างxยาว
+                                                        10x12 ม.
+
+                                                            10 m                                  7.8 m
+
+
+
+
+1.กดที่ Time zone 10ครั้ง     2. รอกำร calibration 10วินำที โดยประมำณ   3. ในจอจะเป็ นสี เขียวเมื่อกำร calibration เสร็จสิ้ น
+                                                             การสอบเที ย บค่ าระบบMPC
+1.      ถอดกระจกเทียบมาตรฐาน Radar ของ ACC ออก ปร ับฐานทั้งสามของเครื่องมือสอบเทียบ
+                             ่ อและทาให ้เครืองมื
+        ทาให ้ฐานรองร ับเครืองมื                   ่ อได ้ระดับ ยิง Laser ให ้ได ้กึงกลางตรงกล
+                                                                                      ่            ้องหน้า
+2.                                               ้
+        วัดระยะจากระหว่างศูนย ์กลางล ้อหน้าทังสองล ้อกับแผ่นกระจกแผงปรับสอบเทียบ (D2) จาก
+        ตรงกลางรถหน้ามีระยะห่าง 6000 มม.
+3.                                 ้
+        ยิงแสงชุด Laser Cal ทังสองที     ่ กยึดไว ้ทีล
+                                         ถู           ่ ้อหลังและปร ับให ้ได ้ระดับโดยยิงไปยังกระจกสะท ้อน
+        แสงของ laser ลาแสงทีย     ่ ้อนกลับจะต ้องชนกับแผ่นกระจกปร ับเทียบของ clamp ยึดตาแหน่ งที่
+        มีระยะห่างเท่ากันระหว่างล ้อซ ้ายและขวาต ้องต่างไม่เกิน ±2
+        ตัวอย่างเช่น ซ ้าย -2 ล ้อขวาก็ต ้อง -4 หรือ +0 ระดับลูกนาต    ้ ้องกึงกลาง
+                                                                                ่
+4. ปรับความสูงตรงกลางของแผ่นสอบเทียบ MPC (H2) เป็ น 1449 มม. จากพืน้                                                                             กลางแนวกล ้อง
+     ่
+(เมือเครื  ่ ออยู่ในแนวนอน ให ้ใช ้ตลับเมตรเครืองมื
+           องมื                                      ่ อวัดกับพืน้ ปร ับเป็ น 1449 มม. ตามมาตราส่วน)
+         ่
+5. เชือมต่      อ VDS
+6. เลือกหัวข ้อ MPC module(multimedia video module) และเลือกรุ ่นตามการกาหนดค่าที่
+   ่
+เกียวข ้อง (ยกตัวอย่าง SC2EK)
+7. เลือก Calibration และ Run calibration จนกว่าสาเร็จ
+8. หลังจาก configuration การ calibration จนสาเร็จกาหนดค่าสาเร็จแล ้วให ้เลือก after-sales
+calibration
+9. เลือก Calibration และ Run calibration จนกว่าสาเร็จ                           Camera Cal Board
+
+
+
+                                                    Radar Cal Board                                              ้ งกลาง
+                                                                                                             ลูกนากึ ่
+                                                                                          1449 มม.
+
+     Laser Cal                                                                                                             ปร ับความสูง H2
+                                                                                                                                             1449 มม.
+                                                   6000 มม.                       Radar Cal Board Angle (องศา‘)
+                                             การสอบเที ย บค่ าระบบ MPC
+
+
+
+
+1.เข้าไปรี่ Multifunction video controller   2.เข้ารี่ Calibration of configuration word 3. เลือก RHD Thailand
+
+
+
+
+4.กด Run                                     5.เลือก Calibration>Dynamic calibration 6.กด Run
+                                               การสอบเที ย บค่ าระบบ MPC
+
+
+
+
+7. ขึ้น Succeeded in cleaning DTC , Restart the camera Successfully        8. Cleaning DTC
+
+
+
+
+                                                                      67
+    การสอบเที ย บค่ าระบบACC
+วิธีการตั้งกระจก
+•    ถอดกระจกเทียบมำตรฐำน Radar ของ ACC ออก ปรับฐำนทั้งสำม
+     ของเครื่ องมือสอบเทียบ ทำให้ฐำนรองรับเครื่ องมือและทำให้                                                                     ใส่กระจก
+     เครื่ องมือได้ระดับ ยิง Laser ให้ได้ก่ ึงกลำงตรงกล้องหน้ำ
+•    ถอดกล่อง Laser ออก ติดตั้งกระจก วัดระยะห่ำงระหว่ำงจุดกึ่งกลำง
+     หน้ำรถกับกระจก (D1) 120เซนติเมตร
+•    ปรับตั้งระดับมุมเงยกระจก Radar Cal Board Angle เป็ นระดับ 0
+•    ยิงแสงชุด Laser Cal ทั้งสองที่ถูกยึดไว้ที่ล้อหลังและปรับให้ได้ระดับ
+     โดยยิงไปยังกระจกสะท้อนแสงของ laser ลำแสงที่ย ้อนกลับจะต้อง                                                     ปรับ 0 องศา
+     ชนกับแผ่นกระจกปรับเทียบของ clamp ยึดตำแหน่งที่มีระยะห่ำง
+     เท่ำกันระหว่ำงล้อซ้ำยและขวำต้องต่ำงไม่เกิน ±2
+     ตัวอย่ำงเช่น ซ้ำย -2 ล้อขวำก็ต้อง -4 หรื อ +0 ระดับลูกน้ ำต้องกึ่งกลำง
+•    ตั้ง Radar Cal Board ยกระยะสู งจำกพื้นจนถึงจุดกึ่งกลำงกระจก (H1)
+                                                                                    กลางแนวกล้อง
+     ระยะ 35.5 เซนติเมตร
+                                                                                                          ลูกน ้ากึ่งกลาง
+                                                                                  Camera Cal Board
+                                                                                                                                       ปรับความสูง H1
+                                                          Radar Cal Board
+                                                                                                                                                        35.5 ซม.
+                                                                                          ยกขึ ้นสูงกึ่งกลางกระจก
+                                                                                          Radar Cal Board
+                                                            120 ซม.                  H1
+                                                                                          ระยะ 35.5 ซม. （H1）
+    Laser Cal                                                      D1
+                                                                              Radar Cal Board Angle (องศา‘) = 0’
+การสอบเที ย บค่ าระบบACC
+
+
+
+
+1. เข้ำไปที่ Front millimeter radar (Veoneer)   3. เลือก Ground coordinate system information                5.เข้ำที่ Calibration
+
+
+
+
+2. เลือก Action test                             4. ตั้งค่ำที่ 12000 แล้วกด Start calibration *เฉพำะ ATTO3   6.เลือก Static calibration
+การสอบเที ย บค่ าระบบACC
+
+
+
+
+7.กด Have read             8.หำกสำเร็จจะขึ้น Routine Completed successfully
+                           และค่ำ error ไม่ควรเกิน
+                           - Radar horizontal angle error: ± 3 Degrees
+                           - Radar height elevation angle error: ± 3 Degrees
+           ACC Dynamic Calibration （Dolphin, Seals）
+                                                 0.Scan VDS ตรวจสอบต้อง
+                                                 ไม่ม ีอาการ fault IPB & EPB
+                                                 1.เลือก Front millimeter-wave
+วิธ ีการ                How to                   radar
+                                                 2. เลือก ACTION test
+                                                 3. Write the production mode
+                                                 4. กด Have read
+                                                 5. Normal mode
+                                                 6. ออกไปCalibrationแล ้วเลือกรุ ่น
+                                                 7.กด Run configuration
+                                                 8. ออกวิ่งด ้วยความเร็ว 35-60 กม/
+                                                 ชม เป็ นเวลา 15 นาทีเป็ นอย่างน้อย
+                                                 9. After sale Standardizing
+                                                 10.กด Run
+                                                 11. รอจน สาเร็จและขึนค ้ าว่า
+
+
+
+                                                 ถือว่าสาเร็จการ Dynamic Cal
+                                                 12.ตรวจสอบโดยเข ้าไป Dataflow
+                                                 13.ที่ Latest Calibration State
+                                                 หากพบคาว่า
+
+
+
+
+                                                 ถือว่าการสอบเทียบ ACC แบบ
+                                                 Dynamic เสร็จสาบูรณ์
+
+
+
+                                 71/ 81
+           ACC Dynamic Calibration （Dolphin, Seals)
+                                                  0.Scan VDS ตรวจสอบต้อง
+                                                  ไม่ม ีอาการ fault IPB & EPB
+                                                  1.เลือก Front millimeter-wave
+วิธ ีการ                                          radar
+                                                  2. เลือก ACTION test
+                                                  3. Write the production mode
+                                                  4. กด Have read
+                                                  5. Normal mode
+                                                  6. ออกไปCalibrationแล ้วเลือกรุ ่น
+                                                  7.กด Run configuration
+                                                  8. ออกวิ่งด ้วยความเร็ว 35-60 กม/
+                                                  ชม เป็ นเวลา 15 นาทีเป็ นอย่างน้อย
+                                                  9. After sale Standardizing
+                                                  10.กด Run
+                                                  11. รอจน สาเร็จและขึนค ้ าว่า
+
+
+
+                                                  ถือว่าสาเร็จการ Dynamic Cal
+                                                  12.ตรวจสอบโดยเข ้าไป Dataflow
+                                                  13.ที่ Latest Calibration State
+                                                  หากพบคาว่า
+
+
+
+
+                                                  ถือว่าการสอบเทียบ ACC แบบ
+                                                  Dynamic เสร็จสาบูรณ์
+
+
+
+                             72/ 81
+ACC Dynamic Calibration （Dolphin, Seals)
+                                       0.Scan VDS ตรวจสอบต้อง
+                                       ไม่ม ีอาการ fault IPB & EPB
+                                       1.เลือก Front millimeter-wave
+                                       radar
+                                       2. เลือก ACTION test
+                                       3. Write the production mode
+                                       4. กด Have read
+                                       5. Normal mode
+                                       6. ออกไปCalibrationแล ้วเลือกรุ ่น
+                                       7.กด Run configuration
+                                       8. ออกวิ่งด ้วยความเร็ว 35-60 กม/
+                                       ชม เป็ นเวลา 15 นาทีเป็ นอย่างน้อย
+                                       9. After sale Standardizing
+                                       10.กด Run
+                                       11. รอจน สาเร็จและขึนค ้ าว่า
+
+
+
+                                       ถือว่าสาเร็จการ Dynamic Cal
+                                       12.ตรวจสอบโดยเข ้าไป Dataflow
+                                       13.ที่ Latest Calibration State
+                                       หากพบคาว่า
+
+
+
+
+                                       ถือว่าการสอบเทียบ ACC แบบ
+                                       Dynamic เสร็จสาบูรณ์
+
+
+
+              73/ 81
+THANK YOU!
+

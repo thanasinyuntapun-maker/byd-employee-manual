@@ -1,0 +1,667 @@
+Thermal
+Management
+System
+ระบบจัดการ
+อุณหภู ม ิ
+เนือ้ หา
+1. หลักพื ้นฐานของระบบปรับอากาศ
+2. ระบบจัด การอุณ หภู มิ ข อง บี ว ายดี
+3. ชิ ้นส่วนระบบในท่อแอร์
+4. วงจรการทางานของระบบจัดการอุณหภูมิของบีวายดี
+5. HVAC
+           Part I
+
+
+ Air Conditioning Principle
+      ้
+หลักพืนฐานของระบบปร  ับอากาศ
+Air Conditioning Principle
+
+
+
+
+                               คอมเพลสเซอร์
+
+
+
+                                              Condenser
+                                              คอยล์ร ้อน
+                 HVAC
+                 -Evaporator
+                 คอยล์เย็น
+การทางานเริ่มจาก
+
+→ Evaporator : สารทาความเย็นในรู ปของละอองฝอยที่ไหลผ่านในตัว Evaporator จะดูดซับ
+ความร้อนภายในรถ ทาให้อากาศภายในรถเย็นขึ้น และเกิดกระบวนการกลายเป็ นไออย่างทันทีท ันใด ทาให้
+สารทาความเย็นกลับมาอยู่ในสถานะก๊าซอีกครั้ง และถูกส่งกลับมายัง Compressor
+
+→ Compressor : ทาหน้าที่ ดูดสารทาความเย็นที่มาจากอีวาปอเรเตอร์ และทาการอัดให้กลายเป็ นสาร
+ทาความเย็นที่สถานะก๊าซ จากนั้นจะส่งผ่านไปยัง Condenser
+
+→ Condenser : ทาหน้าเปลี่ยนสารทาความเย็นในสถานะก๊าซให้กลายเป็ นสถานะของเหลวผ่านการ
+ควบแน่น จากนั้นส่งต่อไปยัง Receiver Dryer
+
+→ Receiver Dryer : ทาหน้าที่ ดูดซับความชื้น กรองสิ่ งสกปรกในระบบ และเป็ นที่พ ักของสารทา
+ความเย็น จากนั้นจะถูกส่งต่อไปยัง Expansion Valve
+
+→ Expansion Valve : ทาหน้าที่ ลดแรงดันของสารทาความเย็น และฉีดสารทาความเย็นในสถานะ
+ที่เป็ นของเหลวในรู ปแบบของฝอยละอองเข้าไปที่ Evaporator
+
+→ จากนั้นสารทาความเย็นจะกลับเข้ าสู่ Evaporator อีกครั้ง และจะวนลูปในลักษณะดังกล่าวนี้ตลอด
+ช่วงการทางานของเครื่ องยนต์ เพื่อทาหน้าที่ในการสร้างความเย็นเข้าสู่ภายในห้องโดยสาร
+         Air Conditioning Principle
+
+
+
+
+ เล่น
+วิดีโอ
+            Part II
+
+
+BYD Thermal Management System
+  ระบบจัดการอุณหภู ม ิของ บีวายดี
+BYD Thermal Management System
+             Part III
+
+
+A/C PIPE LINE MAJOR COMPONENTS
+  อุปกรณ์หลักในท่อของระบบปร ับอากาศ
+                              BYD Thermal Management System
+
+                                                           A/C Pipe Line
+                                                       Main Components
+                                                       ชิ้นส่วนระบบในท่อแอร์
+     CONDENSOR
+   คอนเดนเซอร์ (คอยล์ร ้อน)
+
+
+
+
+                                                          PLATE HEAT EXCHANGE
+                                                            อุปกรณ์แลกเปลี่ยนความร้อน
+    COMPRESSOR
+      คอมเพลสเซอร์
+
+
+
+
+                                                        THERMAL MANAGEMENT MODULE
+GAS LIQUID SEPERATOR                                      โมดู ล การจั ด การอุ ณ หภู มิ แ บบแยกส่ ว น
+ อุปกรณ์แยกแก๊ส และของเหลว
+       (แยกความชื ้น)
+DC Electric A/C Compressor (Specifications)
+
+
+
+
+                              Maker: BYD Auto Industry
+                              Model: ACA46A (FD28HA)
+                              Type: DC Electric Compressor
+                              Voltage: 307.2V
+                              Refrigerant: R134a 1100g
+                              Oil: POE 160g
+A/C Compressor
+
+
+
+
+                 12
+         Scroll A/C Compressor
+
+
+
+
+ เล่น
+วิดีโอ
+                  GAS-LIQUID SEPARATOR
+
+
+
+
+ทาหน้าที่นา
+ความชื ้นออกจาก
+ระบบปรับอากาศ
+                   GAS-LIQUID SEPARATOR
+                                   ท่ อทางเข้ าน้ายาแอร์
+                                   (แก๊ ส)
+
+
+
+                                             ท่ อทางเข้ าน้ายาแอร์
+น้ายาแอร์ แรงดันต่า ไป                       (เหลว) และน้ามันจาก
+ยังคอมเพลสเซอร์                              Evaporator
+                                         ท่ อตัวยู
+
+
+       สารดูดความชื้ น
+
+           ท่ อดูดและกรอง             น้ายาแอร์ (เหลว)
+           น้ามัน
+INTIGRATED THERMAL MANAGEMENT MODULE
+
+
+
+
+ UPPER                       LOWER
+                   Part IV
+
+
+BYD THERMAL MANAGEMENT OPERATION CIRCUIT
+      วงจรการทางานของระบบจัดการอุณหภูมิของบีวายดี
+Thermal management system
+การบริหารอุณหภูม ิของแบตเตอรี่
+• ระบบทาความเย็นจะทางานทันทีถ ้าตรวจพบว่า แบตเตอรี่ อุณหภูม ิสูงเกิน 38C
+                                  PDU
+
+• ระบบทาความร ้อน (Heat pump) จะทางานทันทีถ ้าตรวจพบว่าอุณหภูม ิ แบตเตอรี่ ต่ากว่า 10C
+                                 (Power
+                           Distribution Unit)
+                                                    DC-DC
+                                                    converter
+
+
+• แบตเตอรี่จ ึงถูกรักษาอุณหภูม ิให ้อยู่ในช ่วง 10C - 38C ได ้อย่างสมบูรณ์   OBC
+                                                                             (On Board Charger)
+
+
+• แบตเตอรี่สามารถรับมือกับอุณหภูม ิแวดล ้อม -30C <–> 60C
+                                                                              Drivin
+                                                                                g
+                                                                              Motor
+
+
+                                                                               Motor
+                                                                               controller
+
+
+
+
+                                                                   Reducer
+                                                VCU
+                                                (Vehicle
+                                                Control Unit)
+
+
+
+
+                                                          18/ 81
+Normal Closed
+(NC) Solenoid
+    Valve
+     ชุดคอยล์
+
+
+
+      สกรู
+
+
+
+
+     ตัววาล์ว
+
+
+
+             ยางโอริงกันรั่ว
+             ภายนอก
+             ยางโอริงกันรั่ว
+             ภายใน
+
+
+       19/ 81
+Normal Opened
+ (NO) Solenoid
+    Valve
+
+  ชุด
+  คอยล ์
+
+  สก
+  รู
+
+
+
+  ตัว
+  วาล ์ว
+
+       ยางโอริงกัน
+       ร ่ ัวภายนอก
+       ยางโอริงกันร ่ ัว
+       ภายใน
+
+               20/ 81
+One-Way Electronic   Two-Way Electronic
+Expansion Valve      Expansion Valve
+Electronic Expansion
+Valve
+Heat Pump
+        INTIGRATED THERMAL MANAGEMENT MODULE
+          EXV2                       EXV3
+
+
+
+ SOV2
+                SOV5
+                              SOV6
+                                            EXV1
+
+SOV1                   SOV4
+
+
+         SOV3
+                   INTIGRATED THERMAL MANAGEMENT MODULE
+
+      เช็ควาล์ว                                                                     ท่อคอนเดนเซอร์ขาเข้า
+                                                                                    ภายในห้องโดยสาร
+เซนเซอร์อุณหภูมิ
+  และ แรงดัน                                                                        เซนเซอร์วัดแรงดัน
+                                                                                    ท่อคอนเดนเซอร์ขาออก
+    เช็ควาล์ว 5
+                                                                                    ภายในห้องโดยสาร
+                                                                                    แผ่นกรอง
+     แผ่นกรอง
+                                                                                    ท่อคอมเพลสเซอร์ขาออก
+ ไปคอนเดนเซอร์
+    ขาเข้า                                                                          ท่อคอมเพลสเซอร์ขาเข้า
+                                                                                    เซนเซอร์อุณหภูมิน ้ายาแอร์
+                                                                                     ท่อหล่อเย็นแบตเตอรี่ขา
+                                                                                     ออก
+ ไปคอนเดนเซอร์
+    ขาออก
+                     ไปหล่อเย็น       เซนเซอร์         เซนเซอร์       อุปกรณ์แยก
+                   แบตเตอรี่ขาเข้า   อุณหภูมิน ้า    อุณหภูมิ และ       ความชื ้น
+                                       หล่อเย็น     แรงดัน หล่อเย็น
+                                     แบตเตอรี่ขา    แบตเตอรี่ขาเข้า
+                                         เข้า
+            System Principle - Interior Refrigeration ห้ องโดยสารเย็น
+         High-temperature and                   Medium-temperature and                     Low-temperature and low-pressure
+         high-pressure gas                      high-pressure gas and liquid               gas or liquid or liquid
+                                                                   SOV6             SOV3
+                  1.3 – 1.6 Mpa                                                                                CV5
+
+
+
+
+                                                                 EXV2
+
+                                                                                                                                                    EXV2                            EXV1
+                                                                                                                                                                         SOV3
+
+                                                                                                                                                                                              SOV1
+                                                                                                                                      CV1
+
+
+                            SOV1
+                                                                         CV1                                                           EXV3             SOV6
+                                                                                                                                                                            SOV4
+
+
+
+
+                                                                                     SOV4                                               CV2                                                 SOV2
+                                   VCV
+                                                SOV5
+                                   SOV2                                                                                                                                      SOV5
+                                                            EXV3         CV2
+          0.3-0.5 Mpa
+
+
+                          CV3
+                                       4-12 C
+
+                                                               EXV1
+
+                     Battery heating       Battery cooling         Air heat exchange        Water source heat         A/C heating      A/C refrigeration       Chiller electronic       Electronic          Electronic
+   Interior
+                     solenoid valve        solenoid valve            solenoid valve         exchange solenoid        solenoid valve     solenoid valve         expansion valve      expansion valve for expansion valve of
+refrigeration:
+                         (SOV1)                (SOV2)                    (SOV3)                valve (SOV4)              (SOV5)             (SOV6)                   (EXV1)           heating(EXV2)       battery(EXV3)
+Power supply
+                            0V                      0V                         0V                   12V                   12V                  0V                     12V                  12V                 12V
+   state
+On-off state of                                                                                                                                                   Connected
+                           OFF                  Connected               Connected                  OFF                    OFF               Connected                                      OFF                 OFF
+    valve                                                                                                                                                        (adjustment)
+                     System Principle - Battery Cooling ทาความเย็นแบต
+            High-temperature and                Medium-temperature and                 Low-temperature and low-
+            high-pressure gas                   high-pressure gas and liquid           pressure gas or liquid
+                  1.3 – 1.6 Mpa                                SOV6            SOV3
+                                                                                                        CV5
+
+
+
+
+                                                               EXV2
+                                                                                                                                           EXV2                               EXV1
+                                                                                                                                                                  SOV3
+
+                                                                                                                                                                                          SOV1
+                                                                                                                               CV1
+
+
+                                                                                                                               EXV3
+                              SOV1
+                                                                      CV1                                                                         SOV6
+                                                                                                                                                                    SOV4
+
+
+                      0.2-0.35 Mpa
+                                                                                                                                  CV2
+                                     VCV                                         SOV4                                                                                                   SOV2
+                                            SOV5
+                                                                      CV2                                                                                             SOV5
+          0.2-0.35 Mpa
+                            SOV2                         EXV3
+
+
+                          CV3
+
+
+                                                             EXV1
+
+                     Battery heating       Battery cooling      Air heat exchange     Water source heat        A/C heating       A/C refrigeration       Chiller electronic       Electronic          Electronic
+Battery cooling      solenoid valve        solenoid valve         solenoid valve      exchange solenoid       solenoid valve      solenoid valve         expansion valve      expansion valve for expansion valve of
+                         (SOV1)                (SOV2)                 (SOV3)             valve (SOV4)             (SOV5)              (SOV6)                   (EXV1)           heating(EXV2)       battery(EXV3)
+Power supply
+                            0V                   0V                      0V                  12V                   12V                   0V                 12V (PWM)                12V (LIN)       12V (PWM)
+   state
+On-off state of
+                            OFF              Connected               Connected              OFF                   OFF                 Connected                OFF                     OFF            Connected
+    valve
+System Principle - Interior/Battery Dual Refrigeration เย็นแบตและห้ องโดยสาร
+             High-temperature and                                                       Low-temperature and low-
+                                                Medium-temperature and
+             high-pressure gas                  high-pressure gas and liquid            pressure gas or liquid
+
+                   1.3 – 1.6 Mpa                                                                      CV5
+                                                              SOV6             SOV3
+
+
+                                                                                                                                              EXV2                         EXV1
+                                                               EXV2                                                                                            SOV3
+
+                                                                                                                                                                                    SOV1
+                                                                                                                                CV1
+
+
+                                                                                                                                EXV3
+                                                                                                                                                 SOV6
+                            SOV1                                                                                                                                 SOV4
+                                                                    CV1
+
+
+                                                                                                                                   CV2
+                                                                                                                                                                                   SOV2
+                       0.2-0.35 Mpa
+                                                                                SOV4
+                                      VCV
+                                            SOV5                                                                                                                    SOV5
+
+                                                        EXV3           CV2
+                               SOV2
+           0.3-0.5 Mpa
+
+                           CV3
+
+
+                                                           EXV1
+
+
+                      Battery heating       Battery cooling      Air heat exchange     Water source heat        A/C heating      A/C refrigeration   Chiller electronic       Electronic          Electronic
+  Double-turn
+                      solenoid valve        solenoid valve         solenoid valve      exchange solenoid       solenoid valve     solenoid valve     expansion valve      expansion valve for expansion valve of
+  refrigeration
+                          (SOV1)                (SOV2)                 (SOV3)             valve (SOV4)             (SOV5)             (SOV6)               (EXV1)           heating(EXV2)       battery(EXV3)
+ Power supply
+                             0V                   0V                      0V                  12V                   12V                  0V             12V (PWM)             12V (LIN)          12V (PWM)
+    state
+ On-off state of
+                             OFF              Connected               Connected              OFF                   OFF              Connected           Connected                 OFF             Connected
+     valve
+                                    System Principle - Interior Heating อุ่นห้ องโดยสาร
+           High-temperature and             Medium-temperature and                 Low-temperature and low-
+           high-pressure gas                high-pressure gas and liquid           pressure gas or liquid
+
+                   1.3 – 1.6 Mpa                           SOV6             SOV3
+                                                                                                 CV5
+
+
+
+
+                                                            EXV2
+
+                                                                                                                                             EXV2                             EXV1
+                                                                                                                                                                  SOV3
+
+                                                                                                                                                                                       SOV1
+                                                                                                                                 CV1
+
+                          SOV1                                      CV1                                                        EXV3
+                                                                                                                                                   SOV6
+                                                                                                                                                                      SOV4
+
+
+                                   VCV                                      SOV4
+                                         SOV5                                                                                       CV2
+                                                                                                                                                                                      SOV2
+                                                    EXV3          CV2
+           0.3-0.5 Mpa      SOV2                                                                                                                                       SOV5
+
+                         CV3
+
+
+                                                        EXV1
+
+                     Battery heating     Battery cooling      Air heat exchange    Water source heat           A/C heating     A/C refrigeration    Chiller electronic       Electronic          Electronic
+Interior heating     solenoid valve      solenoid valve         solenoid valve     exchange solenoid          solenoid valve    solenoid valve      expansion valve      expansion valve for expansion valve of
+                         (SOV1)              (SOV2)                 (SOV3)            valve (SOV4)                (SOV5)            (SOV6)                (EXV1)           heating(EXV2)       battery(EXV3)
+Power supply
+                            0V                12V                     12V                  0V                      0V                  12V                12V (PWM)            12V (LIN)        12V (PWM)
+   state
+On-off state of
+                           OFF                OFF                     OFF              Connected                Connected            OFF                    OFF               Connected             OFF
+    valve
+                                              System Principle - Battery Heating อุ่นแบต
+           High-temperature and               Medium-temperature and                Low-temperature and low-
+           high-pressure gas                  high-pressure gas and liquid          pressure gas or liquid
+                                                            SOV6             SOV3
+                  1.3 – 1.6 Mpa                                                                       CV5
+
+
+
+
+                                                                                                                                             EXV2                             EXV1
+                                                             EXV2
+
+                                                                                                                                                                                        SOV1
+                                                                                                                                 CV1                               SOV3
+
+
+                                                                                                                                EXV3
+                                                                                                                                                    SOV6
+                            SOV1                                                                                                                                    SOV4
+                                                                     CV1
+
+
+                                                                                                                                    CV2
+                                                                                                                                                                                      SOV2
+                                    VCV    SOV5                                SOV4
+                                                                                                                                                                       SOV5
+                                                        EXV3         CV2
+          0.3-0.5 Mpa     SOV2
+
+                          CV3
+
+
+                                                          EXV1
+
+                     Battery heating      Battery cooling      Air heat exchange    Water source heat           A/C heating     A/C refrigeration     Chiller electronic       Electronic          Electronic
+Battery heating      solenoid valve       solenoid valve         solenoid valve     exchange solenoid          solenoid valve    solenoid valve       expansion valve      expansion valve for expansion valve of
+                         (SOV1)               (SOV2)                 (SOV3)            valve (SOV4)                (SOV5)            (SOV6)                 (EXV1)           heating(EXV2)       battery(EXV3)
+ Valve power
+                           12V                 12V                     12V                 0V                       0V                 12V                 12V (PWM)           12V (LIN)          12V (PWM)
+ supply state
+On-off state of
+                        Connected              OFF                     OFF             Connected                 Connected             OFF                   OFF                  OFF              Connected
+    valve
+            System Principle - Interior/Battery Heating อุ่นแบตและห้ องโดยสาร
+                High-temperature and             Medium-temperature and                   Low-temperature and low-
+                high-pressure gas                high-pressure gas and liquid             pressure gas or liquid
+
+                                                             SOV6               SOV3
+                  1.3 – 1.6 Mpa                                                                         CV5
+
+
+
+
+                                                               EXV2
+                                                                                                                                             EXV2                               EXV1
+                                                                                                                                                                   SOV3
+
+                                                                                                                                                                                            SOV1
+                                                                                                                                  CV1
+
+
+                                                                                                                                 EXV3
+                            SOV1                                      CV1
+                                                                                                                                                   SOV6
+                                                                                                                                                                    SOV4
+
+
+
+                                                                                                                                     CV2
+                                                                                  SOV4                                                                                                  SOV2
+                                    VCV      SOV5
+                                                                                                                                                                         SOV5
+                                                                      CV2
+                                                        EXV3
+          0.3-0.5 Mpa      SOV2
+                                    CV3
+
+
+
+                                                            EXV1
+
+                   Battery heating        Battery cooling     Air heat exchange        Water source heat       A/C heating     A/C refrigeration    Chiller electronic       Electronic          Electronic
+ Double-turn
+                   solenoid valve         solenoid valve        solenoid valve         exchange solenoid      solenoid valve    solenoid valve      expansion valve      expansion valve for expansion valve of
+   heating
+                       (SOV1)                 (SOV2)                (SOV3)                valve (SOV4)            (SOV5)            (SOV6)                (EXV1)           heating(EXV2)       battery(EXV3)
+ Valve power
+                          12V                  12V                     12V                    0V                     0V              12V               12V (PWM)                12V (LIN)          12V (PWM)
+ supply state
+On-off state of
+                        Connected              OFF                    OFF                 Connected             Connected            OFF                  OFF                   Connected          Connected
+    valve
+                                           System Principle – Defrosting ไล่ ฝ้า
+          High-temperature and             Medium-temperature and                  Low-temperature and low-
+          high-pressure gas                high-pressure gas and liquid            pressure gas or liquid
+
+                1.3 – 1.6 Mpa                              SOV6            SOV3                       CV5
+
+
+
+
+                                                           EXV2
+
+                                                                                                                                         EXV2
+                                                                                                                                                                          EXV1
+                                                                                                                               CV1
+                                                                                                                                                                                       SOV1
+                                                                                                                                                             SOV3
+                           SOV1                                                                                                               SOV6
+                                                                   CV1
+
+                                                                                                                               EXV3
+                                                                                                                                                                SOV4
+                                 VCV                                        SOV4
+                                        SOV5
+                                                                  CV2
+                                                     EXV3                                                                                                         SOV5
+          0.3-0.5 Mpa   SOV2                                                                                                                                                         SOV2
+                                                                                                                                CV2
+                        CV3
+
+
+                                                        EXV1
+
+                   Battery heating     Battery cooling      Air heat exchange      Water source heat           A/C heating      A/C refrigeration    Chiller electronic       Electronic          Electronic
+ Defrosting        solenoid valve      solenoid valve         solenoid valve       exchange solenoid          solenoid valve     solenoid valve      expansion valve      expansion valve for expansion valve of
+                       (SOV1)              (SOV2)                 (SOV3)              valve (SOV4)                (SOV5)             (SOV6)                (EXV1)           heating(EXV2)       battery(EXV3)
+ Valve power
+                          0V                 0V                      12V                   0V                      12V                12V               12V (PWM)                12V (LIN)       12V (PWM)
+ supply state
+
+On-off state of                        Connected - as                                Connected - as                                                   Connected - as        Connected - as
+                          OFF                                        OFF                                          OFF                 OFF                                                            OFF
+    valve                                required                                      required                                                         required              required
+        6
+
+                3
+        8
+
+                              (PT-2)
+
+
+
+                    (P-1)
+
+1           4
+2                    (PT-1)
+    9
+            7
+5
+แบบ Form บันทึกจดค่า การตรวจสอบระบบ Thermal Management
+              Part V
+
+
+            HVAC Unit
+(Heat, Ventilation and Air Conditioning)
+HVAC Unit
+       ระบบปรับอากาศ HVAC
+       ช่วยให้สภาพอากาศในรถเหมาะสม ลดความชื ้นภายในรถ (และ
+       ช่วยขจัดฝ้าที่กระจกหน้ารถ)
+
+       อาการของระบบ HVAC ทางานผิดปกติ
+       อุณหภูมิอากาศระบายไม่เหมาะสม ช่องระบายอากาศต่าหรือไม่
+       มีเลย กลิ่นหรือฝ้าที่กระจกบังลม ระหว่างการทางานไล่ฝ้า เสียง
+       คาราม/เสียงบดหรือเสียงแหลมระหว่างการทางานของ
+       เครื่องปรับอากาศหรือเครื่องทาความร้อน ความร้อนสูงเกินไป
+ 1.) Blower (พัดลม)
+ 2.) Evaporator core (คอล์ยเย็น)
+ 3.) Low pressure PTC (Heater)
+ 4.) Outside air intake flap (บานพับช่องดูดภายนอกอากาศเข้า)
+ 5.) Front windshield defroster air-distribution flap (บานพับช่องลมไล่ฝ้ากระจกบังลมหน้า)
+ 6.) Frontal air-distribution Flap (บานพับช่องลมเป่ าด้านหน้า)
+ 7.) Floor air-distribution Flap (บานพับช่องลมเป่ าเท้า)
+ 8.) Air temperature mixing flap (บานพับช่องผสมอากาศ ร้อน/เย็น)
+                        ส่ ว นประกอบของ HVAC Unit
+
+
+
+
+EVAPORATOR CORE
+     คอล์ยเย็น
+                                             LOW PRESSURE PTC AIR HEATER ASSEMBLY
+                                                      ฮีตเตอร์แบบ PTC แรงดันต่า
+
+
+
+
+CONTROL MOTOR
+ มอเตอร์ควบคุมิศทางลม
+
+
+
+
+                                                   EVAPORATOR BOX ASSY
+                                                          ชุดตู้แอร์
+ BLOWER ASSEMBLY
+     โบลว์เวอร์
+                    Section 03
+
+     THANK YOU!
+TECHNOLOGICAL
+INNOVATIONS
+FOR A BETTER LIFE
+

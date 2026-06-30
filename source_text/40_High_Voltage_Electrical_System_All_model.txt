@@ -1,0 +1,1357 @@
+High-Voltage
+Electrical System
+ระบบไฟฟ้าแรงสู ง
+
+
+                    1
+           01   หลัก การของระบบไฟฟ้ าแรงสู ง
+
+
+           02   ระบบส่ ง กาลังไฟฟ้ า 8in1
+
+
+Contents   03   แบตเตอรี่
+
+
+           04   แอร ์คอมเพรสเซอร ์ และ PTC
+
+
+           05
+                การตรวจสอบความล้ม เหลว
+                ของระบบ
+                                             2
+          Part 1
+
+
+หลัก การของระบบไฟฟ้ าแรงสู ง
+                               3
+                                                 หลัก การของระบบไฟฟ้ าแรงสู ง
+แผนภาพโดยรวมของวงจรไฟฟ้ าแรงสู ง
+                                             ่ ้พละงงานไฟฟ้ าสาหร ับการขับขีรถยนต
+ระบบไฟฟ้ าแรงสูงเป็ นแหล่งพลังงานหลักของรถ ซึงให                            ่                         ่
+                                                                                  ์ และอุปกรณ์ไฟฟ้ าอืนๆ
+ส่วนประกอบหลักๆ ของระบบไฟฟ้ าแรงสูง คือ แบตเตอรี่ และ ระบบส่งกาลังไฟฟ้ า 8in1
+โดยรูปแบบการต่อวงจรไฟฟ้ าแรงสูงนั้น แตกต่างกันไปในแต่ละรุ ่นรถยนต ์
+
+                                                                                                                                 BMC
+
+
+
+                                                                                                                   8in1
+                              Power Battery pack
+                                                                                                           Electric Powertrain
+
+                                                                                                                      BMS
+                                                                                                                     (BASU)
+                    BIC1
+
+                    BIC2
+
+
+
+
+                    BIC-n
+
+
+
+
+                                                                                                                                       4
+                                หลัก การของระบบไฟฟ้ าแรงสู ง
+คาย่ อ ที่ พบบ่ อ ย
+
+  BCM (Body Controller Module) : ชุดควบคุมทีมี   ่ ฟังก ์ช ันหลากหลาย เช่น ล็อคประตู ไฟส่องสว่างในรถ บางรุ ่นจะรวมไว ้
+  กับ LBDC
+  HVSU (High Voltage Supervisor Unit) : ชุดควบคุมไฟฟ้ าแรงสูง
+  BIC (Battery Information Collector) : หน่ วยวัดค่าแรงดันไฟฟ้ าและอุณหภูมิของเซลล ์แบเตอรีส่่ งไปให ้ BMS
+  BASU (Battery execution And Sampling Unit) : ระบบควบคุมและจัดการไฟฟ้ าของแบตเตอรี่
+  SOC (State Of Charge) : ปริมาณ % ของแบตเตอรี่
+  SOH (State Of Health) : สถานะสุขภาพของแบตเตอรี่
+  PWM (Pulse Width Moderation) : สัญญาณทีใช       ่ ้ไฟฟ้ าควบคุม soft interlock
+  VBM (Vehicle Motor Controller) : วงจรควบคุมมอเตอร ์
+  FPC (Flexible Printing Circuit) : สายแพรสาหร ับควบคุมสัญญาณในชุด Blade Battery
+  OBC (On Board Charger) : บอร ์ดควบคุมการชาร ์จรถแปลงไฟจากกระแสสลับไปเป็ นกระแสตรง
+  BDU (Battery Distribution Unit) : วงจรควบคุมการจ่ายไฟชาร ์จไฟออกจากแบตเตอรี่ โดยถูกควบคุมจาก
+  BMS/BASU
+
+
+
+
+                                                                                                                         5
+                                                       หลัก การของระบบไฟฟ้ าแรงสู ง
+   ตาแหน่ งระบบไฟฟ้ าแรงสู งของ Atto3                                                       วงจรไฟฟ้ าแรงสู งของ Atto3 (Front wheel drive)
+
+
+
+
+                 ่ ้พลังงานไฟฟ้ าแก่รถยนต ์เพือการขั
+         แบตเตอรีให                           ่         ่
+                                                   บเคลือนผ่ านระบบส่งกาลังไฟฟ้ า 8in1
+  ่
+ซึงประกอบไปด ้วย Motor, Transmission, Motor Controller, PDU, DC-DC, OBC, VCU and
+BMS.
+       ด ้วยการรวมโมดูลของหลายๆ ฟังก ์ช ่ ันเข ้าด ้วยกัน ทาให ้ใช ้พืนที
+                                                                      ้ ในการติ
+                                                                          ่      ้ นส่
+                                                                              ดตังชิ ้ วน
+        ่
+ประกอบทีลดลง                    ้
+             รวมถึงลดต ้นทุนและนาหนั กของรถด ้วย
+
+
+
+
+                                                                                                                                             6
+                                                       หลัก การของระบบไฟฟ้ าแรงสู ง
+   ตาแหน่ งระบบไฟฟ้ าแรงสู งของ Dolphin                                                     วงจรไฟฟ้ าแรงสู งของ Dolphin (Front wheel drive)
+
+
+
+
+                 ่ ้พลังงานไฟฟ้ าแก่รถยนต ์เพือการขั
+         แบตเตอรีให                           ่         ่
+                                                   บเคลือนผ่ านระบบส่งกาลังไฟฟ้ า 8in1
+  ่
+ซึงประกอบไปด ้วย Motor, Transmission, Motor Controller, PDU, DC-DC, OBC, VCU and
+BMS.
+       ด ้วยการรวมโมดูลของหลายๆ ฟังก ์ช ่ ันเข ้าด ้วยกัน ทาให ้ใช ้พืนที
+                                                                      ้ ในการติ
+                                                                          ่      ้ นส่
+                                                                              ดตังชิ ้ วน
+        ่
+ประกอบทีลดลง                    ้
+             รวมถึงลดต ้นทุนและนาหนั กของรถด ้วย
+
+
+
+
+                                                                                                                                               7
+                                                       หลัก การของระบบไฟฟ้ าแรงสู ง
+   ตาแหน่ งระบบไฟฟ้ าแรงสู งของ Seal                                                        วงจรไฟฟ้ าแรงสู งของ Seal (4WD)
+
+
+
+
+                                                                                            วงจรไฟฟ้ าแรงสู งของ Seal (Rear wheel drive)
+
+                 ่ ้พลังงานไฟฟ้ าแก่รถยนต ์เพือการขั
+         แบตเตอรีให                           ่         ่
+                                                   บเคลือนผ่ านระบบส่งกาลังไฟฟ้ า 8in1
+  ่
+ซึงประกอบไปด ้วย Motor, Transmission, Motor Controller, PDU, DC-DC, OBC, VCU and
+BMS.
+       ด ้วยการรวมโมดูลของหลายๆ ฟังก ์ช ่ ันเข ้าด ้วยกัน ทาให ้ใช ้พืนที
+                                                                      ้ ในการติ
+                                                                          ่      ้ นส่
+                                                                              ดตังชิ ้ วน
+        ่
+ประกอบทีลดลง                    ้
+             รวมถึงลดต ้นทุนและนาหนั กของรถด ้วย
+
+
+
+
+                                                                                                                                           8
+ATTO3
+
+
+
+
+ 9/ 81
+Dolphin
+
+
+
+
+  10/ 81
+Seals
+
+
+
+
+ 11/ 81
+        Part 2
+
+
+ระบบส่งกาลังไฟฟ้ า 8in1
+                          12
+                                ระบบส่ ง กาลังไฟฟ้ า 8in1
+โครงสร ้า งโดยรวมและความหมาย
+
+
+
+
+                      VCU
+    (Vehicle Control Unit)           BMS                                                                                ่ ตแบบ mass
+                                                                       ระบบส่งกาลังไฟฟ้ า 8in1 เป็ นระบบส่งกาลังไฟฟ้ าทีผลิ
+                                     (Battery Management System)       production แรกของโลกทีพั  ่ ฒนาโดย BYD ซึงมี่ ประสิทธิภาพสูง
+                     MCU                                               Power domain controller: ภายในประกอบด ้วย VCU, MCU,
+   (Motor Controller Unit)                                             DC-DC, OBC, DC charging และโมดูลควบคุมไฟฟ้ าแรงสูงอืนๆ      ่ ซึงช่
+                                                                                                                                        ่ วย
+                                           PDU                         ลดความยุ่งยากในการจัดวางเชิงพืนที   ้ ของแต่
+                                                                                                              ่       ละโมดูลและการโต ้ตอบของ
+                         OBC               (Power distribution unit)
+                                                                       สัญญาณระหว่างโมดูล ทังนี  ้ ้ PDC ได ้ร ับการพัฒนาให ้มีประสิทธิภาพ
+           (On Board Charger)                                                ้
+                                                                       มากขึนอย่ างต่อเนื่ อง
+                                     DC-DC
+                                                                       Driving motor: ใช ้มอเตอร ์แบบ Flat wire ซึงมี ่ การสูญเสียต่า
+                                                                       ประสิทธิภาพสูง การกระจายความร ้อนสูง
+                                                                       Reducer: มีการออกแบบมาเพือลดการสู ่        ญเสียการกวนน้ามันใน
+                                                                       กระบวนการหล่อลืน    ่ เกียร ์มีการออกแบบทีมี่ ความแม่นยาสูง และ
+           Drive motor
+                                                                       ประสิทธิภาพการส่งผ่านพลังงานสูงถึง 97.6%
+                                 Reducer
+
+
+
+
+                                                                                                                                       13
+                                                                                                                               ระบบส่ ง กาลังไฟฟ้ า 8in1
+แต่ ล ะส่ ว นประกอบย่ อ ย
+
+ No.   Assembly                                                                                Subassembly                                                                            Functional description
+
+
+  1                                                                                 Drive Motor Controller Unit (MCU)                                                                                   ่
+                                                                                                                                                                  ควบคุมการส่งผ่านพลังงานระหว่างแบตเตอรีและมอเตอร         ่
+                                                                                                                                                                                                                  ์ขับเคลือน
+
+
+
+
+          Integrated intelligent front drive assembly (8in1 Electric Powertrain)
+                                                                                                                                                                                                          ่ ้เป็ นไปตามข ้อกาหนดในการชาร ์จของแบตเตอรี่
+                                                                                                                               แปลงไฟ AC จากอุปกรณ์ชาร ์จภายนอกของรถยนต ์เป็ นไฟ DC แรงดันสูง และควบคุมเพือให
+  2                                                                                Bi-directional On Board Charger (OBC)                                                                          ่ นไฟ AC เพือใช
+                                                                                                                                                                                                               ่
+                                                                                                                                                              และแปลงไฟ DC แรงดันสูงในชุดแบตเตอรีเป็                ้งาน
+
+
+  3                                                                                                  DC-DC                                     แปลงไฟฟ้ า DC แรงดันสูงเป็ น DC แรงดันตา่ เพือจ่
+                                                                                                                                                                                            ่ ายไฟให ้ก ับโหลดแรงดันต่า และแบตเตอรีของยานพาหนะ
+                                                                                                                                                                                                                                   ่
+
+
+                                                                                                                                   ่
+                                                                                                                                เชือมต่                                                         ่ ายไฟ DC แรงดันสูงจากแบตเตอรีไปยั
+                                                                                                                                        อโครงข่ายไฟฟ้ าและโหลดไฟฟ้ าเข ้ากับวงจรไฟฟ้ าแรงสูง เพือจ่                           ่ งอุปกรณ์ไฟฟ้ าแรงสูงของรถยนต ์
+  4                                                                                    Power Distribution Unit (PDU)                                                                                        ่        ่
+                                                                                                                                                                               และร ับไฟจากการชาร ์จไปเก็บทีแบตเตอรี
+
+
+                                                                                                                                                                   ่ ้ร ับจากชุดควบคุมมอเตอร ์ขับเคลือนเป็
+                                                                                                                                                แปลงพลังงานไฟฟ้ าทีได                                  ่                          ่
+                                                                                                                                                                                                            นพลังงานกลและส่งไปทีการเปลี    ่
+                                                                                                                                                                                                                                           ยนเกี ยร ์
+  5                                                                                             Drive motor
+                                                                                                                                                 จากนั้นแปลงพลังงานกลจากการเปลียนเกี
+                                                                                                                                                                                  ่                                                            ่
+                                                                                                                                                                                      ยร ์เป็ นพลังงานไฟฟ้ าและส่งไปยังชุดควบคุมมอเตอร ์ขับเคลือน
+
+  6                                                                                 Single speed transmission (Reducer)                                                                      ่
+                                                                                                                                                                             ลดความเร็วและเพิมแรงบิ
+                                                                                                                                                                                                  ดของมอเตอร ์กาลัง
+
+                                                                                                                                                                                                                                               ่
+                                                                                                      Vehicle Control Unit คานวณพลังงานแบบเรียลไทม ์และการกระจายพลังงาน, การประมวลผลแบบรวมศูนย ์, การประมวลผลสัญญาณเซ็นเซอร ์ เช่นเดียวกับการสือสาร CAN,
+  7                                                                                                                                                                                           ่ เพือตอบสนองความต
+                                                                                                                                                                                                   ่
+                                                                                                             (VCU)              การจัดการข ้อผิดพลาด, การเขียน CAN ออนไลน์, การทางานกับโมดูลอืนๆ                 ้องการในการทางานของยานพาหนะ
+                                                                                        VBM
+                                                                                   (Power domain
+                                                                                     control unit)            BMS                                                                ่                                                         ่
+  8                                                                                                                                  ตรวจเช็คภายในวงจรไฟฟ้ าแรงสูง , ยืนยันการเชือมต่ อการชาร ์จ DC, การโต ้ตอบข ้อมูลกับ Charger, และการสือสารกั
+                                                                                                                                                                                                                                                บ BASU
+                                                                                                       (Partial functions)
+
+                                                                                                                                                                                                                                                                 14
+                                หลัก การของระบบไฟฟ้ าแรงสู ง
+                                                                                                                                             BMS จะตรวจจับ กระแสร ่ ัวตลอดเวลา
+ Principle of high process                                                                                                                   ถ ้าพบจะสัง่ HVSU ตัดการเชือมต่
+                                                                                                                                                                        ่  อ
+                                                                                                                                             กับ HV-Batt
+                                                                                                                                                                               LV
+                                     ถอดสายต่างๆออก จาก 8in1 แล ้ว
+                                     วัดความต ้านทานระหว่างขัว้ ±ค่า
+                                     ต ้อง ≥ 2MΩ
+                                               ้
+                                     หรือตามขันตอนค่ าความต ้านทาน                                                                                      Start command
+                                       ่
+                                     ทีแนะน  า
+                                                 Power Battery pack                                                                                     8in1
+                                                                                                                                                Electric Powertrain
+
+
+
+
+                                                                                                                                                                            Key
+                                                                                                                                                                           Verify
+                                                                                                                                    VBM
+                                                                                                                                                                                    LV
+
+
+
+
+                                                                                                                                                                           Start
+                                                                                                                                                                          Button
+
+                                Start → Key → BCM ใน LBC ส่ง start command ไป BMS เพือให      ่ ้ส่ง   VBM จะจับสัญญาณ HV ตอน precharge ว่าปกติไหม HV Batt-spec (4xx) ±
+                                    ่ HVSU เพือตรวจสอบ
+                                คาสังไป          ่          BIC ว่าแรงดันและอุณหภูมิแต่ละ cell ใน HV   50Vdc
+                                Batt ปกติหรือไม่ก่อนส่ง feedback ไป BMS→BCM หลังจากนั้น BCM จะ         ถ ้าปกติส่งข ้อมูลไป BMS ว่าปกติและให ้จะสัง่ BMS สัง่ HVSU disconnect
+High voltage power-on process          ่ บไป BMS สัง่ HVSU ให ้ connect Negative connector &
+                                ส่งคาสังกลั                                                            precharge Connect และต่อ main contactor เพือจ่    ่ ายไฟเข ้าระบบเพือจ่
+                                                                                                                                                                           ่ าย FMCU
+หลัก การของระบบไฟฟ้ าแรงสู ง
+  Main Contactor
+
+
+
+
+                                                                BMS
+  Pre-Charge Contactor
+
+
+                         BIC-1
+
+
+                                                         HVSU
+
+                         BIC-2
+                                                                       Power
+                                                                      Domain
+
+
+                         BIC-n
+                                          Insulation
+                                          Monitoring
+                                            Device
+
+
+
+
+                                    Negative Contactor
+
+
+                                 16/ 81
+                                       หลัก การของระบบไฟฟ้ าแรงสู ง
+           LV
+                                  LV
+
+                                                                     LV
+                                                                                           A/C           PTC
+
+
+
+                                                                 4                                                     5
+                                                                                                                     VCU
+                       13.7 VDC                                           DC-DC                       VCU
+                                                        DC
+                           Motor                                                           +     -
+                                                           Motor                                     BMS/BASU 3
+Reducer                 Drive PMSM                        Controller
+                                             U      6                          +                           +          +
+                                             V
+                                                                          HV   -    Power distribution
+Transmission             Motor Drive         W    Motor controller
+                                                                                          unit
+                                                                                                           -    HV     -   Battery pack
+      8                      7                                                             PDU
+                                           HV                                                          2
+                                                           1
+       Front MOTOR                                                        +                 HV
+
+                                                  On-board charger        -                                DC Charging
+                                                                                                               port            DC
+                                                                          OBC => 6.6kW                                     350-800 VDC
+
+
+                                                                           L1 U
+                                                                               V
+               Cooling system                                                                                                      AC
+                                                                                    AC Charging port
+                                                                               W                                             1Ph 200-240 VAC
+               Eight-in-one electric powertrain
+                                                                N
+                                                                                   17/68
+                                       หลัก การของระบบไฟฟ้ าแรงสู ง
+           LV
+                                  LV
+                                                                                                                                  Comp
+                                                                      LV
+                                                                                             A/C           PTC
+
+
+                                                                                                                        5
+                                                                            41
+                                                                                                                        VCU
+                       13.7 VDC                          DC                DC-DC                           VCU                +          -
+                           Motor                                                             +     -              3
+                                                                                                                  1
+                                                            Motor
+Reducer 8               Drive PMSM       71
+         1                                                 Controller 61         +
+                                               U                                                             +         +
+                                                                                                                 BMS/BASU
+                                               V
+                                                                           HV    -    Power distribution
+Transmission             Motor Drive           W   Motor controller
+                                                                                            unit
+                                                                                                             -     HV    -    Battery pack
+
+                                              HV                                             PDU         2
+
+
+          REAR MOTOR                      11                               +                  HV
+
+                                                   On-board charger        -                                 DC Charging
+                                                                                                                 port             DC
+                                                                           OBC => 6.6kW                                       350-800 VDC
+
+
+                                                                                 U
+                                                                                 V
+               Cooling system                                                                                                           AC
+                                                                                      AC Charging port
+                                                                                 W                                                1Ph 200-240 VAC
+               Eight-in-one electric powertrain
+
+
+                                                                                     18/68
+                                       หลัก การของระบบไฟฟ้ าแรงสู ง
+           LV
+                                  LV
+                                                                                                                                  Comp
+                                                                      LV                                                                                   Transmission
+                                                                                             A/C           PTC
+
+
+                                                                                                                        5
+                                                                            41
+                                                                                                           VCU
+                                                                                                                        VCU
+                                                                                                                              +          -      Front MOTOR
+                       13.7 VDC                          DC                DC-DC                                                                                 Motor
+                           Motor                                                             +     -              3
+                                                                                                                  1
+                                                                                                                                                                 Drive
+                                                            Motor
+Reducer 8               Drive PMSM       71
+         1                                                 Controller 61         +                                                                                           HV
+                                               U                                                             +         +
+                                                                                                                 BMS/BASU                           +        U    V      W
+                                               V
+                                                                           HV    -    Power distribution
+Transmission             Motor Drive           W   Motor controller
+                                                                                            unit
+                                                                                                             -     HV    -    Battery pack          - HV   Motor controller
+                                              HV                                             PDU         2
+
+                                                                                                                                                                 3 in 1
+          REAR MOTOR                      11                               +                  HV
+
+                                                   On-board charger        -                                 DC Charging
+                                                                                                                 port             DC
+                                                                           OBC => 6.6kW                                       350-800 VDC
+
+
+                                                                                 U
+                                                                                 V
+               Cooling system                                                                                                           AC
+                                                                                      AC Charging port
+                                                                                 W                                                1Ph 200-240 VAC
+               Eight-in-one electric powertrain
+
+
+                                                                                     19/68
+              ระบบส่ ง กาลังไฟฟ้ า 8in1
+โครงสร ้า ง
+
+
+                               LV
+                              Control              HV Batt
+
+
+                                       DC-DC       AC Comp
+                                    To LV supply
+
+
+
+
+                         20
+                       ระบบส่ ง กาลังไฟฟ้ า 8in1
+โครงสร ้า ง
+
+
+
+
+                 VCU    BMS
+
+                          MCU
+
+
+                                PDU
+
+                        DC-DC
+                OBC
+
+                                  Reducer
+                              (Transmission)
+
+              MOTOR
+
+
+
+                                                   21
+                                                 ระบบส่ ง กาลังไฟฟ้ า 8in1
+ โครงสร ้า ง
+
+                                                                                                                       Assembly water inlet        Assembly outlet
+
+                                                                    DC Charging
+
+ LV
+                                                         Electronic control
+                            Layer 1                      assembly
+ DC                                                                                     Low-voltage
+                                                                  AC Charging            connector
+                                               OBC
+COMP                         Layer 2                                             DC pole interface
+
+                                                                              Compressor interface
+
+                                                         Lower power supply
+
+                                                                                                                                                            AC charging port
+                                                          Drive motor assembly
+       HV
+
+                                                               Single speed
+                                                               transmission
+                                                                                      DC bus interface power           DC charging      DC charging port
+                                                                                                               Fuse    cable plug
+                                                                                      distribution
+                                                                                                               box     assembly box
+                                                                                                               cover   cover
+                                                                 ่
+        Power Domain Controller / Drive Motor สามารถแยกชุดเปลียนได ้
+        แต่ถ ้าชุด PDC เสีย Layer ใด Layer หนึ่ งต ้องเปลียนยกชุ
+                                                          ่    ด
+                                                                                                                                                                           22
+                                                                                    ระบบส่ ง กาลังไฟฟ้ า 8in1
+โครงสร ้า งแบบแผนผัง                                                                                       โครงสร ้า งภายใน                                                 AC -
+
+                                                                                                                                                                            AC +
+
+                                                                                                                                                                            DC -
+                AC/DC charging port
+                                                                                                             ่
+                                                                                                         เปลียนพาร     ์ท                                                   DC +
+                                                                                                               ได ้ fuse
+                                                                                                   50A compressor
+                                VBM+PDU
+                               (upper layer)                                                                                                         DC charging Negative contactor
+                                                                            MOTOR
+
+
+
+                                                                                                             Board VMB                               DC charging Positive contactor
+                                       OBC+DC                                                                 (VCU+BMS
+                                     (lower layer)
+                                                                                                             รวมด ้วยอยู่ใน
+                                                                                                                VBM นี )้
+                                                                                                                                                       50A DC fuse to OBC
+                                                                                                                                     HV BAR                        ่
+                                                                                                                                                               เปลียนพาร  ์ท
+                                          Compressor                                                                                                                 ได ้
+
+
+                                                         DC bus interface
+                DC anode interface
+                                          power
+    Low                                   distribution
+    voltage                               interface
+    interface
+
+                                          Electricity
+                                          interface
+                                                                                                                Front Comp
+                                                                                        VBM circuit board        Fuse box     Compressor
+                                                                                                                                               HV
+                                                                                                     LV           Anode                       BATT                                    23
+                                                                                                    Batt         Fuse box
+                                       ระบบส่ ง กาลังไฟฟ้ า 8in1
+โครงสร ้า ง
+
+                                                                                             u        v   w
+                                                       6 assembling bolts
+
+
+                                                         Resolver
+                                                         connector
+
+
+
+                                                       Three-phase
+                                                       copper bar
+
+
+
+
+                                                 Temperature sensor
+                                                 connector
+
+                                               Temperature
+                                               sensor อยู่
+                                               ด ้านใน motor
+
+
+                                                                                                              Resolver sensor
+                                                                            Resolver                              ่
+                                                                                                              เปลียนไม่ ได ้ต ้องยก
+                                                                                       sensor 6 pin
+   Resolver resistance                                                                 ส่งสัญญาณไป            motor ใหม่
+   Sin: 60±5Ω; Cos: 60±5Ω; Excitation: 20±5Ω                                           VBM
+                                                                                                              ถ ้าขยับก็ต ้อง
+                                                                                                                   ่
+                                                                                                              เปลียนใหม่  จูนใหม่     24
+                                                                                                              cal ไม่ได ้
+                                   ระบบส่ ง กาลังไฟฟ้ า 8in1
+                                                 ่
+คาจากัด ความสาหร ับ พิ น ของคอนเนคเตอร ์แ รงดัน ตา   S/N   Definition of ports              Definition of ports               Wiring Harness Connection Mode       Remarks
+
+                                                     B1          +5V1                 Accelerator pedal depth power 1         Connect the accelerator pedal - 3       /
+
+                                                     B2          +5V1                 Accelerator pedal depth power 2          Connect the accelerator pedal - 2      /
+
+                                                     B3           GND              Accelerator pedal depth 2 power GND        Connect the accelerator pedal - 6       /
+
+                                                     B4           GND              Accelerator pedal depth 1 power GND        Connect the accelerator pedal - 5       /
+
+                                                     B5           GND              Accelerator pedal depth shielding GND                  Body GND                    /
+
+                                                     B6        DC_GAIN2               Accelerator pedal depth 2 signal        Connect the accelerator pedal - 1       /
+
+                                                     B7           GND                        HVSU power GND                  Connect the power battery pack D-18      /
+
+                                                     B8           GND                           Power GND                          Connect the body GND               /
+
+                                                     B9           GND                           Power GND                          Connect the body GND               /
+
+
+
+                                                     B10          GND            DC charging port temperature sensor 2 GND   Connect the AC/DC charging port -4       /
+
+
+
+                                                     B11    DC-CHG- TMP2              DC charging port temperature 2         Connect the AC/DC charging port -3       /
+
+                                                     B12       DC_GAIN1               Accelerator pedal depth 1 signal        Connect the accelerator pedal - 4       /
+
+                                                     B13          GND                        HVSU power GND                  Connect the power battery pack D-17      /
+
+                                                     B14          GND                           Power GND                          Connect the body GND               /
+
+                                                     B15          GND                           Power GND                          Connect the body GND               /
+
+                                                     B16          GND              DC charging auxiliary power supply A+                      /                    Reserved
+
+
+                                                     B17          GND            DC charging port temperature sensor 1 GND   Connect the AC/DC charging port - 2      /
+
+
+
+                                                     B18    DC-CHG- TMP1              DC charging port temperature 1         Connect the AC/DC charging port - 1      /
+
+                                                     B19        P-HVSU                      HVSU power supply                Connect the power battery pack D-05      /
+
+                                                     B20         +12V0                    Constant Power Supply                 Connect 12V constant power            /
+
+                                                     B21         +12V1                    Constant Power Supply                 Connect 12V constant power            /
+
+
+                                                                                                                                                                              25
+                                                                           ระบบส่ ง กาลังไฟฟ้ า 8in1
+                                                                                                                   A12      Inter- lock0         Charging plug lock signal (DC&OBC)                       /                     Reserved
+B22    WK-DC-A+       DC charging auxiliary power supply wake-up   Connect the AC/DC charging port -5      /
+
+                                                                    Connect the coolant temperature                A13     CANE_PPC_N               Power battery subnet CAN_L           Connect the power battery pack D-09       /
+B23      GND          Coolant temperature sensor signal ground                                             /
+                                                                               sensor - 3
+                                                                                                                   A14     CANE_PPC_P               Power battery subnet CAN_H           Connect the power battery pack D-08       /
+                                                                      Connect the AC/DC charging
+B24     DC-CC                   DC CC detection signal                              port -11               /
+                                                                                                                   A15    IN_FEET_BR AKE              Brake switch signal (12V)              Connect the brake switch - 3          /
+                                                                   Connect the power battery pack D-
+B25     P-HVSU                   HVSU power supply                                                         /
+                                                                                  06
+B26     +12V0                  Constant Power Supply                  Connect 12V constant power           /       A16    PUMP-TEST- IN               Water pump back-check              Connect the stepless water pump -2        /
+B27     +12V1                  Constant Power Supply                  Connect 12V constant power           /
+                                                                                                                                                Low-speed fan relay control/stepless
+                        Level signal to wake up VBM in case of     Connect the power battery pack D-               A17      /L-FAN-OUT                 fan/stepless fan back-check         Connect the low-speed fan relay         /
+B28     WK-BIC                              abnormal BIC                                                   /
+                                                                                  11
+                                                                                                                   A18        Un-lock0            Unlocking line number (DC&OBC)                          /                     Reserved
+      Water-T- IN                                                   Connect the coolant temperature
+B29                       Coolant temperature sensor signal                                                /
+                                                                               sensor - 1                          A19     CAND_PPC_P                 DC charging subnet CANH            Connect the AC/DC charging port - 10      /
+                                                                      Connect the AC/DC charging
+B30     AC-CC                   AC CC detection signal                              port - 12              /       A20     CANB_PPC_N                    CANFD signal CANL                                /                     Reserved
+                      Power input with independent chip power      Connect the power battery pack D-
+A1      YL-HSD                                                                                             /       A21     CANC_PPC_P                Power network signal CANH                 Connect the chassis net             /
+                                       supply                                     04
+A2         /                           Reserved                                    /                       /       A22        YL-OUT                  Low-side output reserved                            /                        /
+
+A3         /                          Reserved                                     /                       /                                   Temperature detector of charging port L
+                                                                                                                   A23        Temp L0                        (DC&OBC                     Connect the AC/DC charging port - 8       /
+A4       GND                     Collision signal GND                          Body GND                    /
+                                                                                                                                                                )
+                       Water pump relay control/stepless water                                                                                 Temperature detector of charging port N
+A5    /PUMP-OUT          pump/stepless water pump back-check Connect the stepless water pump -3            /
+                                                                                                                   A24        Temp N0                        (DC&OBC                                      /                     Reserved
+                                                                                                                                                                )
+        E-lock-         Electric lock state detection (DC & OBC
+A6       test0                               )                                     /                    Reserved
+                                                                                                                   A25     CAND_PPC_N                 DC charging subnet CANL            Connect the AC/DC charging port -14       /
+
+
+A7    /FILM-OUT            Film heating relay control signal                       /                    Reserved   A26     CANB_PPC_P                    CANFD signal CANH                                /                     Reserved
+
+A8       GND                     CAN shielding GND                             Body GND                 Reserved   A27     CANC_PPC_N                Power network signal CANL                 Connect the chassis net             /
+
+      FILM- TEST-IN                                                                                                A28       YL-TEST-IN                 Reserved back-check                               /                     Reserved
+A9                             Film heating back-check                             /                    Reserved
+
+A10    CRASH-IN                     Collision signal                     Connect the SRS-ECU               /       A29        Net-CP0             Charging control guide (DC&OBC)        Connect the AC/DC charging port -13       /
+
+
+A11   /H-FAN- OUT            HIGH mode fan relay control            Connect the high-speed fan relay       /             Discharge- trigger0
+                                                                                                                   A30                         In-vehicle discharge CC signal (DC&OBC)                    /                     Reserved
+                                                                                                                                                                                                                                           26
+                                               ระบบส่ ง กาลังไฟฟ้ า 8in1
+Data flow ของ Power Domain Controller (PDC)
+
+
+
+
+   Whether the charging plug is connected                  Whether the coolant temperature is normal
+
+   Whether the high-voltage interlocking is normal                                Fan state
+   Whether the inclination is calibrated
+                                                                                                       27
+                                 ระบบส่ ง กาลังไฟฟ้ า 8in1
+Data flow ของ Power Domain Controller (PDC)
+
+
+
+
+         State of OK indicator                              Brake pedal depth
+          Power system state                        Depth of accelerator pedal
+                                                           Brake switch signal
+                 Driving state
+                                                                                 28
+                                                        ระบบส่ ง กาลังไฟฟ้ า 8in1
+Concept การเปลี่ ยน Power Domain Controller (PDC)
+
+
+เนื่ องจาก PDC อยู่ใน 8in1 ซึงประกอบไปด
+                               ่              ้วย PDC และ ชุดควบคุมมอเตอร ์
+ดังนั้นจะต ้องคานึ งถึงเรืองต่
+                          ่ อไปนี เมื
+                                  ้ อจ่ าเป็ นต ้องเปลียน
+                                                       ่ PDC
+
+
+1. ใช ้ VDS ในการดาเนิ นการ เคลียร ์รหัส และ โปรแกรมชุดควบคุมมอเตอร ์
+ใหม่ โดยเข ้าไปที่ "Vehicle Model"
+         - เลือก "Special Functions"                                                                    2   3
+         - เลือก "Anti-theft Matching"
+         - เลือก "Password Clearing or Programming of Vehicle
+Control Unit"
+
+2. ดาเนิ นการ "Write and read VIN"                                            4
+3. ดาเนิ นการ "The tilt standardization"
+4. ดาเนิ นการ "Calibration of cruise configuration"
+
+
+
+
+                                                                                    Attached file for
+                                                                                    PDC Replacement
+                                                                                                                29
+                                                      ระบบส่ ง กาลังไฟฟ้ า 8in1
+Concept การเปลี่ ยน Power Domain Controller (PDC)
+
+
+5. ดาเนิ นการ "Motor back to 0 point calibration"
+                    ่  ดควบคุมมอเตอร ์หรือตัวมอเตอร ์ จาเป็ นต ้องทาการตัง้
+         หลักการเปลียนชุ
+                                      ้
+Motor zero calibration ด ้วย VDS ตามขันตอนดั  งนี ้
+
+  5.1) จดบันทึกเลขบาร ์โค ้ดของมอเตอร ์
+           ่
+  5.2) เชือมต่ อ VDS แล ้วเข ้าไปที่ "Front drive motor control unit" และเลือก          5
+  "Motor back to 0 point calibration"
+  5.3) ใส่เลขบาร ์โค ้ดของมอเตอร ์ 28 หลัก กด Play จากนั้นถ ้าระบบทาการ
+  ตรวจสอบว่าเลขมอเตอร ์ถูกต ้อง จะทาการโปรแกรมตัวเอง เมือการด่      าเนิ นการ
+         ้
+  เสร็จสินแล ้วหน้าจอจะแจ ้งเตือนว่า "Operation succeeded"
+
+
+
+
+                                                                                  Attached file for
+                                                                                  PDC Replacement
+                                                                                                      30
+                                                         ระบบส่ ง กาลังไฟฟ้ า 8in1
+  ้
+ขันตอนการเปลี ่ ยน Power Domain Controller (PDC) (เริมต้
+                                                     ่ นสตาร ์ทรถและนากุญแจใส่ไว้ในช่องต ัวร ับสัญญาณกุญแจ（ทีมี
+                                                                                                             ่ รูปกุญแจ Keyless）)
+
+
+
+Motor Controller Programming
+
+
+
+
+     1. เลือก Vehicle Diagnosis System และเลือกรุ ่นรถ     2. เลือก Special diagnostic function      3. เลือก Anti-theft match
+
+
+
+
+     4. เลือก Motor controller programming                 5. เลือก Have read                        6. เลือก Play แล ้วรอจนระบบดาเนิ นการเสร็จสิน้ (Succeeded)   31
+                                  ระบบส่ ง กาลังไฟฟ้ า 8in1
+  ้
+ขันตอนการเปลี ่ ยน Power Domain Controller (PDC)
+
+VIN Reading
+
+
+
+
+     7. เลือก Vehicle scanning       8. เลือก Power domain controller   9. เลือก Write and read VIN
+
+
+
+
+     10. เลือก Read VIN              11. เลือก SID 22h                  12. เลือก Play แล ้วรอจนระบบดาเนิ นการเสร็จสิน้ (Succeeded)   32
+                                   ระบบส่ ง กาลังไฟฟ้ า 8in1
+  ้
+ขันตอนการเปลี ่ ยน Power Domain Controller (PDC)
+
+VIN Writing
+
+
+
+
+      13. เลือก Vehicle scanning     14. เลือก Power domain controller                             15. เลือก Write and read VIN
+
+
+
+
+      16. เลือก Write VIN            17. เลือก Play แล ้วรอจนระบบดาเนิ นการเสร็จสิน้ (Succeeded)                                  33
+                                                       ระบบส่ ง กาลังไฟฟ้ า 8in1
+  ้
+ขันตอนการเปลี ่ ยน Power Domain Controller (PDC)
+
+The tilt standardization
+
+
+
+
+      18. เลือก Vehicle scanning                         19. เลือก Power domain controller                             20. เลือก The tilt standardization
+
+
+
+
+      21. เลือก Manual operation of zero calibration     22. เลือก Play แล ้วรอจนระบบดาเนิ นการเสร็จสิน้ (Succeeded)                                        34
+         readback of inclination angle
+                                         ระบบส่ ง กาลังไฟฟ้ า 8in1
+  ้
+ขันตอนการเปลี ่ ยน Power Domain Controller (PDC)
+
+Calibrating cruise configuration
+
+
+
+
+      23. เลือก Vehicle scanning           24. เลือก Power domain controller                             25. เลือก Calibration of cruise configuration
+
+
+
+
+      26. เลือก Self-confidence cruise     27. เลือก Play แล ้วรอจนระบบดาเนิ นการเสร็จสิน้ (Succeeded)                                                   35
+                                   ระบบส่ ง กาลังไฟฟ้ า 8in1
+  ้
+ขันตอนการเปลี ่ ยน Power Domain Controller (PDC)
+
+Zero position calibration
+
+
+
+
+      28. เลือก Vehicle scanning     29. เลือก Front drive motor controller                              30. เลือก Motor back to 0 point calibration
+
+
+
+
+      31. เลือก Have read            32. ใส่เลข Motor 28 หลัก จากนั้นเลือก Play แล ้วรอจนระบบดาเนิ นการเสร็จสิน้ (Succeeded)                           36
+ Part 3
+
+
+แบตเตอรี ่
+
+             37
+                               แบตเตอรี่
+โครงสร ้า งโดยรวม
+
+
+                                           Torque Bolt x2 = 60 N-M
+
+
+
+         Torque Bolt = 9 N-M
+
+
+
+
+   Torque Bolt x12 = 135 N-M
+
+
+
+
+                                                                     (Blade Battery)
+
+
+
+
+                                                                                       38
+                                                           แบตเตอรี่
+หลัก การทางานของแบตเตอรี่
+
+ The Battery Management System (BMS) ทีใช    ่ ้ในรถยนต ์ประกอบด ้วย BASU, BIC and battery sampling line, ซึงวางอยู
+                                                                                                                  ่     ่ภายในก ้อน
+  แบตเตอรี่
+        ่ กของ BASU ได ้แก่ การจัดการการชาร ์จและดิสชาร ์จ, การควบคุมคอนแทค, การควบคุมพลังงาน, การเตือนและป้ องกันสถานะผิดปกติ
+ หน้าทีหลั
+  ของแบตเตอรี,่ คานวณ SOC/SOH, การสือสารภายในแบตเตอรี
+                                            ่               ,่ การสุ่มตัวอย่างกระแส, การสุ่มตัวอย่างแรงดันไฟฟ้ า, การตรวจจับการเผาคอน
+  แทคเตอร ์, การตรวจจับไฟฟ้ าร ่ ัว และอืนๆ
+                                         ่
+                                                                                                           Start → Key → BCM ใน LBC ส่ง start
+                                                                                                           command ไป BMS
+                                                                                                               ่ ้ส่งคาสังไป
+                                                                                                           เพือให          ่ HVSU เพือตรวจสอบ
+                                                                                                                                      ่         BIC ว่า
+                                                                                                           แรงดันและอุณหภูมิแต่ละ cell ใน HV Batt ปกติ
+                                                                                                           หรือไม่
+                                                                                                           ก่อนส่ง feedback ไป BMS→BCM หลังจากนั้น
+                                                                                                           BCM จะส่งคาสังกลั ่ บไป BMS สัง่ HVSU ให ้
+                                                                                                           connect Negative connector & precharge
+                                                                                                           VBM   จะจับสัญญาณ HV ตอน precharge ว่าปกติ
+                                                                                                           connector
+                                                                                                           ไหม HV Batt-spec (Battery Voltage spec) ±
+                                                                         BASU                              50Vdc
+                                                       -                                                   ถ ้าปกติส่งข ้อมูลไป BMS ว่าปกติและ VBM จะสัง่
+                                                                                                           BMS ส่งคาสังให ่ ้ HVSU disconnect precharge
+                                                                                                           Connector และต่อสังให ่ ้ main contactor เพือ
+                                                                                                                                                       ่
+                                                                                                                               ่ าย MCU และ Drive motor
+                                                                                                           จ่ายไฟเข ้าระบบเพือจ่
+                                      +
+
+                                                           200 Ohm
+                                                                                                          BMS จะตรวจจับ กระแสร ่ ัวตลอดเวลา
+                                                                                     Check 50Vdc or not   ถ ้าพบจะสัง่ HVSU ตัดการเชือมต่
+                                                                                                                                     ่  อ
+                                                                                                          กับ HV-Batt
+
+                                                                                                                                                     39
+                                                   แบตเตอรี่
+                                                  ่
+คาจาก ัด ความสาหร ับ พิ น ของคอนเนคเตอร ์แ รงดัน ตา
+
+                                         Pin No.         Port description                        Definition of ports                     Wiring Harness Connection Mode      Signal types
+
+                                           01         12V+ (constant power)      Battery pack heating film power supply positive pole    Vehicle low-voltage power supply      Voltage
+                                                                                                      (reserved)
+                                           02                   /
+
+                                           03                 GND                Battery pack heating film power supply negative pole   Low-voltage power supply ground of      GND
+                                                                                                      (reserved)                                    the vehicle
+                                           04         12V+ (constant power)       Power input with independent chip power supply            All-in-one control unit - A1       Voltage
+             7       4                               BASU_+12V1 (two-circuit
+                                           05                                                   Power supply input 1                        All-in-one control unit - B19      Voltage
+                         1                                  Electric)
+                                                       BASU_+12V2 (two-
+                                           06                                                   Power supply input 2                        All-in-one control unit - B25      Voltage
+                                                         circuit power)
+                         2
+                                           07                   /
+
+                         3                 08           Power net CANH                            Power net CANH                            All-in-one control unit - A14    CAN signal
+
+             19     16                     09            Power net CANL                            Power net CANL                           All-in-one control unit - A13    CAN signal
+
+                                           10      Power net CAN shielding GND                   CAN shielding GND                          All-in-one control unit - A8        GND
+
+                                           11                   /
+
+                                           12                   /
+
+                                           13                   /
+
+                                           14                   /
+
+                                           15                   /
+
+                                           16                   /
+
+                                           17             BASU_GND1                              BASU power GND 1                           All-in-one control unit - B13       GND
+
+                                           18             BASU_GND2                              BASU power GND 2                           All-in-one control unit - B7        GND
+
+                                           19                   /                                                                                                                           40
+                                             แบตเตอรี่
+            ่
+สเปคแบตเตอรีของแต่ ล ะรุ ่ น
+
+
+                                               Specification
+                        Number of cells Single cell    Battery capacity Total Voltage Driving range:
+        Model/Type
+                           (Qty.)       capacity (Ah)       (kWh)          (VDC)       NEDC (km.)
+       Atto3
+       Standard                104           150            49.92           332.8          410
+       Extended                126           150            60.48           403.2          480
+       Dolphin
+       Standard                104           135            44.92           332.8          410
+       Extended                126           150            60.48           403.2          490
+       Seal
+       Dynamic                 128           150            61.44           409.6          510
+       Premium                 172           150            82.56           550.4          650
+       Performance             172           150            82.56           550.4          580
+
+                                                                                                       41
+                                                             แบตเตอรี่
+การคานวณ SOH
+
+                                  ่ ้ต่ากว่า 10% ถ ้าได ้ 1% - 5% จะดีมาก
+ ⚫ ลดเปอร ์เซ็นต ์ SOC ของแบตเตอรีให
+ ⚫ Spec batt Ext. Model ➔ 60.48 kWh & Std. Model ➔ 49.92 kWh
+
+ ⚫ ใช ้ VDS สแกนและอ่านข ้อมูล energy consumption ก่อนทาการชาร ์จ (ตัวอย่าง 30,155.2 kWh).
+                                        ่ นมากี
+ ⚫ ชาร ์จกลับให ้ถึง SOC 100% เช็คว่าเพิมขึ ้   ่
+                                              เปอร ์เซ็นต ถ ้า 10% (60.48 ➔ 10% คือ 6.048 kWh)
+ ⚫ ใช ้ VDS สแกนและอ่านข ้อมูล energy consumption หลังทาการชาร ์จ (ตัวอย่าง 30,206.448 kWh.)
+ ⚫ เช็ค energy actual consumption โดยคานวณเปอร ์เซ็นก่อนชาร ์จจนถึง SOC 100%.
+ ⚫ 60.48 kWh(100% ตามสเปค) - 6.048 (10% ตามสเปค) = 54.432 kWh (Energy consumption ตามสเปคหลังชาร ์จ)
+ ⚫ Energy consumption ของตัวอย่างนี ้ (ก่อน) 30,206.448 - (หลัง) 30,155.2 = 51.248 kWh
+
+                                    51.248 kWh        ➔ ทีวั่ ดได ้
+ %SOH =                           ----------------                    x 100 = 94.15 %
+                                     54.432 kWh       ➔ ตามสปค
+
+ ถ ้าเปอร ์เซ็นต ์ SOH น้อยกว่า 70% หมายถึงแบตเตอรีเสื  ่
+                                                      ่ อม
+ นั่นหมายถึงแบตเตอรีชุ   ่ ดนี ยั
+                               ้ งดีอยู่ Good Health.
+
+%SOH ตารางการคานวณ➔
+                                                                                                       42
+%SOH ตารางการคานวณ
+
+
+
+
+              Accumulated Charging
+                    Energy
+
+
+
+
+                                     43
+                                                                          แบตเตอรี่
+การตรวจเช็ ค ข้อ มู ล Single Cell ของแบตเตอรี่
+                                                                            ตัวอย่างจาก Seal
+                                                                                                  3                              4
+      ในบางกรณี ข ้อมูล Single cell ของแบตเตอรีจ่ าเป็ นเพือความ
+                                                           ่
+ปลอดภัยและการตรวจสอบ เช่น พบเจอว่ามีการร ่ ัวไหลของกระแสไฟฟ้ า,
+        ่ อุณหภูมิสูงผิดปกติ, รถเกิดอุบ ัติเหตุ
+แบตเตอรีมี
+
+          ้
+1. ถอดขัวลบออกจากแบตเตอรี         ่ 12 โวลท ์
+2. ลิฟท ์รถขึน้ ทาการถอดถาดและคานเหล็ก เพือให        ่ ้สามารถถอดปลัก๊
+สายไฟจาก PDC มาทีแบตเตอรี่       ่ ้
+                                 ได                                          2
+3. ถอดปลักสาย ๊      HV ของแบตเตอรีที ่ เข
+                                        ่ ้า PDC
+            ๊
+4. ถอดปลักสาย        LV(BK51) ของแบตเตอรีที   ่ เข
+                                                ่ ้า PDC                                                     ้
+                                                                                                -อย่าลืมถอดขัวลบออกจากแบตเตอรี ่ 12 โวลท ์ ก่อนอย่าง
+                ๊ ว BK51 ของสายตรวจสอบ Single Cell ไปทีแบตเตอรี
+                                                             ่        ่                                  ้
+                                                                                                แรกตามขันตอนที  ่1
+5. เสียบปลักหั
+6. เสียบปลักหั   ๊ ว OBC ของสายตรวจสอบ Single Cell ไปที่ VDS
+7. พ่วงแบตเตอรี่ 12 โวลท ์ เพือจ่
+                               ่ ายไฟ                                                6                 ้
+                                                                                                -ตามขันตอนที  ่ 5 ปลักหั
+                                                                                                                     ๊ ว BK51 ของสายตรวจสอบ Single
+                                                                                                                 ่     คเตอร ์ LV ของแบตเตอรี่ แทนทีปลั
+                                                                                                                                                    ่ กที
+                                                                                                                                                        ๊ ่
+8. ใช ้ VDS อ่านข ้อมูล Single Cell ของแบตเตอรี่                                                Cell จะเสียบไปทีคอนเน็
+                                                                                                                   ้      ่4
+                                                                                                ถูกถอดออกตามขันตอนที
+                                            ่ บ PDC
+วงจรด ้วยรวมของสาย HV และ LV ระหว่างแบตเตอรีกั
+
+                                                                                 7
+
+
+
+                                                                                               ไฟล ์แนบการตรวจเช็ค
+                                                                                                     Single Cell
+                                                                                                                                                              44
+                                                   แบตเตอรี่
+การตรวจเช็ ค ข้อ มู ล Single Cell ของแบตเตอรี่
+
+             ่
+รายละเอียดเกียวกั                      ้
+                บวิธ ีการอ่าน VDS ตามขันตอนที ่8
+
+
+1. เลือก "BMS Center"
+2. เลือก "Real-Time battery detection"
+3. เลือก "EV battery Pack detection"
+
+                                                               2
+
+
+
+
+   1
+
+
+
+                                                               3
+                                                                   45
+                                                              แบตเตอรี่
+   การตรวจเช็ ค ข้อ มู ล Single Cell ของแบตเตอรี่
+
+     4. เลือก "Analog power", จากนั้นทาการวิเคราะห ์ข ้อมูล               รอจนกระทั่งข ้อมูลปรากฏขึนมา
+                                                                                                   ้
+
+
+                                                                              4
+
+
+
+
+                      ่ ค Voltage ของ
+กด "Full-screen" เพือเช็
+                    ่ ้ต ้องเป็ นแนว
+single cell โดยผลทีได
+เดียวกัน (แต่ละเซลล ์ Balance กันอยู่)
+
+
+                                                                                                                         ่ ้อง
+                                                                                                         สถานะของแบตเตอรีจะต
+                                                                                                         เป็ นปกติ
+
+
+
+
+                     ่ คอุณหภูมิ                                                                         ค่า Insulation อีกค่าหนึ่ งที่
+กด "Full-screen" เพือเช็
+                                                                                                         สาคัญในการคอนเฟิ ร ์มสถา
+ของ BIC โดยต ้องไม่เกิน 40 เซลเซียส
+                                                                                                         นะแบตเตอรี่
+
+                                                                                                                                          46
+         Part 4
+
+
+แอร ์คอมเพรสเซอร ์ และ PTC
+                             47
+                                                      แอร ์คอมเพรสเซอร ์ และ PTC
+แอร ์ค อมเพรสเซอร ์
+        คอมเพรสเซอร ์แอร ์แรงดันสูงสาหร ับรถยนต ์ไฟฟ้ านี ้ มีหน้าทีหลั
+                                                                    ่ กๆ ประกอยด ้วย ควบคุมสภาพอากาศในห ้องโดยสาร และ การระบายความร ้อนของแบตเตอรี่
+
+
+        ประกอบด ้วยหลัก :
+        • Compressor section – เป็ นแบบ scroll type สาหร ับบีบอัดและปล่อยสารทาความเย็น
+                                                                                                                            ่ บเคลือนคอมเพรสเซอร
+        • Electric motor – เป็ นแบบ Direct current (DC) brushless type โดยใช ้แม่เหล็กถาวรเป็ นโรเตอร ์และคอยล ์สเตเตอร ์เพือขั    ่             ์
+                        ่ บเคลือนมอเตอร
+        • Inverter – เพือขั     ่                                       ่
+                                          ์และแปลงกระแสตรงจากแบตเตอรีไฟฟ้   าแรงสูง (HV) เป็ นไฟฟ้ ากระแสสลับ (AC) สาหร ับมอเตอร ์ โดยหน่ วยควบคุมอิเล็กทรอนิ กส ์ AC (ECU) ส่งสัญญาณ
+                                                                            ่
+          ความเร็วการหมุนของคอมเพรสเซอร ์ไปยังอินเวอร ์เตอร ์ผ่าน HV ECU เพือควบคุ  มความเร็วในการหมุนของคอมเพรสเซอร ์
+
+
+
+
+ แอร ์คอมเพรสเซอร ์ของ Seal
+
+
+
+
+                                                       ถอดแยกส่วน
+
+
+
+
+                                                                                                                                                                                        48
+แอร ์คอมเพรสเซอร ์
+
+
+
+
+                     49
+แอร ์คอมเพรสเซอร ์
+
+
+
+
+                     50
+                                                                                           PTC
+PTC (Positive Temperature Coefficient)
+            ่ าความร ้อน PTC คือระบบทาความร ้อนชนิ ดหนึ่ งทีใช
+        เครืองท                                             ่ ้กันทั่วไปในยานพาหนะ ออกแบบมาเพือให
+                                                                                              ่ ้ความร ้อนแก่ห ้องโดยสาร, ละลายนาแข็
+                                                                                                                                ้    งหรือไล่ฝ้ากระจกหน้ารถ, และช่วยร ักษาอุณหภูมิ
+ภายในรถให ้สบาย
+
+
+        หลักการทางาน :
+        • Structure – PTC ประกอบด ้วยองค ์ประกอบเซรามิกทีมี  ่ ค่าสัมประสิทธิอุ์ ณหภูมิเป็ นบวก โดยองค ์ประกอบเซรามิกประกอบด ้วยวัสดุนาไฟฟ้ าทีมี ่ อนุ ภาคนาไฟฟ้ าฝังอยู่
+                                    ่
+        • Electrical Current – เมือกระแสไฟฟ้ าถูกจ่ายไปที่ PTC ความต ้านทานขององค ์ประกอบเซรามิกจะเพิมขึ    ่ นตามอุ
+                                                                                                              ้     ณหภูมิ คุณสมบัตินีเรี้ ยกว่าสัมประสิทธิอุ์ ณหภูมิบวก ซึงหมายความว่
+                                                                                                                                                                           ่               ่
+                                                                                                                                                                                       าเมือ
+          อุณหภูมิสูงขึน้ ความต ้านทานก็เพิมขึ
+                                           ่ นด้ ้วย
+                                  ่
+        • Heat Generation – เมือกระแสไหลผ่   าน PTC จากนั้นความต ้านทานทาให ้องค ์ประกอบเซรามิกร ้อนขึน้ อนุ ภาคนาไฟฟ้ าทีฝั ่ งอยู่ช ่วยให ้ถ่ายเทความร ้อนและกระจายความร ้อนได ้อย่าง
+          สม่าเสมอ
+
+
+                         PTC ของ Seal
+
+
+
+
+                                                                                                                                                    ตัวอย่างโครงสร ้างของ PTC                  51
+           Part 5
+
+
+การตรวจสอบความล้มเหลวของระบบ
+                               52
+                                            การตรวจสอบความล้ม เหลวของระบบ
+วิ ธ ีต รวจสอบแรงดัน Pre-Charge
+          ้
+1. ถอดขัวลบแบตเตอรี        ่ 12 โวลท ์ และควรรอ 5 นาทีเพือความปลอดภั
+                                                              ่              ย
+            ๊
+2. ถอดปลักสาย      HV จากแบตเตอรีเข     ่ ้า PDC(8in1)
+3. ใช ้คลิปปากจระเข ้ หนี บระหว่างพิน 1 และ 2 ของ HV คอนเนคเตอร ์บน PDC
+                       ้ ้จับค่า Inrush หรือ ค่าทีวั่ ดได ้สูงสุดของ DC Voltage วัดทีขั
+4. ใช ้มัลติมิเตอร ์ ตังให                                                            ่ วบวกและลบของปลั
+                                                                                          ้               ๊
+                                                                                                          กสาย   HV จากแบตเตอรี่
+5. สตาร ์ทรถ ระบบ HV จะสังท     ่ าการตรวจเช็ค Pre-Charge ซึงจะส่     ่   งไฟแรงสูงมาที่ PDC ทีสามารถวั
+                                                                                               ่                                      ้ จากนั้นแรงดันไฟจะตกจนถึง 0
+                                                                                                      ดค่าได ้ราวๆ 4XX±50 VDC ในเวลาสันๆ
+            ถ ้าพบว่าค่าแรงดันวัดได ้อยู่ในเกณฑ ์ตามทีระบุไว่     ้ แสดงว่าระบบ Pre-Charge ทางานปกติ
+
+
+                             5V PWM
+                                        1
+                                                                                                                            *Noted
+              HV Batt                           8in1                                                                                                 ่
+                                                                                                                            ถ ้าตรวจพบโค ้ดปัญหาเกียวกั บ interlocking1, สามารถทาการตรวจเช็ค
+                                        2                                                                                   continuity test ก่อนได ้ ระหว่างพิน 1 และ 2 ที่ PDC
+
+
+
+
+                                                                                                                                                                                               53
+                                      การตรวจสอบความล้ม เหลวของระบบ
+วิ ธ ีต รวจสอบค่ า ฉนวน โดย Active control of insulation detection
+                                                                                                                                5V PWM
+                                                                                                                                         1          Not
+1. ถอด คลิปปากจระเข ้จากพิน 1 และ 2 ของ HV คอนเนคเตอร ์บน PDC                                                                                       Short pin
+2. ใช ้ VDS สแกนแล ้วไปที่ BASU(Battery Execution And Sampling Unit) เลือก Repair Mode                   HV Batt                             8in1
+3. เลือก " Active control insulation detection “ แล ้วเลือก Have read                                                                    2
+             ่
+4. เลือกคาสังตามขั ้
+                   นตอน                                           ้
+                           1 – 2 – 3 แล ้วอ่านค่าความต ้านทานตามขันตอนที ่4
+ตัวอย่าง ถ้าสเปคแบตเตอรี่ = 403.2 VDC
+               ้ าความต้านทานควรจะสู งกว่า
+          ดังนันค่
+          403.2 x 100 = 40,320 Ω or 40.32 kΩ (Ext)
+
+
+
+
+                                                                                         State of main contactor : Close
+                                                                                         Negative contactor state : Close
+                                                                                         Insulation resistance : 7113KΩ
+
+                                                                    1
+                                                                                                                            4
+
+
+                                                                        2                       3                                                        OK     54
+                                        การตรวจสอบความล้ม เหลวของระบบ
+วิ ธ ีต รวจสอบคอนแทคเตอร ์ไ หม้ โดย Active control
+                                                                                                   5V PWM
+                                                                                                            1          Not
+การเตรียมการ                                                                                                           Short pin
+1. ถอด คลิปปากจระเข ้จากพิน 1 และ 2 ของ HV คอนเนคเตอร ์บน PDC                            HV Batt                8in1
+2. ใช ้ VDS สแกนแล ้วไปที่ BASU(Battery Execution And Sampling Unit) เลือก Repair Mode                      2
+
+
+วิธ ีตรวจสอบคอนแทคเตอร ์ (สามารถเลือกได้ท ีละ 1 ขัว้ {1 or 2})
+ต้องใช้ฟังก ์ช ่ ันนี เมื
+                      ้ อเจอโค้
+                          ่   ด "Connector Burn out"
+                                    ้
+1. ถ ้าต ้องการทดสอบคอนแทคเตอร ์ขัวลบไหม้  หรือไม่
+เลือก Positive connector (1) เลือก Have read แล ้วเลือกคาสัง่ close หรือ disconnect
+                                                    ้
+➔ ถ ้ามีแรงดันไฟฟ้ าหมายความว่า “คอนแทคเตอร ์ขัวลบไหม้        ”
+                                      ้
+2. ถ ้าต ้องการทดสอบคอนแทคเตอร ์ขัวบวกไหม้  หรือไม่
+เลือก Negative connector (2) เลือก Have read แล ้วเลือกคาสัง่ close หรือ disconnect
+                                                      ้
+➔ ถ ้ามีแรงดันไฟฟ้ าหมายความว่า “คอนแทคเตอร ์ขัวบวกไหม้         ”
+                                       การตรวจสอบความล้ม เหลวของระบบ
+วิ ธ ีต รวจสอบค่ า แรงดันไฟฟ้ าของแบตเตอรี่ โดย Active control
+                                                                                                            5V PWM
+                                                                                                                     1          Not
+การเตรียมการ                                                                                                                    Short pin
+1. ถอด คลิปปากจระเข ้จากพิน 1 และ 2 ของ HV คอนเนคเตอร ์บน PDC                                     HV Batt                8in1
+2. ใช ้ VDS สแกนแล ้วไปที่ BASU(Battery Execution And Sampling Unit) เลือก Repair Mode                               2
+
+
+วิธ ีตรวจสอบแรงดันไฟฟ้าของแบตเตอรีปกติ ่   หรือไม่
+เลือก Active control Main and cathode contactor เลือก Have read แล ้วเลือกคาสัง่ close หรือ disconnect
+➔ ถ ้ามีแรงดันไฟฟ้ าราว 4XX±50 VDC ตามสเปคแบตเตอรี่ หมายความว่า “แบตเตอรีก้       ่ อนนี ปกติ
+                                                                                         ้    ”
+Thank You!
+
+             57
+
