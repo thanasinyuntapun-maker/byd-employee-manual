@@ -1257,7 +1257,7 @@
       </div>
       <!-- CAD sim: Shock Absorber cross-section -->
       <div class="fig" style="margin-top:18px;">
-        <canvas id="cv-shock" style="width:100%;height:300px;display:block;border-radius:10px;background:#040d1a;cursor:grab;" title="ลากเพื่อหมุน"></canvas>
+        <canvas id="cv-shock" style="width:100%;height:400px;display:block;border-radius:10px;background:#060c18;cursor:grab;" title="ลากเพื่อหมุน"></canvas>
         <div class="fig-cap">โช้คอัพแบบ MacPherson Strut (ซ้าย) และ Twin-Tube Damper (ขวา) — ภาพตัดขวางแสดงชิ้นส่วนภายใน <span class="src">Simulation Diagram</span></div>
       </div>
     </div>
@@ -8528,44 +8528,127 @@ function addMesh(scene, geo, mat, x, y, z, rx, ry, rz) {
   return m;
 }
 
-// ─── 1. SHOCK ABSORBER (MacPherson Strut) ────────────────────────────────────
+// ─── 1. MacPherson Strut — full assembly ─────────────────────────────────────
 (function() {
   const canvas = document.getElementById('cv-shock');
   if (!canvas) return;
-  const { renderer, scene, camera, controls } = makeScene(canvas, 300);
-  camera.position.set(2.8, 0.4, 5.5);
-  camera.lookAt(0, 0, 0);
+  const { renderer, scene, camera, controls } = makeScene(canvas, 400);
+  camera.position.set(4.2, 1.5, 5.8);
+  camera.lookAt(0.3, -0.5, 0);
+  controls.autoRotateSpeed = 0.9;
 
-  const chromeMat = new THREE.MeshPhongMaterial({ color: 0xd0d8e0, specular: 0xffffff, shininess: 280, emissive: 0x0c1220 });
-  const tubeMat   = new THREE.MeshPhongMaterial({ color: 0x1a3a60, specular: 0x60a5fa, shininess: 120, emissive: 0x0c1626 });
-  const springMat = new THREE.MeshPhongMaterial({ color: 0xf59e0b, specular: 0xfde68a, shininess: 160, emissive: 0x6d3000 });
-  const pistonMat = new THREE.MeshPhongMaterial({ color: 0x1d4ed8, specular: 0x93c5fd, shininess: 120 });
-  const mountMat  = new THREE.MeshPhongMaterial({ color: 0x475569, specular: 0xb0b8c8, shininess: 80, emissive: 0x0f1827 });
-  const fluidMat  = new THREE.MeshPhongMaterial({ color: 0x0c4a8c, transparent: true, opacity: 0.65 });
-  const bootMat   = new THREE.MeshPhongMaterial({ color: 0x1e293b, transparent: true, opacity: 0.7, side: THREE.DoubleSide });
+  // Extra lighting for PBR
+  scene.add(new THREE.HemisphereLight(0x8ab0d0, 0x303040, 0.7));
+  const key = new THREE.DirectionalLight(0xfff5e8, 2.2);
+  key.position.set(3, 5, 4); scene.add(key);
+  const rim2 = new THREE.DirectionalLight(0x6090ff, 0.5);
+  rim2.position.set(-4, 2, -3); scene.add(rim2);
 
-  addMesh(scene, new THREE.CylinderGeometry(0.50, 0.50, 0.13, 28), mountMat, 0, 2.28, 0);
-  addMesh(scene, new THREE.CylinderGeometry(0.14, 0.10, 0.32, 12), bootMat,  0, 1.88, 0);
-  addMesh(scene, new THREE.CylinderGeometry(0.088, 0.088, 2.70, 22), chromeMat, 0, 0.85, 0);
+  // PBR materials
+  const castMat   = new THREE.MeshStandardMaterial({ color: 0x9aa4ae, metalness: 0.72, roughness: 0.30 });
+  const chromeMat = new THREE.MeshStandardMaterial({ color: 0xdce8f2, metalness: 0.98, roughness: 0.04 });
+  const springMat = new THREE.MeshStandardMaterial({ color: 0xcc1515, metalness: 0.30, roughness: 0.42 });
+  const tubeMat   = new THREE.MeshStandardMaterial({ color: 0x1c2535, metalness: 0.70, roughness: 0.35 });
+  const rubberMat = new THREE.MeshStandardMaterial({ color: 0x141414, metalness: 0.00, roughness: 0.95 });
+  const boltMat   = new THREE.MeshStandardMaterial({ color: 0x707880, metalness: 0.85, roughness: 0.20 });
 
-  const springPts = [];
-  for (let i = 0; i <= 280; i++) {
-    const t = i / 280;
-    const a = t * Math.PI * 2 * 7.5;
-    springPts.push(new THREE.Vector3(Math.cos(a)*0.44, t*2.25-1.20, Math.sin(a)*0.44));
+  function m(geo, mat, x=0, y=0, z=0, rx=0, ry=0, rz=0) {
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(x, y, z);
+    mesh.rotation.set(rx, ry, rz);
+    g.add(mesh);
+    return mesh;
   }
-  scene.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(springPts), 500, 0.058, 8, false), springMat));
+  function tube(pts, r) {
+    const mesh = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map(p=>new THREE.Vector3(...p))), 30, r, 10, false), castMat);
+    g.add(mesh);
+  }
 
-  addMesh(scene, new THREE.CylinderGeometry(0.20, 0.14, 0.55, 14, 1, true), bootMat, 0, 0.52, 0);
-  addMesh(scene, new THREE.CylinderGeometry(0.265, 0.265, 2.08, 26), tubeMat, 0, -0.52, 0);
-  addMesh(scene, new THREE.CylinderGeometry(0.23, 0.23, 1.15, 20), fluidMat, 0, -0.72, 0);
-  addMesh(scene, new THREE.CylinderGeometry(0.24, 0.24, 0.09, 22), pistonMat, 0, 0.07, 0);
-  addMesh(scene, new THREE.CylinderGeometry(0.32, 0.32, 0.13, 22), mountMat, 0, -1.62, 0);
+  const g = new THREE.Group();
+  g.rotation.set(0.04, 0.28, -0.14);
+  scene.add(g);
 
-  const eyelet = new THREE.Mesh(new THREE.TorusGeometry(0.19, 0.07, 8, 22), mountMat);
-  eyelet.rotation.x = Math.PI / 2;
-  eyelet.position.set(0, -1.88, 0);
-  scene.add(eyelet);
+  // ── Top strut mount ──
+  m(new THREE.CylinderGeometry(0.46, 0.46, 0.07, 30), castMat,  0, 2.32, 0);
+  m(new THREE.CylinderGeometry(0.22, 0.22, 0.10, 20), rubberMat,0, 2.35, 0);
+  m(new THREE.CylinderGeometry(0.10, 0.10, 0.14, 14), chromeMat,0, 2.35, 0);
+  m(new THREE.TorusGeometry(0.30, 0.04, 8, 28), castMat, 0, 2.32, 0, Math.PI/2, 0, 0);
+
+  // ── Piston rod (chrome) ──
+  m(new THREE.CylinderGeometry(0.078, 0.078, 3.05, 22), chromeMat, 0, 0.82, 0);
+
+  // ── Dust boot (bellows) ──
+  m(new THREE.CylinderGeometry(0.18, 0.12, 0.65, 16, 1, true), rubberMat, 0, 0.48, 0);
+
+  // ── Spring — red coil ──
+  const sPts = [];
+  for (let i = 0; i <= 320; i++) {
+    const t = i/320, a = t * Math.PI*2 * 6.8;
+    sPts.push(new THREE.Vector3(Math.cos(a)*0.38, t*2.30-1.32, Math.sin(a)*0.38));
+  }
+  g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(sPts), 560, 0.072, 10, false), springMat));
+
+  // Upper + lower spring seats
+  m(new THREE.CylinderGeometry(0.42, 0.38, 0.08, 26), castMat, 0, 0.98, 0);
+  m(new THREE.CylinderGeometry(0.42, 0.36, 0.09, 26), castMat, 0,-1.36, 0);
+
+  // ── Strut outer tube (damper body) ──
+  m(new THREE.CylinderGeometry(0.21, 0.21, 2.18, 26), tubeMat, 0, -0.48, 0);
+  // Chrome jounce band
+  m(new THREE.CylinderGeometry(0.215, 0.215, 0.09, 26), chromeMat, 0, 0.62, 0);
+  // Bottom cap
+  m(new THREE.CylinderGeometry(0.23, 0.21, 0.12, 22), castMat, 0, -1.59, 0);
+
+  // ── Steering knuckle (grey cast upright) ──
+  // Hub carrier cylinder (points in +X for wheel hub)
+  m(new THREE.CylinderGeometry(0.26, 0.24, 0.34, 22), castMat, 0.40,-1.02, 0, 0, 0, Math.PI/2);
+  m(new THREE.CylinderGeometry(0.14, 0.14, 0.38, 16), tubeMat, 0.40,-1.02, 0, 0, 0, Math.PI/2);
+  // Flanged outer face
+  m(new THREE.CylinderGeometry(0.30, 0.26, 0.06, 22), castMat, 0.57,-1.02, 0, 0, 0, Math.PI/2);
+
+  // Two vertical strut clamp plates
+  m(new THREE.BoxGeometry(0.09, 0.58, 0.20), castMat, -0.08,-0.76, 0.13);
+  m(new THREE.BoxGeometry(0.09, 0.58, 0.20), castMat, -0.08,-0.76,-0.13);
+  m(new THREE.BoxGeometry(0.09, 0.10, 0.30), castMat, -0.08,-1.04, 0);
+  // Clamp bolts
+  m(new THREE.CylinderGeometry(0.035,0.035,0.28,8), boltMat,-0.08,-0.72, 0, 0,0,Math.PI/2);
+  m(new THREE.CylinderGeometry(0.035,0.035,0.28,8), boltMat,-0.08,-0.90, 0, 0,0,Math.PI/2);
+
+  // Brake caliper mounting ears
+  m(new THREE.BoxGeometry(0.32, 0.09, 0.09), castMat, 0.16,-0.70, 0.23);
+  m(new THREE.BoxGeometry(0.32, 0.09, 0.09), castMat, 0.16,-0.88, 0.23);
+  m(new THREE.BoxGeometry(0.09, 0.24, 0.09), castMat, 0.30,-0.79, 0.23);
+  // Ear bolt holes (small spheres = hole illusion)
+  m(new THREE.SphereGeometry(0.038, 8, 6), tubeMat, 0.08,-0.70, 0.23);
+  m(new THREE.SphereGeometry(0.038, 8, 6), tubeMat, 0.08,-0.88, 0.23);
+
+  // Ball joint stub + socket
+  m(new THREE.CylinderGeometry(0.07, 0.09, 0.22, 12), castMat, 0.20,-1.40, 0);
+  m(new THREE.SphereGeometry(0.10, 14, 10), castMat, 0.20,-1.55, 0);
+  m(new THREE.CylinderGeometry(0.055,0.055,0.18,10), castMat, 0.20,-1.70, 0);
+  // Ball joint boot (rubber)
+  m(new THREE.CylinderGeometry(0.11, 0.06, 0.18, 12, 1, true), rubberMat, 0.20,-1.50, 0);
+
+  // ── Lower control arm (A-arm) ──
+  // Front arm: ball joint → front chassis bush
+  tube([[0.20,-1.70,0],[0.00,-1.82,0.30],[-0.35,-1.86,0.58],[-0.65,-1.88,0.82]], 0.07);
+  // Rear arm: ball joint → rear chassis bush
+  tube([[0.20,-1.70,0],[0.00,-1.82,-0.28],[-0.38,-1.86,-0.52],[-0.65,-1.88,-0.72]], 0.065);
+  // Crossbar near ball joint
+  tube([[0.20,-1.70,0],[-0.20,-1.76,0.14],[-0.20,-1.76,-0.14],[0.20,-1.70,0]], 0.055);
+
+  // Chassis mount bushings
+  [[-0.65,-1.88,0.82],[-0.65,-1.88,-0.72]].forEach(([x,y,z]) => {
+    const bsh = new THREE.Mesh(new THREE.CylinderGeometry(0.13,0.13,0.22,16), castMat);
+    bsh.rotation.z = Math.PI/2; bsh.position.set(x,y,z); g.add(bsh);
+    const inner = new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06,0.24,12), rubberMat);
+    inner.rotation.z = Math.PI/2; inner.position.set(x,y,z); g.add(inner);
+  });
+
+  // ── Anti-roll bar drop link ──
+  tube([[0.14,-1.10,-0.20],[0.10,-1.48,-0.26],[0.08,-1.70,-0.28]], 0.030);
+  m(new THREE.SphereGeometry(0.06,10,7), castMat, 0.14,-1.10,-0.20);
+  m(new THREE.SphereGeometry(0.06,10,7), castMat, 0.08,-1.72,-0.28);
 
   function animate() { requestAnimationFrame(animate); controls.update(); renderer.render(scene, camera); }
   animate();
