@@ -533,6 +533,9 @@
     <div class="nav-item" onclick="showSection('thermal')">
       <span class="icon"><svg class="ic"><use href="#ic-thermo"/></svg></span> <span data-lang="th">ระบบจัดการอุณหภูมิ</span><span data-lang="en">Thermal Management</span>
     </div>
+    <div class="nav-item" onclick="showSection('evsafety')">
+      <span class="icon"><svg class="ic"><use href="#ic-zap"/></svg></span> <span data-lang="th">ความปลอดภัย EV</span><span data-lang="en">EV Safety</span>
+    </div>
     <div class="nav-item" onclick="showSection('engtest')">
       <span class="icon"><svg class="ic"><use href="#ic-flask"/></svg></span> <span data-lang="th">การทดสอบทางวิศวกรรม</span><span data-lang="en">Engineering Testing</span>
     </div>
@@ -1540,7 +1543,8 @@
     <p style="margin-bottom:14px;">การส่งกำลังของรถ EV และรถสันดาปภายใน (ICE) มีหลักการต่างกันอย่างสิ้นเชิง ตั้งแต่แหล่งพลังงาน จำนวนชิ้นส่วน วิธีการส่งแรงบิด ไปจนถึงประสิทธิภาพรวม</p>
 
     <!-- Car Structure Comparison -->
-    <div class="fig" style="background:#080e18; padding:14px 10px 0; margin-bottom:16px;">
+    <div style="margin-bottom:6px; font-size:0.82rem; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:.05em;">① โครงสร้างภายในรถ — ICE vs EV</div>
+    <div class="fig" style="background:#080e18; padding:14px 10px 0; margin-bottom:36px;">
       <svg viewBox="0 0 760 258" style="width:100%;display:block;" font-family="'DB Heavent Now','Segoe UI',sans-serif">
         <defs>
           <linearGradient id="gice" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1c0903"/><stop offset="100%" stop-color="#110500"/></linearGradient>
@@ -1713,6 +1717,7 @@
     </div>
 
     <!-- Power Flow SVG -->
+    <div style="margin-bottom:6px; font-size:0.82rem; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:.05em;">② ห่วงโซ่การส่งกำลัง + Torque Curve — ICE vs EV</div>
     <div class="fig" style="background:#0f1b2d; padding:16px 12px 0;">
       <svg viewBox="0 0 760 340" style="width:100%; display:block; font-family:'DB Heavent Now','Segoe UI',sans-serif;">
         <rect width="760" height="340" fill="#0f1b2d"/>
@@ -6694,6 +6699,220 @@ Android Auto™</td><td class="spec-val">●</td></tr>
     </div>
   </div>
 
+  <!-- EV SAFETY -->
+  <div id="evsafety" class="section">
+    <div class="section-title">ความปลอดภัย EV</div>
+    <div class="section-en">EV Safety — ไฟฟ้าแรงสูง · เพลิงไหม้ · PPE · การจัดการฉุกเฉิน</div>
+    <div class="src-note">ข้อมูลจาก Basic Safety for Denza EV (Rev 0 210225) — Rever Automotive Training</div>
+
+    <!-- ─── 1. ELECTRICAL HAZARD THRESHOLDS ─── -->
+    <div class="section-title" style="font-size:1.15rem; margin-top:28px;">1. ขีดอันตรายของกระแสไฟฟ้า</div>
+    <p style="margin-bottom:14px;">ไฟฟ้ากระแสสลับ (AC) อันตราย&gt;25 V และไฟฟ้ากระแสตรง (DC) อันตราย&gt;60 V — กระแสที่ไหลผ่านร่างกายเป็นตัวชี้วัดความอันตราย ไม่ใช่แรงดัน</p>
+    <table class="spec-table" style="margin-bottom:20px;">
+      <tr><th>กระแสไฟ (AC)</th><th>ผลที่เกิดขึ้น</th><th>ระดับ</th></tr>
+      <tr><td>&lt; 1 mA</td><td>ไม่รู้สึก</td><td style="color:#22c55e;font-weight:700;">ปลอดภัย</td></tr>
+      <tr><td>1–5 mA</td><td>รู้สึกเสียวซ่า / ชา</td><td style="color:#eab308;font-weight:700;">ระวัง</td></tr>
+      <tr><td>5–30 mA</td><td>กล้ามเนื้อหดตัว ปล่อยไม่ได้</td><td style="color:#f97316;font-weight:700;">อันตราย</td></tr>
+      <tr><td>30–50 mA</td><td>หัวใจเต้นผิดจังหวะ (Ventricular Fibrillation)</td><td style="color:#ef4444;font-weight:700;">ร้ายแรง</td></tr>
+      <tr><td>&gt;80 mA</td><td>หัวใจหยุดเต้น เสียชีวิต</td><td style="color:#dc2626;font-weight:700;">เสียชีวิต</td></tr>
+    </table>
+    <div class="info-box" style="margin-bottom:20px;">
+      <h4>ตัวอย่างจริง — DENZA D9 (608 VDC)</h4>
+      <p>หากสายไฟฟ้า HV 288 V ไหลผ่านร่างกาย (ความต้านทานรวม ~1,080 Ω): <strong>I = 288V ÷ 1,080Ω ≈ 0.27 A (270 mA)</strong> — ร่างกายรับกระแสสูงกว่า "เสียชีวิต" ถึง 3 เท่า ทำให้หัวใจหยุดเต้นภายใน 10–15 มิลลิวินาที</p>
+      <p style="margin-top:8px;font-size:0.85rem;color:#64748b;">ความต้านทานร่างกาย: ลำตัว 80 Ω · หน้าอก 15 Ω · แขน/ขา ข้างละ ~500 Ω · ผิวหนัง (แห้ง) สูงสุด ~500 kΩ แต่ลดเหลือ 1–2 kΩ เมื่อเปียก</p>
+    </div>
+
+    <!-- ─── 2. ELECTRICAL ACCIDENT CONSEQUENCES ─── -->
+    <div class="section-title" style="font-size:1.15rem; margin-top:28px;">2. ผลกระทบ 7 ประการจากอุบัติเหตุไฟฟ้า</div>
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); margin-top:14px; margin-bottom:20px;">
+      <div class="card" style="border-top:3px solid #ef4444;">
+        <div style="font-size:1.6rem;margin-bottom:8px;">⚡</div>
+        <h3>Electric Shock</h3>
+        <p>กระแสไฟฟ้าไหลผ่านร่างกาย กล้ามเนื้อหดตัว ไม่สามารถปล่อยมือได้</p>
+      </div>
+      <div class="card" style="border-top:3px solid #f97316;">
+        <div style="font-size:1.6rem;margin-bottom:8px;">🔥</div>
+        <h3>Burns (ไหม้)</h3>
+        <p>ความร้อนจากกระแสไฟฟ้าทำให้เนื้อเยื่อไหม้ทั้งภายในและภายนอก</p>
+      </div>
+      <div class="card" style="border-top:3px solid #a855f7;">
+        <div style="font-size:1.6rem;margin-bottom:8px;">🩸</div>
+        <h3>Chemical Effects</h3>
+        <p>กระแสไฟฟ้าเปลี่ยนองค์ประกอบเคมีในเลือด เช่น สลายน้ำในร่างกาย</p>
+      </div>
+      <div class="card" style="border-top:3px solid #3b82f6;">
+        <div style="font-size:1.6rem;margin-bottom:8px;">💪</div>
+        <h3>Muscle Paralysis</h3>
+        <p>กล้ามเนื้อหยุดทำงาน รวมถึงกะบังลม — หยุดหายใจได้</p>
+      </div>
+      <div class="card" style="border-top:3px solid #eab308;">
+        <div style="font-size:1.6rem;margin-bottom:8px;">💥</div>
+        <h3>Thermal Arc Burn</h3>
+        <p>ประกายไฟจาก Arc เผาไหม้เครื่องมือและร่างกาย อุณหภูมิสูงถึง 4,000–35,000°C</p>
+      </div>
+      <div class="card" style="border-top:3px solid #ef4444;">
+        <div style="font-size:1.6rem;margin-bottom:8px;">🌡️</div>
+        <h3>Arc Flash Fire</h3>
+        <p>ประกายไฟ Arc กลายเป็นไฟลุก เสี่ยงต่อการเกิดเพลิงไหม้บริเวณงาน</p>
+      </div>
+      <div class="card" style="border-top:3px solid #06b6d4;">
+        <div style="font-size:1.6rem;margin-bottom:8px;">👁️</div>
+        <h3>UV Eye Damage</h3>
+        <p>แสง UV จาก Arc Flash ทำลายดวงตาถาวร — ต้องสวม Face Shield เสมอ</p>
+      </div>
+    </div>
+
+    <!-- First Aid -->
+    <div class="section-title" style="font-size:1.1rem; margin-top:20px;">การปฐมพยาบาล</div>
+    <div class="card-grid" style="grid-template-columns:1fr 1fr; margin-top:12px; margin-bottom:24px;">
+      <div class="card" style="border-left:4px solid #ef4444;">
+        <h3>⚡ ไฟฟ้าดูด (Electric Shock)</h3>
+        <ol style="padding-left:18px; font-size:0.88rem; line-height:1.8;">
+          <li><strong>อย่าสัมผัสผู้บาดเจ็บ</strong> — กระแสอาจยังผ่านร่างกายอยู่</li>
+          <li>ตัดแหล่งจ่ายไฟหรือใช้วัสดุฉนวน (ไม้แห้ง ยาง) ดันผู้บาดเจ็บออก</li>
+          <li>ตรวจสติสัมปชัญญะ การหายใจ ชีพจร</li>
+          <li>ทำ CPR (ถ้าหัวใจหยุด) + ใช้ AED โดยเร็วที่สุด</li>
+          <li>โทรแจ้ง 1669 ทันที</li>
+        </ol>
+      </div>
+      <div class="card" style="border-left:4px solid #3b82f6;">
+        <h3>🔋 อุบัติเหตุจากแบตเตอรี่</h3>
+        <ol style="padding-left:18px; font-size:0.88rem; line-height:1.8;">
+          <li><strong>สารอิเล็กโทรไลต์ถูกผิว:</strong> ล้างด้วยน้ำสะอาด ≥15 นาที ทา Calcium Gluconate 2.5%</li>
+          <li><strong>เข้าตา:</strong> ล้างตาด้วยน้ำ ≥10 นาที พบแพทย์ทันที</li>
+          <li><strong>ก๊าซรั่ว (H₂, HF):</strong> ออกจากพื้นที่ทันที ไปอยู่ในที่อากาศถ่ายเท</li>
+          <li><strong>กลืนกิน:</strong> บ้วนปากและไปโรงพยาบาลทันที</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- ─── 3. HV IDENTIFICATION ─── -->
+    <div class="section-title" style="font-size:1.15rem; margin-top:28px;">3. การระบุชิ้นส่วน HV บนรถ</div>
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); margin-top:14px; margin-bottom:20px;">
+      <div class="card" style="background:#fff7ed; border:2px solid #f97316;">
+        <div style="font-size:2rem;margin-bottom:8px;">🟠</div>
+        <h3>สายไฟสีส้ม</h3>
+        <p>สายไฟแรงสูง HV ทุกเส้นในรถ EV ใช้ฉนวนสีส้มเพื่อแยกออกจากสาย LV สีดำ</p>
+        <p style="margin-top:6px;font-size:0.8rem;color:#ea580c;font-weight:600;">อย่าตัด ดัด หรือสัมผัสโดยไม่สวม PPE</p>
+      </div>
+      <div class="card" style="background:#fef2f2; border:2px solid #ef4444;">
+        <div style="font-size:2rem;margin-bottom:8px;">🔴</div>
+        <h3>หัวต่อสีแดง</h3>
+        <p>ขั้วต่อ (Connector) HV ทุกตัวมีเครื่องหมายสีแดงหรือป้ายสีแดง "HIGH VOLTAGE INSIDE"</p>
+        <p style="margin-top:6px;font-size:0.8rem;color:#dc2626;font-weight:600;">ห้ามถอดโดยไม่มีการอบรม</p>
+      </div>
+      <div class="card" style="background:#fffbeb; border:2px solid #f59e0b;">
+        <div style="font-size:2rem;margin-bottom:8px;">⚡</div>
+        <h3>สัญลักษณ์ ⚡ เหลือง</h3>
+        <p>ป้ายไฟฟ้าแรงสูงสีเหลือง ติดบนแบตเตอรี่ BDU MCU OBC และส่วนประกอบ HV ทุกชิ้น</p>
+        <p style="margin-top:6px;font-size:0.8rem;color:#d97706;font-weight:600;">ระยะปลอดภัย ≥1 เมตร</p>
+      </div>
+      <div class="card" style="background:#f0fdf4; border:2px solid #22c55e;">
+        <div style="font-size:2rem;margin-bottom:8px;">🔑</div>
+        <h3>MSD / Service Plug</h3>
+        <p>Maintenance Service Disconnect — ถอดออกเพื่อตัดวงจร HV ก่อนซ่อมบำรุง (BYD-Technician only)</p>
+        <p style="margin-top:6px;font-size:0.8rem;color:#16a34a;font-weight:600;">รอ 5 นาที หลังถอด MSD ก่อนสัมผัส</p>
+      </div>
+    </div>
+
+    <!-- ─── 4. EV FIRE CAUSES ─── -->
+    <div class="section-title" style="font-size:1.15rem; margin-top:28px;">4. สาเหตุเพลิงไหม้รถ EV</div>
+    <p style="margin-bottom:14px;">เพลิงไหม้ EV มักเกิดจาก <strong>Thermal Runaway</strong> — ปฏิกิริยาเคมีในเซลล์ที่ควบคุมไม่ได้ ซึ่งอาจถูกกระตุ้นได้จากหลายสาเหตุ</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:24px;">
+      <div style="background:#fff1f2;border:1.5px solid #fecdd3;border-radius:12px;padding:16px;">
+        <div style="font-weight:700;color:#dc2626;margin-bottom:8px;font-size:0.95rem;">💥 Thermal Runaway</div>
+        <p style="font-size:0.86rem;line-height:1.6;">ความเสียหายของเซลล์ → ปฏิกิริยาเคมีคายความร้อน → อุณหภูมิสูงขึ้น → ปฏิกิริยาเร็วขึ้น → วนซ้ำ → เพลิงไหม้/ระเบิด</p>
+        <div style="margin-top:10px;font-size:0.8rem;color:#9f1239;">สัญญาณเตือน: กลิ่นไหม้ · ควัน · ไอน้ำ · เสียงดัง</div>
+      </div>
+      <div style="background:#fff7ed;border:1.5px solid #fed7aa;border-radius:12px;padding:16px;">
+        <div style="font-weight:700;color:#ea580c;margin-bottom:8px;font-size:0.95rem;">🚗 การชนกัน</div>
+        <p style="font-size:0.86rem;line-height:1.6;">ถาดแบตเตอรีแตก (≥4 mm ลึก / ≥25 mm² พื้นที่) → อิเล็กโทรไลต์รั่ว → ลัดวงจร → ไฟไหม้ · HV cable ขาด → Arc Flash</p>
+      </div>
+      <div style="background:#fefce8;border:1.5px solid #fef08a;border-radius:12px;padding:16px;">
+        <div style="font-weight:700;color:#ca8a04;margin-bottom:8px;font-size:0.95rem;">🔌 การชาร์จไม่เหมาะสม</div>
+        <p style="font-size:0.86rem;line-height:1.6;">อุปกรณ์ชาร์จไม่ได้มาตรฐาน ชาร์จ Overload หรืออุปกรณ์เสียหาย → แบตเตอรีชาร์จเกิน → ร้อนจัด → ไฟไหม้</p>
+      </div>
+      <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:16px;">
+        <div style="font-weight:700;color:#1d4ed8;margin-bottom:8px;font-size:0.95rem;">🌊 น้ำท่วม</div>
+        <p style="font-size:0.86rem;line-height:1.6;">แบตเตอรี EV มาตรฐาน <strong>IP67</strong> (ทนน้ำ ≤1 ม. / 30 นาที) แต่ถ้าจมนานกว่านั้น → ของเหลวซึมเข้า → ลัดวงจร → ไฟไหม้</p>
+      </div>
+    </div>
+
+    <!-- LFP vs NCM fire comparison -->
+    <div class="info-box blue" style="margin-bottom:24px;">
+      <h4>LFP vs NCM — ความปลอดภัยด้านเพลิงไหม้</h4>
+      <table class="spec-table" style="margin-top:10px;">
+        <tr><th>คุณสมบัติ</th><th style="background:#064e3b;">LFP (Blade Battery BYD)</th><th style="background:#7f1d1d;">NCM</th></tr>
+        <tr><td>อุณหภูมิสลายตัว</td><td style="color:#10b981;font-weight:700;">700–800°C</td><td style="color:#ef4444;font-weight:700;">~200°C</td></tr>
+        <tr><td>ปล่อย O₂ เมื่อสลายตัว</td><td style="color:#10b981;font-weight:700;">ไม่ปล่อย</td><td style="color:#ef4444;font-weight:700;">ปล่อย O₂ → ฟ้าผ่าเชื้อไฟ</td></tr>
+        <tr><td>ความเสี่ยง Thermal Runaway</td><td style="color:#10b981;font-weight:700;">ต่ำ — ปฏิกิริยาช้า</td><td style="color:#ef4444;font-weight:700;">สูง — ลูกโซ่รวดเร็ว</td></tr>
+        <tr><td>การดับเพลิง</td><td>ใช้น้ำ/ทรายดับได้</td><td>ยากมาก ปล่อย O₂ ซ้ำ</td></tr>
+      </table>
+    </div>
+
+    <!-- ─── 5. PPE ─── -->
+    <div class="section-title" style="font-size:1.15rem; margin-top:28px;">5. อุปกรณ์ป้องกันส่วนบุคคล (PPE)</div>
+    <p style="margin-bottom:14px;">ก่อนเข้าทำงานกับระบบ HV ต้องสวม PPE ที่เหมาะสมตามขั้นตอนที่ทำ</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px;">
+      <div style="text-align:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 10px;">
+        <div style="font-size:2rem;margin-bottom:6px;">🧤</div>
+        <div style="font-weight:700;font-size:0.85rem;">ถุงมือฉนวน</div>
+        <div style="font-size:0.75rem;color:#64748b;margin-top:4px;">1,000 VDC<br>สีส้ม</div>
+      </div>
+      <div style="text-align:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 10px;">
+        <div style="font-size:2rem;margin-bottom:6px;">🧤</div>
+        <div style="font-weight:700;font-size:0.85rem;">ถุงมือทนกรด-ด่าง</div>
+        <div style="font-size:0.75rem;color:#64748b;margin-top:4px;">สีเขียว<br>สำหรับอิเล็กโทรไลต์</div>
+      </div>
+      <div style="text-align:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 10px;">
+        <div style="font-size:2rem;margin-bottom:6px;">👟</div>
+        <div style="font-weight:700;font-size:0.85rem;">รองเท้าฉนวน</div>
+        <div style="font-size:0.75rem;color:#64748b;margin-top:4px;">18 kV<br>พื้น ESD</div>
+      </div>
+      <div style="text-align:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 10px;">
+        <div style="font-size:2rem;margin-bottom:6px;">🥽</div>
+        <div style="font-weight:700;font-size:0.85rem;">แว่นตา/หน้ากาก</div>
+        <div style="font-size:0.75rem;color:#64748b;margin-top:4px;">Goggles / Face Shield<br>กัน Arc Flash + สาร</div>
+      </div>
+      <div style="text-align:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 10px;">
+        <div style="font-size:2rem;margin-bottom:6px;">⛑️</div>
+        <div style="font-weight:700;font-size:0.85rem;">หมวกนิรภัย</div>
+        <div style="font-size:0.75rem;color:#64748b;margin-top:4px;">แข็ง/อ่อน<br>ตามพื้นที่งาน</div>
+      </div>
+      <div style="text-align:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 10px;">
+        <div style="font-size:2rem;margin-bottom:6px;">🟫</div>
+        <div style="font-weight:700;font-size:0.85rem;">เสื่อฉนวน</div>
+        <div style="font-size:0.75rem;color:#64748b;margin-top:4px;">Insulating Mat<br>วางใต้เท้า</div>
+      </div>
+    </div>
+
+    <!-- ─── 6. EMERGENCY RESPONSE SCENARIOS ─── -->
+    <div class="section-title" style="font-size:1.15rem; margin-top:28px;">6. การจัดการฉุกเฉิน — เลือกสถานการณ์</div>
+    <p style="margin-bottom:14px;">ขั้นตอนพื้นฐาน 3 ขั้น: <strong>Identify → Immobilize → Disable</strong></p>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+      <button onclick="evScenario('collision')" id="evsc-collision"
+        style="padding:9px 20px;border-radius:8px;border:2px solid #f97316;background:#fff7ed;color:#ea580c;font-weight:700;cursor:pointer;font-family:inherit;font-size:0.9rem;">
+        🚗 การชนกัน
+      </button>
+      <button onclick="evScenario('fire')" id="evsc-fire"
+        style="padding:9px 20px;border-radius:8px;border:2px solid #ef4444;background:#fff;color:#dc2626;font-weight:700;cursor:pointer;font-family:inherit;font-size:0.9rem;">
+        🔥 ควัน / ไฟไหม้
+      </button>
+      <button onclick="evScenario('flood')" id="evsc-flood"
+        style="padding:9px 20px;border-radius:8px;border:2px solid #3b82f6;background:#fff;color:#1d4ed8;font-weight:700;cursor:pointer;font-family:inherit;font-size:0.9rem;">
+        🌊 น้ำท่วม
+      </button>
+    </div>
+
+    <div id="ev-scenario-panel" style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:20px;min-height:200px;transition:all 0.3s;">
+      <!-- content injected by JS -->
+    </div>
+
+    <div class="src-note" style="margin-top:12px;">ขั้นตอน ง. (ปลดบัสบาร์ + MSD) ต้องดำเนินการโดย BYD-Technician ที่ผ่านการรับรองเท่านั้น</div>
+  </div>
+
   <!-- ENGINEERING TESTS -->
   <div id="engtest" class="section">
     <div class="section-title">การทดสอบทางวิศวกรรม</div>
@@ -7376,6 +7595,127 @@ function closeSidebar() {
 
   // Init
   window.hvMode('drive');
+})();
+
+/* ===== EV SAFETY SCENARIOS ===== */
+(function(){
+  var SCENARIOS = {
+    collision: {
+      title: '🚗 การชนกัน — Collision Handling',
+      color: '#ea580c',
+      border: '#f97316',
+      bg: '#fff7ed',
+      user: [
+        'ปิดรถทันที (Power OFF) ให้รถอยู่นิ่ง ≥5 นาที',
+        'ถอดขั้วลบแบตเตอรี่แรงดันต่ำ (12V) ออก',
+        'ถอด MSD (Maintenance Service Disconnect) ถ้ามีติดตั้ง',
+        'โทรติดต่อศูนย์บริการ BYD ที่ได้รับอนุญาต',
+        '<strong style="color:#dc2626">หากชนรุนแรง ให้ออกจากรถทันที ไปยืนห่าง ≥10 เมตร</strong>'
+      ],
+      tech: [
+        'ปลดบัสบาร์บวกและลบของแบตเตอรี่แรงสูง (BYD-Technician only)',
+        'ใช้เทปฉนวนปิดบัสบาร์และขั้วต่อสายรัดทุกจุด',
+        'ถ้ามีอิเล็กโทรไลต์รั่ว: เก็บในภาชนะอากาศเข้าไม่ได้ ไปที่ร้านเพื่อจัดการ',
+        '<em>ขั้นตอน ง–ช ต้องสวม: รองเท้าฉนวน + ถุงมือฉนวน + แผ่นฉนวน</em>',
+        'PPE เพิ่มเติมเมื่อมีอิเล็กโทรไลต์: ถุงมือทนกรด-ด่าง + แว่นตา/หน้ากาก'
+      ],
+      warn: 'ระบบ HV ยังมีแรงดันอยู่ ~60 นาที หลังจากเกิดอุบัติเหตุ แม้ไม่มีไฟเตือน'
+    },
+    fire: {
+      title: '🔥 ควัน / ไฟไหม้ — Smoke & Fire',
+      color: '#dc2626',
+      border: '#ef4444',
+      bg: '#fff1f2',
+      user: [
+        '<strong>ไฟประกาย (เล็ก):</strong> ตัดแหล่งจ่ายไฟ AC ภายนอก (ถ้าชาร์จอยู่) ทันที',
+        'ปิดประตูรถ เพื่อลดออกซิเจน',
+        'ใช้ถังดับเพลิง <strong>แบบไม่มีสมน้ำ (Dry Powder + ทรายดับเพลิง)</strong>',
+        'ถอด MSD ถ้าทำได้อย่างปลอดภัย',
+        '<strong style="color:#dc2626">ไฟร้ายแรง: ออกจากรถทันที ไปยืนห่าง อยู่เหนือลม แจ้ง 199</strong>'
+      ],
+      tech: [
+        'ใช้ถังดับเพลิงแบบไม่มีสมน้ำ + ทราย ดับในส่วนแบตเตอรี่แรงสูง',
+        'หลังดับไฟแล้ว ต้องทำความสะอาดแบตเตอรี่แรงสูงด้วยน้ำ <strong>30 นาที</strong> ต่อเนื่อง',
+        '<strong style="color:#dc2626">อย่าเปิดหรือถอดฝาครอบ/Connector ที่มีโลโก้ไฟฟ้าแรงสูงติดอยู่</strong>',
+        'ระวัง: ควันจากไฟไหม้ LFP มีก๊าซพิษ HF — ต้องสวมหน้ากาก SCBA'
+      ],
+      warn: 'ไฟจาก HV Battery อาจกลับมาลุกซ้ำได้หลังดับแล้ว ต้องเฝ้าระวังและรดน้ำต่อเนื่อง'
+    },
+    flood: {
+      title: '🌊 รถน้ำท่วม — Flooded Vehicle',
+      color: '#1d4ed8',
+      border: '#3b82f6',
+      bg: '#eff6ff',
+      user: [
+        'ทดสอบว่ารถยังทำงานได้หรือไม่ (มีไฟเตือนหรือไม่)',
+        'ถ้าน้ำท่วมต่ำกว่าขอบประตู &lt;30 นาที และไม่มีไฟเตือน → บำรุงรักษาตามปกติ',
+        '<strong>ถ้าน้ำท่วมสูงหรือนาน: Power OFF ทันที ห้ามสตาร์ท</strong>',
+        'ถอด MSD ถ้าทำได้ ย้ายรถมาที่ร้านทันที',
+        '<strong style="color:#1d4ed8">ห้ามนำรถเข้าอุโมงค์ซ่อมหรือยก รอ BYD-Technician ตรวจก่อน</strong>'
+      ],
+      tech: [
+        'ตรวจสอบระดับน้ำท่วมและระยะเวลา ประเมินความเสียหาย',
+        'ปลดบัสบาร์บวกและลบของแบตเตอรี่แรงสูง (BYD-Technician only)',
+        'ถ้าแบตเตอรี่แรงสูงยังมีไฟฟ้า: วางไว้อย่างปลอดภัย ถอดแบตเตอรี่แรงสูงและโมดูล',
+        'ตรวจสอบ IP67 ของ HV Battery Pack — ถ้าถูกแซมจะต้องเปลี่ยน',
+        '<em>ทุกขั้นตอนต้องสวม: รองเท้าฉนวน + ถุงมือฉนวน + ถุงมือทนกรด-ด่าง + แว่นตา</em>'
+      ],
+      warn: 'หากน้ำท่วมนาน >30 นาที หรือแบตเตอรี่แรงสูงมีไฟฟ้ารั่ว ห้ามใช้งานจนกว่า BYD-Technician จะตรวจสอบ'
+    }
+  };
+
+  window.evScenario = function(s) {
+    var d = SCENARIOS[s];
+    if (!d) return;
+    // update button styles
+    ['collision','fire','flood'].forEach(function(k){
+      var btn = document.getElementById('evsc-'+k);
+      if (!btn) return;
+      var kd = SCENARIOS[k];
+      if (k === s) {
+        btn.style.background = kd.bg;
+        btn.style.borderColor = kd.border;
+        btn.style.color = kd.color;
+        btn.style.boxShadow = '0 0 0 3px '+kd.border+'40';
+      } else {
+        btn.style.background = '#fff';
+        btn.style.borderColor = '#e2e8f0';
+        btn.style.color = '#475569';
+        btn.style.boxShadow = 'none';
+      }
+    });
+
+    var userSteps = d.user.map(function(t,i){
+      return '<div style="display:flex;gap:10px;margin-bottom:8px;align-items:flex-start;">'
+        +'<div style="min-width:24px;height:24px;border-radius:50%;background:'+d.color+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:700;">'+(i+1)+'</div>'
+        +'<div style="font-size:0.88rem;line-height:1.6;padding-top:2px;">'+t+'</div></div>';
+    }).join('');
+
+    var techSteps = d.tech.map(function(t){
+      return '<li style="font-size:0.85rem;line-height:1.6;margin-bottom:6px;">'+t+'</li>';
+    }).join('');
+
+    var panel = document.getElementById('ev-scenario-panel');
+    if (!panel) return;
+    panel.style.background = d.bg;
+    panel.style.borderColor = d.border;
+    panel.innerHTML = '<div style="font-size:1.05rem;font-weight:700;color:'+d.color+';margin-bottom:14px;">'+d.title+'</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex-wrap:wrap;">'
+      +'<div>'
+      +'<div style="font-weight:700;font-size:0.82rem;text-transform:uppercase;letter-spacing:.05em;color:#475569;margin-bottom:10px;">สำหรับผู้ใช้/ผู้พบเห็น</div>'
+      + userSteps
+      +'</div>'
+      +'<div>'
+      +'<div style="font-weight:700;font-size:0.82rem;text-transform:uppercase;letter-spacing:.05em;color:#475569;margin-bottom:10px;">ช่างบำรุงรักษา (Technician)</div>'
+      +'<ul style="padding-left:16px;margin:0;">'+techSteps+'</ul>'
+      +'</div>'
+      +'</div>'
+      +'<div style="margin-top:14px;background:#fff8;border-left:3px solid '+d.color+';padding:10px 14px;border-radius:0 8px 8px 0;font-size:0.84rem;color:#374151;">'
+      +'⚠️ '+d.warn+'</div>';
+  };
+
+  // init
+  window.evScenario('collision');
 })();
 
 /* ===== CAN BUS SIMULATION ===== */
