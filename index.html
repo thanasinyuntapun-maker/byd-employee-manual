@@ -225,9 +225,28 @@
   @media (max-width: 768px) {
     #sidebar { transform: translateX(-100%); transition: transform 0.3s; }
     #sidebar.open { transform: translateX(0); }
-    #main { margin-left: 0; }
+    #main { margin-left: 0; min-width: 0; }
     .hero, .section { padding: 24px 20px; }
     .section-title { font-size: 1.3rem; }
+
+    /* --- Mobile responsive fixes (fixed-column grids + wide tables) --- */
+    /* Wide tables scroll horizontally instead of overflowing the page */
+    .section table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    /* Card / metric rows with fixed column counts → collapse to 2 columns */
+    .section div[style*="repeat(5,1fr)"],
+    .section div[style*="repeat(6,1fr)"],
+    .section div[style*="repeat(4,1fr)"],
+    .section div[style*="repeat(3,1fr)"] { grid-template-columns: repeat(2,1fr) !important; }
+    /* Interactive-sim sliders & controls + two-column content layouts → single column */
+    .section div[style*="3fr 3fr 3fr 2fr"],
+    .section div[style*="1fr 1fr 1fr 120px"],
+    .section div[style*="1fr auto auto auto"],
+    .section div[style*="1fr 195px"],
+    .section div[style*="1fr 185px"] { grid-template-columns: 1fr !important; }
+    /* CAN data-log rows: keep tabular width but scroll inside their own container */
+    .section div[style*="100px 65px 42px 130px 1fr"],
+    .section div[style*="100px 65px 40px 130px 1fr"] { min-width: 420px; }
+    #can-log, #can-log-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   }
 
   /* HAMBURGER */
@@ -446,6 +465,11 @@
   <symbol id="ic-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-1.7 6.3"/><path d="M20 5v6h-6"/></symbol>
   <symbol id="ic-ext" viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></symbol>
   <symbol id="ic-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+  <symbol id="ic-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 3z"/></symbol>
+  <symbol id="ic-wind" viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></symbol>
+  <symbol id="ic-droplet" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
+  <symbol id="ic-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+  <symbol id="ic-hardhat" viewBox="0 0 24 24"><path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z"/><path d="M10 10V5a2 2 0 0 1 4 0v5"/><path d="M4 15v-3a8 8 0 0 1 16 0v3"/></symbol>
 </svg>
 
 <!-- SIDEBAR -->
@@ -537,7 +561,7 @@
       <span class="icon"><svg class="ic"><use href="#ic-zap"/></svg></span> <span data-lang="th">ความปลอดภัย EV</span><span data-lang="en">EV Safety</span>
     </div>
     <div class="nav-item" onclick="showSection('evfire')">
-      <span class="icon">🔥</span> <span data-lang="th">การดับเพลิง EV</span><span data-lang="en">EV Fire Fighting</span>
+      <span class="icon"><svg class="ic"><use href="#ic-flame"/></svg></span> <span data-lang="th">การดับเพลิง EV</span><span data-lang="en">EV Fire Fighting</span>
     </div>
     <div class="nav-item" onclick="showSection('engtest')">
       <span class="icon"><svg class="ic"><use href="#ic-flask"/></svg></span> <span data-lang="th">การทดสอบทางวิศวกรรม</span><span data-lang="en">Engineering Testing</span>
@@ -1882,7 +1906,7 @@
         <text x="574" y="273" fill="#f59e0b" font-size="9">ICE — Peak ที่ ~4,000 RPM</text>
 
         <!-- No gearshift label -->
-        <text x="408" y="318" text-anchor="middle" fill="#94a3b8" font-size="8.5">EV ไม่ต้องเปลี่ยนเกียร์ตลอดช่วง RPM</text>
+        <text x="408" y="336" text-anchor="middle" fill="#94a3b8" font-size="8.5">EV ไม่ต้องเปลี่ยนเกียร์ตลอดช่วง RPM</text>
 
         <!-- Title labels left -->
         <text x="148" y="225" text-anchor="middle" fill="#94a3b8" font-size="9.5">ห่วงโซ่การส่งกำลัง</text>
@@ -3393,13 +3417,13 @@
           <!-- Terminator Right -->
           <line x1="698" y1="104" x2="698" y2="120" stroke="#475569" stroke-width="1.5"/>
           <path d="M694,109 l4,-3 l4,6 l4,-6 l3,6 l3,-3" stroke="#94a3b8" stroke-width="1.2" fill="none"/>
-          <text x="702" y="100" fill="#64748b" font-size="7.5">120Ω</text>
+          <text x="716" y="100" text-anchor="end" fill="#64748b" font-size="7.5">120Ω</text>
           <!-- CAN-H -->
           <line x1="22" y1="104" x2="698" y2="104" stroke="#ef4444" stroke-width="2.5" opacity="0.7"/>
-          <text x="11" y="102" fill="#f87171" font-size="7">H</text>
+          <text x="44" y="101" fill="#f87171" font-size="7">H</text>
           <!-- CAN-L -->
           <line x1="22" y1="120" x2="698" y2="120" stroke="#3b82f6" stroke-width="2.5" opacity="0.7"/>
-          <text x="11" y="124" fill="#60a5fa" font-size="7">L</text>
+          <text x="44" y="130" fill="#60a5fa" font-size="7">L</text>
           <!-- Packet (hidden) -->
           <rect id="can-pkt" x="0" y="101" width="34" height="21" rx="4" fill="#22c55e" opacity="0"/>
           <text id="can-pkt-lbl" x="17" y="115" fill="#fff" font-size="7" font-weight="700" text-anchor="middle" opacity="0"/>
@@ -3487,7 +3511,7 @@
         <!-- Message Log -->
         <div>
           <div style="font-size:0.7rem; color:#475569; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px;">Message Log</div>
-          <div style="background:#020810; border-radius:6px; border:1px solid #1e293b; min-height:48px; max-height:180px; overflow-y:auto;">
+          <div id="can-log-wrap" style="background:#020810; border-radius:6px; border:1px solid #1e293b; min-height:48px; max-height:180px; overflow-y:auto;">
             <div style="display:grid;grid-template-columns:100px 65px 42px 130px 1fr;gap:5px;padding:5px 10px;border-bottom:1px solid #1e3a5f;font-size:0.65rem;color:#334155;font-weight:700;text-transform:uppercase;"><span>Time</span><span>ID</span><span>DLC</span><span>Data</span><span>Description</span></div>
             <div id="can-log"><div style="padding:12px 10px;color:#334155;font-size:0.78rem;font-style:italic;">— กด SEND เพื่อเริ่มส่งข้อมูล —</div></div>
           </div>
@@ -3661,8 +3685,8 @@
         <text x="22" y="210" text-anchor="middle" fill="#94a3b8" font-size="11" transform="rotate(-90,22,210)">Pressure, P (MPa)</text>
 
         <!-- P labels on right -->
-        <text x="665" y="127" fill="#d70c19" font-size="10" font-weight="600">P_high 1.45</text>
-        <text x="665" y="316" fill="#3b82f6" font-size="10" font-weight="600">P_low 0.35</text>
+        <text x="663" y="127" fill="#d70c19" font-size="9" font-weight="600">P_high 1.45</text>
+        <text x="663" y="316" fill="#3b82f6" font-size="9" font-weight="600">P_low 0.35</text>
 
         <!-- T isotherms (dashed, subtle) -->
         <!-- T=40°C (313K) line at P_high — reference -->
@@ -3952,7 +3976,7 @@
           <!-- EXP. VALVE -->
           <rect x="298" y="283" width="130" height="48" rx="7" fill="#141a06" stroke="#84cc16" stroke-width="1.8"/>
           <text x="363" y="305" text-anchor="middle" fill="#d9f99d" font-size="11" font-weight="700">EXP. VALVE</text>
-          <text x="363" y="321" text-anchor="middle" fill="#84cc16" font-size="8.5">ลดแรงดัน → T↓ Flash</text>
+          <text x="363" y="321" text-anchor="middle" fill="#84cc16" font-size="8">EXV1 · ลดแรงดัน → T↓ Flash</text>
 
           <!-- EVAPORATOR -->
           <rect id="cs-evap-rect" x="42" y="185" width="151" height="76" rx="7" fill="#041628" stroke="#22d3ee" stroke-width="1.8"/>
@@ -3983,6 +4007,28 @@
           <text x="137" y="374" text-anchor="middle" fill="#6ee7b7" font-size="11" font-weight="700">BATTERY PACK</text>
           <text x="137" y="389" text-anchor="middle" fill="#34d399" font-size="8.5" id="cs-t-bat-box">T_bat = 30°C</text>
           <text x="137" y="404" text-anchor="middle" fill="#10b981" font-size="8.5" id="cs-bat-load-box">Load = 50 kW</text>
+
+          <!-- ================= REAL BYD COMPONENTS (mode-active in Cooling) ================= -->
+          <!-- SOV6 : A/C refrigeration solenoid valve — Connected (ON) in Interior Refrigeration -->
+          <path d="M 638,49 L 638,59 L 645,54 Z" fill="#fca5a5" stroke="#ef4444" stroke-width="1"/>
+          <path d="M 652,49 L 652,59 L 645,54 Z" fill="#fca5a5" stroke="#ef4444" stroke-width="1"/>
+          <text x="645" y="44" text-anchor="middle" fill="#fca5a5" font-size="8" font-weight="700">SOV6</text>
+
+          <!-- P-1 · T-1 : high-pressure discharge sensor (1.3–1.6 MPa) -->
+          <circle cx="675" cy="115" r="6" fill="#0a1628" stroke="#f87171" stroke-width="1.4"/>
+          <text x="675" y="118" text-anchor="middle" fill="#f87171" font-size="6.5" font-weight="700">PT</text>
+          <text x="686" y="111" fill="#fca5a5" font-size="8" font-weight="700">P-1 · T-1</text>
+          <text x="686" y="122" fill="#f87171" font-size="7.5">1.3–1.6 MPa</text>
+
+          <!-- Gas-Liquid Separator : before compressor suction -->
+          <rect x="592" y="180" width="15" height="26" rx="4" fill="#0f2438" stroke="#38bdf8" stroke-width="1.3"/>
+          <line x1="599.5" y1="186" x2="599.5" y2="200" stroke="#38bdf8" stroke-width="1"/>
+          <text x="599" y="222" text-anchor="middle" fill="#7dd3fc" font-size="7">G-L Sep</text>
+
+          <!-- PT-2 : low-pressure suction sensor (0.3–0.5 MPa) -->
+          <circle cx="450" cy="202" r="6" fill="#0a1628" stroke="#38bdf8" stroke-width="1.4"/>
+          <text x="450" y="205" text-anchor="middle" fill="#38bdf8" font-size="6.5" font-weight="700">PT</text>
+          <text x="450" y="222" text-anchor="middle" fill="#7dd3fc" font-size="8" font-weight="700">PT-2 · 0.3–0.5 MPa</text>
 
           <!-- ======================== STATE POINT LABELS ======================== -->
           <circle cx="193" cy="202" r="5.5" fill="#38bdf8" opacity="0.85"/>
@@ -4023,6 +4069,10 @@
           <text x="590" y="402" fill="#94a3b8" font-size="8.5">Coolant เย็น ← Chiller</text>
           <text x="679" y="415" text-anchor="middle" fill="#475569" font-size="7.5">Speed animation ∝ mass flow rate</text>
         </svg>
+        <div style="font-size:0.82rem; color:#4b5563; margin:8px 2px 0; line-height:1.55;">
+          จำลองแบบง่ายของ <b>Integrated TM Module</b> ในโหมดทำความเย็น (Interior Refrigeration) — โหมดนี้เปิดวาล์ว <b>SOV2, SOV3, <span style="color:#dc2626;">SOV6</span></b> + <b style="color:#65a30d;">EXV1</b> (adjustment); ผังย่อนี้แสดงเฉพาะ <b style="color:#dc2626;">SOV6</b> (A/C refrigeration) กับ <b style="color:#65a30d;">EXV1</b> ที่อยู่บน loop สารทำความเย็นหลัก · เซนเซอร์แรงดันสูง <b>P-1/T-1 = 1.3–1.6 MPa</b> / ต่ำ <b>PT-2 = 0.3–0.5 MPa</b> · Gas-Liquid Separator ก่อนเข้า Compressor
+          <span style="color:#64748b;">— ดูผังวงจรจริงเต็มรูปแบบ + ตารางสถานะ Valve ทั้ง 9 ตัว (SOV1–6, EXV1–3) ได้ที่หัวข้อ “System Principle — Interior Refrigeration” ด้านล่าง</span>
+        </div>
       </div>
 
       <!-- SLIDERS -->
@@ -6926,25 +6976,29 @@ Android Auto™</td><td class="spec-val">●</td></tr>
     <div class="sub-title" style="margin-top:28px;">องค์ประกอบการเกิดไฟ — Fire Triangle</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:14px 0;">
       <div style="background:#fff7ed;border:2px solid #fb923c;border-radius:12px;padding:16px 18px;">
-        <div style="font-size:1.5rem;margin-bottom:6px;">⛽</div>
+        <svg width="28" height="28" fill="none" stroke="#c2410c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;display:block;"><use href="#ic-flame"/></svg>
         <div style="font-weight:700;color:#c2410c;font-size:1rem;">เชื้อเพลิง (Fuel)</div>
         <div style="font-size:.85rem;color:#555;margin-top:4px;">วัสดุที่สามารถลุกไหม้ได้ — ไม้, กระดาษ, น้ำมัน, พลาสติก, ก๊าช</div>
       </div>
       <div style="background:#eff6ff;border:2px solid #3b82f6;border-radius:12px;padding:16px 18px;">
-        <div style="font-size:1.5rem;margin-bottom:6px;">💨</div>
+        <svg width="28" height="28" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;display:block;"><use href="#ic-wind"/></svg>
         <div style="font-weight:700;color:#1d4ed8;font-size:1rem;">ออกซิเจน (Oxygen)</div>
         <div style="font-size:.85rem;color:#555;margin-top:4px;">อากาศในบรรยากาศ — ออกซิเจนอย่างน้อย ~16% จึงจะเกิดการเผาไหม้</div>
       </div>
       <div style="background:#fef2f2;border:2px solid #ef4444;border-radius:12px;padding:16px 18px;">
-        <div style="font-size:1.5rem;margin-bottom:6px;">🌡️</div>
+        <svg width="28" height="28" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;display:block;"><use href="#ic-thermo"/></svg>
         <div style="font-weight:700;color:#dc2626;font-size:1rem;">ความร้อน (Heat)</div>
         <div style="font-size:.85rem;color:#555;margin-top:4px;">ความร้อนเพียงพอที่จะทำให้เชื้อเพลิงถึงจุดวาบไฟ (Ignition Point)</div>
       </div>
       <div style="background:#fdf4ff;border:2px solid #a855f7;border-radius:12px;padding:16px 18px;">
-        <div style="font-size:1.5rem;margin-bottom:6px;">🔁</div>
+        <svg width="28" height="28" fill="none" stroke="#7e22ce" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;display:block;"><use href="#ic-refresh"/></svg>
         <div style="font-weight:700;color:#7e22ce;font-size:1rem;">ปฏิกิริยาลูกโซ่ (Chain Reaction)</div>
         <div style="font-size:.85rem;color:#555;margin-top:4px;">เมื่อเชื้อเพลิงได้รับความร้อน จะแตกตัวเป็นโมเลกุลขนาดเล็กที่ติดไฟต่อเนื่อง — ดับไฟ = ตัดวงจรนี้</div>
       </div>
+    </div>
+    <div class="fig">
+      <img src="assets/90_evfire/slide-45.png" alt="Fire Triangle — Fuel Oxygen Heat Chain Reaction">
+      <div class="fig-cap">องค์ประกอบการเกิดไฟ (Fire Triangle) — เชื้อเพลิง · ออกซิเจน · ความร้อน + ปฏิกิริยาลูกโซ่ <span class="src">— Denza EV Basic Safety หัวข้อ 6</span></div>
     </div>
 
     <!-- 2. FIRE CLASSES -->
@@ -6976,13 +7030,17 @@ Android Auto™</td><td class="spec-val">●</td></tr>
         <div style="font-size:.78rem;color:#555;margin-top:4px;">น้ำมันพืช · น้ำมันเตา</div>
       </div>
     </div>
+    <div class="fig">
+      <img src="assets/90_evfire/slide-46.png" alt="FIRE CLASSES A B C D K chart">
+      <div class="fig-cap">ตารางจำแนกประเภทของไฟ — Class A · B · C · D · K พร้อมสัญลักษณ์มาตรฐาน <span class="src">— Denza EV Basic Safety หัวข้อ 6</span></div>
+    </div>
 
     <!-- 3. FIRE EXTINGUISHER TYPES -->
     <div class="sub-title" style="margin-top:28px;">ประเภทถังดับเพลิง — Fire Extinguisher Types</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:14px 0;">
       <div style="background:#fafafa;border:2px solid #d4361a;border-radius:12px;padding:16px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <span style="font-size:1.8rem;">🧯</span>
+          <svg width="28" height="28" fill="none" stroke="#d4361a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-flask"/></svg>
           <div>
             <div style="font-weight:700;color:#d4361a;font-size:.95rem;">ผงเคมีแห้ง (Dry Chemical)</div>
             <div style="font-size:.75rem;color:#777;">Class A · B · C (ยกเว้น K)</div>
@@ -6992,7 +7050,7 @@ Android Auto™</td><td class="spec-val">●</td></tr>
       </div>
       <div style="background:#fafafa;border:2px solid #16a34a;border-radius:12px;padding:16px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <span style="font-size:1.8rem;">🟢</span>
+          <svg width="28" height="28" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-droplet"/></svg>
           <div>
             <div style="font-weight:700;color:#16a34a;font-size:.95rem;">น้ำยาเหลวระเหย</div>
             <div style="font-size:.75rem;color:#777;">Class A · B · C (ยกเว้น K) — ถังสีเขียว</div>
@@ -7002,7 +7060,7 @@ Android Auto™</td><td class="spec-val">●</td></tr>
       </div>
       <div style="background:#fafafa;border:2px solid #0284c7;border-radius:12px;padding:16px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <span style="font-size:1.8rem;">💨</span>
+          <svg width="28" height="28" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-wind"/></svg>
           <div>
             <div style="font-weight:700;color:#0284c7;font-size:.95rem;">ก๊าซ CO₂</div>
             <div style="font-size:.75rem;color:#777;">Class A · B · C (ยกเว้น K)</div>
@@ -7012,7 +7070,7 @@ Android Auto™</td><td class="spec-val">●</td></tr>
       </div>
       <div style="background:#fafafa;border:2px solid #737373;border-radius:12px;padding:16px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <span style="font-size:1.8rem;">🫧</span>
+          <svg width="28" height="28" fill="none" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-disc"/></svg>
           <div>
             <div style="font-weight:700;color:#404040;font-size:.95rem;">โฟม (Foam)</div>
             <div style="font-size:.75rem;color:#777;">Class A · B เท่านั้น</div>
@@ -7022,7 +7080,7 @@ Android Auto™</td><td class="spec-val">●</td></tr>
       </div>
       <div style="background:#fff1f2;border:2px solid #e11d48;border-radius:12px;padding:16px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <span style="font-size:1.8rem;">🌿</span>
+          <svg width="28" height="28" fill="none" stroke="#be123c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-check"/></svg>
           <div>
             <div style="font-weight:700;color:#be123c;font-size:.95rem;">F-500 (Fluorine-Free)</div>
             <div style="font-size:.75rem;color:#777;">Class A · B · D — เหมาะกับ Li-ion</div>
@@ -7031,35 +7089,44 @@ Android Auto™</td><td class="spec-val">●</td></tr>
         <div style="font-size:.82rem;color:#444;">ห่อหุ้มเชื้อเพลิง · ลดความร้อนรวดเร็ว · ปิดกั้นปฏิกิริยาลูกโซ่ · ไม่มีสารฟลูออรีน</div>
       </div>
     </div>
+    <div class="fig-grid">
+      <div class="fig"><img src="assets/90_evfire/slide-47.png" alt="Dry Chemical and น้ำยาเหลวระเหย"><div class="fig-cap">ผงเคมีแห้ง (Dry Chemical) · น้ำยาเหลวระเหย <span class="src">— Class A·B·C</span></div></div>
+      <div class="fig"><img src="assets/90_evfire/slide-48.png" alt="CO2 and Foam extinguishers"><div class="fig-cap">ก๊าซ CO₂ · โฟม <span class="src">— Class A·B·C / A·B</span></div></div>
+      <div class="fig"><img src="assets/90_evfire/slide-49.png" alt="F-500 Fluorine-Free extinguisher"><div class="fig-cap">F-500 (Fluorine-Free) <span class="src">— Class A·B·D เหมาะ Li-ion</span></div></div>
+    </div>
 
     <!-- 4. LI-ION BATTERY FIRE CHARACTERISTICS -->
     <div class="sub-title" style="margin-top:28px;">ลักษณะพิเศษไฟไหม้แบตเตอรี่ลิเธียมไออน</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0;">
       <div style="background:#fff7ed;border-left:4px solid #f97316;border-radius:8px;padding:14px;">
-        <div style="font-size:1.2rem;">🔁</div>
+        <svg width="22" height="22" fill="none" stroke="#c2410c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px;display:block;"><use href="#ic-refresh"/></svg>
         <div style="font-weight:700;color:#c2410c;margin:4px 0 4px;">ติดไฟใหม่ได้ง่าย</div>
         <div style="font-size:.82rem;color:#555;">หลังดับแล้ว ต้องใช้น้ำปริมาณมากทำให้เปลวไฟเย็นลง ไม่เช่นนั้นติดซ้ำได้อีก</div>
       </div>
       <div style="background:#fdf4ff;border-left:4px solid #a855f7;border-radius:8px;padding:14px;">
-        <div style="font-size:1.2rem;">🌫️</div>
+        <svg width="22" height="22" fill="none" stroke="#7e22ce" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px;display:block;"><use href="#ic-wind"/></svg>
         <div style="font-weight:700;color:#7e22ce;margin:4px 0 4px;">ควันและฝุ่นพิษก้อนใหญ่</div>
         <div style="font-size:.82rem;color:#555;">ก่อให้เกิดควันไวไฟ ระเบิด และเป็นพิษในปริมาณมาก — อันตรายอย่างยิ่ง</div>
       </div>
       <div style="background:#fef2f2;border-left:4px solid #ef4444;border-radius:8px;padding:14px;">
-        <div style="font-size:1.2rem;">⚡</div>
+        <svg width="22" height="22" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px;display:block;"><use href="#ic-zap"/></svg>
         <div style="font-weight:700;color:#dc2626;margin:4px 0 4px;">ลุกลามและแพร่กระจายรวดเร็ว</div>
         <div style="font-size:.82rem;color:#555;">แบตเตอรี่ลิเธียมไหม้และแพร่กระจายอย่างรวดเร็ว ความเสี่ยงระเบิดสูง</div>
       </div>
       <div style="background:#fefce8;border-left:4px solid #eab308;border-radius:8px;padding:14px;">
-        <div style="font-size:1.2rem;">🔩</div>
+        <svg width="22" height="22" fill="none" stroke="#a16207" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px;display:block;"><use href="#ic-cog"/></svg>
         <div style="font-weight:700;color:#a16207;margin:4px 0 4px;">เกี่ยวข้องกับ Class D</div>
         <div style="font-size:.82rem;color:#555;">โลหะลิเธียมหรือลิเธียมผสมมีปฏิกิริยาและติดไฟได้ง่าย — ต้องระวังการดับด้วยน้ำ</div>
       </div>
       <div style="background:#f0fdf4;border-left:4px solid #22c55e;border-radius:8px;padding:14px;">
-        <div style="font-size:1.2rem;">🔋</div>
+        <svg width="22" height="22" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px;display:block;"><use href="#ic-battery"/></svg>
         <div style="font-weight:700;color:#15803d;margin:4px 0 4px;">พลังงานสูงมาก</div>
         <div style="font-size:.82rem;color:#555;">เก็บพลังงานไฟฟ้าและปล่อยพลังงานจำนวนมากเมื่อถูกเผา — ไฟไหม้รุนแรงกว่ารถ ICE</div>
       </div>
+    </div>
+    <div class="fig-grid">
+      <div class="fig"><img src="assets/90_evfire/slide-50.png" alt="Li-ion battery fire characteristics circular diagram"><div class="fig-cap">ลักษณะไฟไหม้แบตเตอรี่ลิเธียมไออน — 5 ประเด็นสำคัญ <span class="src">— Denza EV Basic Safety หัวข้อ 7</span></div></div>
+      <div class="fig"><img src="assets/90_evfire/slide-51.png" alt="HRR graph comparison regular fire vs battery fire"><div class="fig-cap">เปรียบเทียบ HRR — ไฟไหม้ทั่วไป vs ไฟไหม้แบตเตอรี่ Li-ion (ไม่มีระยะ smoldering) <span class="src">— Denza EV Basic Safety</span></div></div>
     </div>
 
     <!-- 5. BATTERY FIRE EXTINGUISHING AGENT TABLE -->
@@ -7076,31 +7143,31 @@ Android Auto™</td><td class="spec-val">●</td></tr>
         </thead>
         <tbody>
           <tr style="background:#f0fdf4;">
-            <td style="padding:10px 12px;font-weight:700;color:#15803d;">💧 น้ำ</td>
+            <td style="padding:10px 12px;font-weight:700;color:#15803d;"><svg width="16" height="16" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><use href="#ic-droplet"/></svg>น้ำ</td>
             <td style="padding:10px 12px;">ลดอุณหภูมิ · ป้องกันอากาศไหลเวียน</td>
             <td style="padding:10px 12px;">ราคาถูก หาได้ทั่วไป ความจุความร้อนสูง</td>
             <td style="padding:10px 12px;">✅ <strong>ดีที่สุด</strong> — ต้องใช้ <strong>11,356–30,283 ลิตร</strong> ละอองน้ำดีกว่าหยดน้ำ</td>
           </tr>
           <tr style="background:#fff;">
-            <td style="padding:10px 12px;font-weight:700;color:#0284c7;">💨 CO₂</td>
+            <td style="padding:10px 12px;font-weight:700;color:#0284c7;"><svg width="16" height="16" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><use href="#ic-wind"/></svg>CO₂</td>
             <td style="padding:10px 12px;">ป้องกันอากาศไหลเวียน · ป้องกันลุกลาม</td>
             <td style="padding:10px 12px;">กระทบแบตเตอรี่ลูกอื่นน้อย</td>
             <td style="padding:10px 12px;">⚠️ ความต้านทานไฟลุกซ้ำต่ำ — <strong>ไม่เหมาะ</strong>กับ Li-ion</td>
           </tr>
           <tr style="background:#fafafa;">
-            <td style="padding:10px 12px;font-weight:700;color:#d4361a;">🧯 ผงเคมีแห้ง</td>
+            <td style="padding:10px 12px;font-weight:700;color:#d4361a;"><svg width="16" height="16" fill="none" stroke="#d4361a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><use href="#ic-flask"/></svg>ผงเคมีแห้ง</td>
             <td style="padding:10px 12px;">ลดอุณหภูมิ · ป้องกันลุกลาม · สารเคมี</td>
             <td style="padding:10px 12px;">ป้องกันไฟลุกลาม ไม่มีสารอันตรายต่อสิ่งแวดล้อม</td>
             <td style="padding:10px 12px;">⚠️ ความต้านทานไฟลุกซ้ำต่ำ ประสิทธิภาพโมดูลต่ำ</td>
           </tr>
           <tr style="background:#fff;">
-            <td style="padding:10px 12px;font-weight:700;color:#7e22ce;">🟣 FM200 (Heptafluoropropane)</td>
+            <td style="padding:10px 12px;font-weight:700;color:#7e22ce;"><svg width="16" height="16" fill="none" stroke="#7e22ce" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><use href="#ic-disc"/></svg>FM200</td>
             <td style="padding:10px 12px;">ป้องกันลุกลาม · สารเคมี</td>
             <td style="padding:10px 12px;">ไม่ทิ้งคราบ ค่าบำรุงรักษาต่ำ ใช้ปริมาณน้อย</td>
             <td style="padding:10px 12px;">⚠️ ความต้านทานไฟลุกซ้ำต่ำ ประสิทธิภาพโมดูลต่ำ</td>
           </tr>
           <tr style="background:#fafafa;">
-            <td style="padding:10px 12px;font-weight:700;color:#be123c;">🌿 FK-5112 (Perfluorohexanone)</td>
+            <td style="padding:10px 12px;font-weight:700;color:#be123c;"><svg width="16" height="16" fill="none" stroke="#be123c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><use href="#ic-check"/></svg>FK-5112</td>
             <td style="padding:10px 12px;">ลดอุณหภูมิ · ป้องกันลุกลาม · สารเคมี</td>
             <td style="padding:10px 12px;">เคลื่อนย้ายสะดวก ประสิทธิภาพสูง สารอันตรายต่ำ</td>
             <td style="padding:10px 12px;">✅ มีประสิทธิภาพกับ Li-ion แต่ยังไม่มีมาตรฐาน MEC กำหนดปริมาณ</td>
@@ -7113,49 +7180,59 @@ Android Auto™</td><td class="spec-val">●</td></tr>
     <div class="sub-title" style="margin-top:28px;">การควบคุมสถานที่ดับเพลิง — Scene Control</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:14px 0;">
       <div style="background:#fff7ed;border:1px solid #fb923c;border-radius:10px;padding:14px;">
-        <div style="font-size:1.3rem;margin-bottom:6px;">🚧</div>
+        <svg width="22" height="22" fill="none" stroke="#c2410c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;display:block;"><use href="#ic-target"/></svg>
         <div style="font-weight:700;color:#c2410c;font-size:.88rem;">แบ่งเขตและปิดกั้น</div>
         <div style="font-size:.78rem;color:#555;margin-top:3px;">กำจัดวัสดุที่ติดไฟได้ออกจากพื้นที่โดยรอบ</div>
       </div>
       <div style="background:#fafafa;border:1px solid #a3a3a3;border-radius:10px;padding:14px;">
-        <div style="font-size:1.3rem;margin-bottom:6px;">📡</div>
+        <svg width="22" height="22" fill="none" stroke="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;display:block;"><use href="#ic-search"/></svg>
         <div style="font-weight:700;color:#404040;font-size:.88rem;">ตรวจจับก๊าซไวไฟ</div>
         <div style="font-size:.78rem;color:#555;margin-top:3px;">ใช้เครื่องตรวจจับก๊าซไวไฟตลอดกระบวนการ</div>
       </div>
       <div style="background:#fefce8;border:1px solid #eab308;border-radius:10px;padding:14px;">
-        <div style="font-size:1.3rem;margin-bottom:6px;">🌡️</div>
+        <svg width="22" height="22" fill="none" stroke="#a16207" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;display:block;"><use href="#ic-thermo"/></svg>
         <div style="font-weight:700;color:#a16207;font-size:.88rem;">วัดอุณหภูมิแบตเตอรี่</div>
         <div style="font-size:.78rem;color:#555;margin-top:3px;">เครื่องวัดอุณหภูมิ / กล้อง Thermal ตรวจสอบแบตเตอรี่</div>
       </div>
       <div style="background:#eff6ff;border:1px solid #3b82f6;border-radius:10px;padding:14px;">
-        <div style="font-size:1.3rem;margin-bottom:6px;">🫁</div>
+        <svg width="22" height="22" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;display:block;"><use href="#ic-wind"/></svg>
         <div style="font-weight:700;color:#1d4ed8;font-size:.88rem;">สวมอุปกรณ์ป้องกัน</div>
         <div style="font-size:.78rem;color:#555;margin-top:3px;">SCBA / หน้ากากป้องกันแก๊สพิษตลอดกระบวนการ</div>
       </div>
       <div style="background:#f0fdf4;border:1px solid #22c55e;border-radius:10px;padding:14px;">
-        <div style="font-size:1.3rem;margin-bottom:6px;">⚡</div>
+        <svg width="22" height="22" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;display:block;"><use href="#ic-zap"/></svg>
         <div style="font-weight:700;color:#15803d;font-size:.88rem;">ตัดกระแสไฟชาร์จ</div>
         <div style="font-size:.78rem;color:#555;margin-top:3px;">ชาร์จรถยนต์และตัดสายไฟชาร์จออก</div>
       </div>
       <div style="background:#fdf4ff;border:1px solid #a855f7;border-radius:10px;padding:14px;">
-        <div style="font-size:1.3rem;margin-bottom:6px;">🚨</div>
+        <svg width="22" height="22" fill="none" stroke="#7e22ce" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;display:block;"><use href="#ic-bell"/></svg>
         <div style="font-weight:700;color:#7e22ce;font-size:.88rem;">อพยพผู้พบเห็น</div>
         <div style="font-size:.78rem;color:#555;margin-top:3px;">เปิดช่องทางออกและอพยพผู้คนออกจากพื้นที่</div>
       </div>
+    </div>
+    <div class="fig">
+      <img src="assets/90_evfire/slide-54.png" alt="Scene control mind map 6 elements">
+      <div class="fig-cap">การควบคุมสถานที่ดับเพลิง — 6 มาตรการรอบพื้นที่เกิดเหตุ <span class="src">— Denza EV Basic Safety หัวข้อ 8</span></div>
     </div>
 
     <!-- 7. FIRE FIGHTING PROCEDURE -->
     <div class="sub-title" style="margin-top:28px;">กระบวนการดับเพลิง EV — Fire Fighting Procedure</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:14px 0;">
       <div style="background:#1c1c1c;border-radius:12px;padding:18px;color:#fff;">
-        <div style="font-size:1rem;font-weight:700;color:#94a3b8;margin-bottom:10px;">⬛ ไฟไหม้ทั่วไป (ไม่ใช่แบตเตอรี่)</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <svg width="20" height="20" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-flame"/></svg>
+          <span style="font-size:1rem;font-weight:700;color:#94a3b8;">ไฟไหม้ทั่วไป (ไม่ใช่แบตเตอรี่)</span>
+        </div>
         <ul style="margin:0;padding-left:16px;font-size:.82rem;line-height:1.7;">
           <li>ไฟเล็ก: ถังดับเพลิงแบบไม่ผสมน้ำ + ทรายดับ</li>
           <li>ไฟใหญ่: ใช้น้ำปริมาณมากควบคุม</li>
         </ul>
       </div>
       <div style="background:#7f1d1d;border-radius:12px;padding:18px;color:#fff;">
-        <div style="font-size:1rem;font-weight:700;color:#fca5a5;margin-bottom:10px;">🔴 ไฟไหม้แบตเตอรี่</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <svg width="20" height="20" fill="none" stroke="#fca5a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-battery"/></svg>
+          <span style="font-size:1rem;font-weight:700;color:#fca5a5;">ไฟไหม้แบตเตอรี่</span>
+        </div>
         <ul style="margin:0;padding-left:16px;font-size:.82rem;line-height:1.7;">
           <li>ทรายแห้ง + น้ำปริมาณมาก <strong>(3,000–8,000 แกลลอน / 11,356–30,283 ลิตร)</strong></li>
           <li>ฉีดน้ำโดยตรงที่แบตเตอรี่เพื่อระบายความร้อน</li>
@@ -7165,7 +7242,10 @@ Android Auto™</td><td class="spec-val">●</td></tr>
         </ul>
       </div>
       <div style="background:#1e3a5f;border-radius:12px;padding:18px;color:#fff;">
-        <div style="font-size:1rem;font-weight:700;color:#93c5fd;margin-bottom:10px;">🔵 การรักษาหลังดับไฟ</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <svg width="20" height="20" fill="none" stroke="#93c5fd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-droplet"/></svg>
+          <span style="font-size:1rem;font-weight:700;color:#93c5fd;">การรักษาหลังดับไฟ</span>
+        </div>
         <ul style="margin:0;padding-left:16px;font-size:.82rem;line-height:1.7;">
           <li>ใช้กล้อง Thermal/IR ตรวจอุณหภูมิแบตเตอรี่ต่อเนื่อง</li>
           <li>รถต้องไม่มีไฟ ควัน เสียงดัง หรือฟูมความร้อนสูง</li>
@@ -7175,7 +7255,10 @@ Android Auto™</td><td class="spec-val">●</td></tr>
         </ul>
       </div>
       <div style="background:#3d2a00;border-radius:12px;padding:18px;color:#fff;">
-        <div style="font-size:1rem;font-weight:700;color:#fcd34d;margin-bottom:10px;">⚠️ ข้อควรระวัง</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <svg width="20" height="20" fill="none" stroke="#fcd34d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bell"/></svg>
+          <span style="font-size:1rem;font-weight:700;color:#fcd34d;">ข้อควรระวัง</span>
+        </div>
         <ul style="margin:0;padding-left:16px;font-size:.82rem;line-height:1.7;">
           <li>ห้ามเปิดหรือถอดฝาครอบที่มีป้าย <strong>⚡ HIGH VOLTAGE</strong></li>
           <li>สวม SCBA / หน้ากากป้องกันแก๊สพิษตลอดกระบวนการ</li>
@@ -7184,56 +7267,65 @@ Android Auto™</td><td class="spec-val">●</td></tr>
         </ul>
       </div>
     </div>
+    <div class="fig-grid">
+      <div class="fig"><img src="assets/90_evfire/slide-55.png" alt="Fire fighting procedure puzzle diagram 4 parts"><div class="fig-cap">กระบวนการดับเพลิง EV — 4 ส่วน: ไม่ใช้แบตเตอรี่ไฟ · ไฟไหม้แบตเตอรี่ · หลังดับไฟ · ข้อควรระวัง <span class="src">— Denza EV Basic Safety หัวข้อ 9</span></div></div>
+      <div class="fig"><img src="assets/90_evfire/slide-58.png" alt="Fire control water spraying EV"><div class="fig-cap">การควบคุมเพลิงไหม้ — ใช้น้ำปริมาณมาก + กล้อง Thermal ตรวจแบตเตอรี่ต่อเนื่อง <span class="src">— Denza EV Basic Safety หัวข้อ 9</span></div></div>
+    </div>
 
     <!-- 8. FIREFIGHTER PPE -->
     <div class="sub-title" style="margin-top:28px;">อุปกรณ์ PPE สำหรับผู้ดับเพลิง EV</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:14px 0 20px;">
       <div style="background:#fafafa;border:1px solid #d4d4d4;border-radius:10px;padding:14px;display:flex;gap:12px;align-items:flex-start;">
-        <span style="font-size:1.4rem;">🫁</span>
+        <svg width="26" height="26" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><use href="#ic-wind"/></svg>
         <div>
           <div style="font-weight:700;font-size:.88rem;">ชุด SCBA</div>
           <div style="font-size:.78rem;color:#555;">Self-Contained Breathing Apparatus — สวมทุกครั้งที่เข้าผจญเพลิง</div>
         </div>
       </div>
       <div style="background:#fafafa;border:1px solid #d4d4d4;border-radius:10px;padding:14px;display:flex;gap:12px;align-items:flex-start;">
-        <span style="font-size:1.4rem;">👢</span>
+        <svg width="26" height="26" fill="none" stroke="#ca8a04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><use href="#ic-zap"/></svg>
         <div>
           <div style="font-weight:700;font-size:.88rem;">รองเท้าฉนวนกันไฟ</div>
           <div style="font-size:.78rem;color:#555;">10 kV (ขณะเปียก) · 35 kV (ขณะแห้ง)</div>
         </div>
       </div>
       <div style="background:#fafafa;border:1px solid #d4d4d4;border-radius:10px;padding:14px;display:flex;gap:12px;align-items:flex-start;">
-        <span style="font-size:1.4rem;">✂️</span>
+        <svg width="26" height="26" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><use href="#ic-key"/></svg>
         <div>
           <div style="font-weight:700;font-size:.88rem;">อุปกรณ์ตัดระบบไฟฟ้า</div>
           <div style="font-size:.78rem;color:#555;">ดีมฉนวนปากเหยี่ยว กันไฟ &gt;5 kV</div>
         </div>
       </div>
       <div style="background:#fafafa;border:1px solid #d4d4d4;border-radius:10px;padding:14px;display:flex;gap:12px;align-items:flex-start;">
-        <span style="font-size:1.4rem;">🔲</span>
+        <svg width="26" height="26" fill="none" stroke="#7e22ce" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><use href="#ic-box"/></svg>
         <div>
           <div style="font-weight:700;font-size:.88rem;">ผ้าคลุมกันไฟ</div>
           <div style="font-size:.78rem;color:#555;">5×5 ม. หรือ 9×6 ม. · ทนอุณหภูมิ &gt;1,600°C</div>
         </div>
       </div>
       <div style="background:#fafafa;border:1px solid #d4d4d4;border-radius:10px;padding:14px;display:flex;gap:12px;align-items:flex-start;">
-        <span style="font-size:1.4rem;">📷</span>
+        <svg width="26" height="26" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><use href="#ic-monitor"/></svg>
         <div>
           <div style="font-weight:700;font-size:.88rem;">กล้อง Thermal Scan</div>
           <div style="font-size:.78rem;color:#555;">Range: −20°C ถึง 1,000°C</div>
         </div>
       </div>
       <div style="background:#fafafa;border:1px solid #d4d4d4;border-radius:10px;padding:14px;display:flex;gap:12px;align-items:flex-start;">
-        <span style="font-size:1.4rem;">🧤</span>
+        <svg width="26" height="26" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><use href="#ic-hardhat"/></svg>
         <div>
           <div style="font-weight:700;font-size:.88rem;">ถุงมือกันไฟฟ้า</div>
           <div style="font-size:.78rem;color:#555;">1,000 V DC · 1,500 V AC</div>
         </div>
       </div>
     </div>
+    <div class="fig">
+      <img src="assets/90_evfire/slide-57.png" alt="Firefighter PPE for EV fire fighting">
+      <div class="fig-cap">อุปกรณ์ PPE สำหรับผู้ดับเพลิง EV — SCBA · รองเท้าฉนวน · อุปกรณ์ตัดไฟ · ผ้าคลุม · กล้อง Thermal · ถุงมือ <span class="src">— Denza EV Basic Safety หัวข้อ 9</span></div>
+    </div>
 
-    <div style="background:#1e3a5f;border-radius:10px;padding:14px 18px;color:#bfdbfe;font-size:.85rem;font-weight:600;margin-bottom:8px;">
-      ⚠️ ในระหว่างกิจกรรมดับเพลิงทั้งหมด ให้พิจารณาว่ารถมีกำลังไฟฟ้าอยู่เสมอ แม้จะดับรถแล้วก็ตาม
+    <div style="background:#1e3a5f;border-radius:10px;padding:14px 18px;color:#bfdbfe;font-size:.85rem;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+      <svg width="20" height="20" fill="none" stroke="#bfdbfe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><use href="#ic-zap"/></svg>
+      ในระหว่างกิจกรรมดับเพลิงทั้งหมด ให้พิจารณาว่ารถมีกำลังไฟฟ้าอยู่เสมอ แม้จะดับรถแล้วก็ตาม
     </div>
   </div>
 
