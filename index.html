@@ -1368,6 +1368,104 @@
         <tr><td>ตัวอย่างแบรนด์</td><td class="spec-val">BYD (Blade), Tesla Model 3 STD, MG</td><td>Tesla Model 3/Y LR, BMW iX, Audi e-tron</td></tr>
       </table>
     </div>
+
+    <!-- CHARGE CURVE -->
+    <div style="margin-top:28px; border-top:2px solid #16a34a; padding-top:18px;">
+      <div class="section-title" style="font-size:1.2rem; border-bottom-width:2px;">เส้นโค้งการชาร์จ LFP — Constant Current / Constant Voltage (CC-CV)</div>
+      <p style="font-size:0.87rem; margin-bottom:12px;">LFP Blade มีลักษณะเส้นโค้งแรงดัน "แบน" มากในช่วง SOC 20–80% → SOC-meter จากแรงดันเพียงอย่างเดียวไม่แม่นยำ BMS จึงต้องรวม Current Integration + Kalman Filter</p>
+      <div style="background:#040d1a; border-radius:10px; padding:16px; border:1px solid #166534;">
+        <svg viewBox="0 0 520 160" style="width:100%; display:block;">
+          <!-- Grid -->
+          <line x1="50" y1="10" x2="50" y2="135" stroke="#1e3a2a" stroke-width="1"/>
+          <line x1="50" y1="135" x2="500" y2="135" stroke="#1e3a2a" stroke-width="1"/>
+          <!-- Horizontal grid -->
+          <line x1="50" y1="35"  x2="500" y2="35"  stroke="#0d2a1a" stroke-width="0.8" stroke-dasharray="4 3"/>
+          <line x1="50" y1="60"  x2="500" y2="60"  stroke="#0d2a1a" stroke-width="0.8" stroke-dasharray="4 3"/>
+          <line x1="50" y1="85"  x2="500" y2="85"  stroke="#0d2a1a" stroke-width="0.8" stroke-dasharray="4 3"/>
+          <line x1="50" y1="110" x2="500" y2="110" stroke="#0d2a1a" stroke-width="0.8" stroke-dasharray="4 3"/>
+          <!-- Voltage curve (LFP) — CC phase then CV flat -->
+          <polyline points="50,125 80,118 100,113 120,111 150,109 200,108 280,108 340,107 400,106 430,100 450,88 465,72 475,55 482,40 488,28 492,18 494,13 496,12"
+            fill="none" stroke="#4ade80" stroke-width="2.5"/>
+          <!-- Current curve (I drops in CV phase) -->
+          <polyline points="50,45 100,44 200,44 280,44 350,44 400,44 430,55 450,72 465,93 475,108 482,118 488,124 492,127 496,130"
+            fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="8 3"/>
+          <!-- CC/CV boundary -->
+          <line x1="430" y1="10" x2="430" y2="135" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="5 3"/>
+          <text x="395" y="22" fill="#fbbf24" font-size="8.5" text-anchor="middle">CC Phase</text>
+          <text x="462" y="22" fill="#fbbf24" font-size="8.5" text-anchor="middle">CV Phase</text>
+          <!-- Labels -->
+          <text x="25" y="14"  fill="#4ade80" font-size="8" text-anchor="middle">3.65V</text>
+          <text x="25" y="39"  fill="#94a3b8" font-size="7.5" text-anchor="middle">3.5V</text>
+          <text x="25" y="64"  fill="#94a3b8" font-size="7.5" text-anchor="middle">3.4V</text>
+          <text x="25" y="89"  fill="#94a3b8" font-size="7.5" text-anchor="middle">3.3V</text>
+          <text x="25" y="114" fill="#94a3b8" font-size="7.5" text-anchor="middle">3.2V</text>
+          <text x="25" y="137" fill="#64748b" font-size="7.5" text-anchor="middle">2.5V</text>
+          <!-- SOC axis -->
+          <text x="50"  y="148" fill="#475569" font-size="8" text-anchor="middle">0%</text>
+          <text x="180" y="148" fill="#475569" font-size="8" text-anchor="middle">30%</text>
+          <text x="290" y="148" fill="#475569" font-size="8" text-anchor="middle">55%</text>
+          <text x="400" y="148" fill="#475569" font-size="8" text-anchor="middle">80%</text>
+          <text x="500" y="148" fill="#475569" font-size="8" text-anchor="middle">100%</text>
+          <!-- Legend -->
+          <line x1="270" y1="8" x2="300" y2="8" stroke="#4ade80" stroke-width="2.5"/>
+          <text x="305" y="12" fill="#4ade80" font-size="8">Voltage (V)</text>
+          <line x1="370" y1="8" x2="400" y2="8" stroke="#60a5fa" stroke-width="2" stroke-dasharray="8 3"/>
+          <text x="405" y="12" fill="#60a5fa" font-size="8">Current (A)</text>
+        </svg>
+        <p style="font-size:0.77rem; color:#475569; text-align:center; margin-top:6px;">ช่วง CC: แรงดันค่อยๆ ขึ้น กระแสคงที่ · ช่วง CV: แรงดัน 3.65V คงที่ กระแสลดลงจน &lt;0.05C → หยุดชาร์จ</p>
+      </div>
+    </div>
+
+    <!-- INTERACTIVE BMS CELL MONITOR -->
+    <div style="margin-top:28px; border-top:2px solid #16a34a; padding-top:18px;">
+      <div class="section-title" style="font-size:1.2rem; border-bottom-width:2px;">🔋 BMS Cell Monitor — จำลองการตรวจสอบเซลล์</div>
+      <p style="font-size:0.84rem; color:#64748b; margin-bottom:14px;">จำลองการมอนิเตอร์แรงดันของแต่ละเซลล์ใน Pack — กดปุ่มเพื่อดูสถานะต่างๆ</p>
+
+      <!-- State buttons -->
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+        <button id="bms-btn-normal"   onclick="bmsState('normal')"   style="padding:8px 16px; border-radius:6px; border:2px solid #22c55e; background:#061a0f; color:#4ade80; font-size:0.82rem; font-weight:800; cursor:pointer;">✅ ปกติ</button>
+        <button id="bms-btn-lowcell"  onclick="bmsState('lowcell')"  style="padding:8px 16px; border-radius:6px; border:2px solid #475569; background:#0f172a; color:#64748b; font-size:0.82rem; font-weight:800; cursor:pointer;">⚠️ เซลล์ต่ำ</button>
+        <button id="bms-btn-hotpack"  onclick="bmsState('hotpack')"  style="padding:8px 16px; border-radius:6px; border:2px solid #475569; background:#0f172a; color:#64748b; font-size:0.82rem; font-weight:800; cursor:pointer;">🌡 แพ็คร้อน</button>
+        <button id="bms-btn-imbalance" onclick="bmsState('imbalance')" style="padding:8px 16px; border-radius:6px; border:2px solid #475569; background:#0f172a; color:#64748b; font-size:0.82rem; font-weight:800; cursor:pointer;">⚡ Imbalance</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 185px; gap:12px; align-items:start;">
+        <!-- Cell grid -->
+        <div style="background:#040d1a; border-radius:10px; padding:16px; border:1px solid #166534;">
+          <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px; font-family:'DB Heavent Now',sans-serif;">Cell Voltage Monitor — 24 cells (LFP Nominal: 3.2V)</div>
+          <div id="bms-cells" style="display:grid; grid-template-columns:repeat(12,1fr); gap:4px;"></div>
+          <!-- SOC bar -->
+          <div style="margin-top:14px; display:flex; align-items:center; gap:10px;">
+            <div style="font-size:0.8rem; color:#94a3b8; font-family:'DB Heavent Now',sans-serif; white-space:nowrap;">SOC:</div>
+            <div style="flex:1; background:#0f172a; border-radius:4px; height:14px; overflow:hidden; border:1px solid #1e293b;">
+              <div id="bms-soc-bar" style="height:100%; width:72%; background:linear-gradient(90deg,#22c55e,#4ade80); border-radius:4px; transition:width 0.5s ease;"></div>
+            </div>
+            <div id="bms-soc-val" style="font-size:0.82rem; font-weight:700; color:#4ade80; font-family:'DB Heavent Now',sans-serif; width:36px; text-align:right;">72%</div>
+          </div>
+          <!-- Temp bar -->
+          <div style="margin-top:8px; display:flex; align-items:center; gap:10px;">
+            <div style="font-size:0.8rem; color:#94a3b8; font-family:'DB Heavent Now',sans-serif; white-space:nowrap;">Temp:</div>
+            <div style="flex:1; background:#0f172a; border-radius:4px; height:14px; overflow:hidden; border:1px solid #1e293b;">
+              <div id="bms-temp-bar" style="height:100%; width:28%; background:linear-gradient(90deg,#22d3ee,#3b82f6); border-radius:4px; transition:all 0.5s ease;"></div>
+            </div>
+            <div id="bms-temp-val" style="font-size:0.82rem; font-weight:700; color:#22d3ee; font-family:'DB Heavent Now',sans-serif; width:50px; text-align:right;">28°C</div>
+          </div>
+          <!-- Status line -->
+          <div id="bms-status" style="margin-top:12px; font-size:0.8rem; padding:8px 10px; border-radius:6px; background:#061a0f; border-left:3px solid #22c55e; color:#4ade80; font-family:'DB Heavent Now',sans-serif;">
+            ✅ ระบบทำงานปกติ — ไม่มี DTC
+          </div>
+        </div>
+
+        <!-- Info panel -->
+        <div style="background:#040d1a; border-radius:10px; padding:14px; border:1px solid #166534;">
+          <div id="bms-panel-title" style="font-size:0.82rem; font-weight:800; color:#22c55e; margin-bottom:10px; font-family:'DB Heavent Now',sans-serif;">✅ สถานะปกติ</div>
+          <div id="bms-panel-vals" style="font-size:0.78rem; line-height:2; color:#94a3b8; font-family:'DB Heavent Now',sans-serif;"></div>
+          <div id="bms-panel-desc" style="margin-top:10px; font-size:0.75rem; color:#64748b; line-height:1.6; border-top:1px solid #1e293b; padding-top:8px; font-family:'DB Heavent Now',sans-serif;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="src-note" style="margin-top:16px;">ข้อมูลจากคอร์สอบรม BYD: 40_High Voltage Electrical System — Blade Battery Architecture</div>
   </div>
 
   <!-- 8IN1 POWERTRAIN -->
@@ -7052,6 +7150,141 @@ function closeSidebar() {
 </script>
 
 <script>
+/* ===== BMS CELL MONITOR ===== */
+(function(){
+  var BMS_STATES = {
+    normal: {
+      title:'✅ สถานะปกติ', titleCol:'#22c55e',
+      cells: Array.from({length:24}, (_,i) => 3.18 + Math.random()*0.04 - 0.02),
+      soc:72, temp:28, tempCol:'#22d3ee', tempGrad:'#22d3ee,#3b82f6', socGrad:'#22c55e,#4ade80',
+      btnCol:'#22c55e', btnBg:'#061a0f', btnTxt:'#4ade80',
+      statusCol:'#22c55e', statusBg:'#061a0f',
+      status:'✅ ระบบทำงานปกติ — ไม่มี DTC',
+      vals:'<b style="color:#4ade80">V_max:</b> 3.22V<br><b style="color:#4ade80">V_min:</b> 3.17V<br><b style="color:#4ade80">ΔV:</b> 0.05V (OK)<br><b style="color:#22d3ee">T_max:</b> 28°C (OK)<br><b style="color:#fbbf24">DTC:</b> ไม่มี',
+      desc:'Pack อยู่ในช่วงปกติ BMS ตรวจ Balancing อัตโนมัติ เซลล์ทั้งหมดอยู่ในช่วง 3.15–3.22V (SOC 20–80%)'
+    },
+    lowcell: {
+      title:'⚠️ เซลล์แรงดันต่ำ', titleCol:'#f59e0b',
+      cells: Array.from({length:24}, (_,i) => i===12 ? 2.92 : i===11 ? 3.04 : 3.17 + Math.random()*0.04),
+      soc:18, temp:26, tempCol:'#22d3ee', tempGrad:'#22d3ee,#3b82f6', socGrad:'#ef4444,#f97316',
+      btnCol:'#f59e0b', btnBg:'#1a0f00', btnTxt:'#fbbf24',
+      statusCol:'#f97316', statusBg:'#1a0800',
+      status:'⚠️ DTC: Cell Under-Voltage — เซลล์ที่ 13 (2.92V) ต่ำกว่า threshold 3.0V',
+      vals:'<b style="color:#ef4444">V_cell13:</b> 2.92V ⚠️<br><b style="color:#fcd34d">V_cell12:</b> 3.04V<br><b style="color:#4ade80">V_others:</b> ~3.17–3.21V<br><b style="color:#ef4444">SOC:</b> 18% (ต่ำมาก)<br><b style="color:#f97316">DTC:</b> C1234 Cell Undervolt',
+      desc:'BMS ตรวจพบเซลล์ที่ 13 แรงดันต่ำกว่า 3.0V ซึ่งอยู่นอกช่วงปกติ LFP → Limit Power → แจ้ง Fault → บันทึก DTC ส่งออก CAN (0x3C1)'
+    },
+    hotpack: {
+      title:'🌡 แพ็คร้อนเกินกำหนด', titleCol:'#ef4444',
+      cells: Array.from({length:24}, (_,i) => 3.15 + Math.random()*0.04),
+      soc:55, temp:52, tempCol:'#ef4444', tempGrad:'#f97316,#ef4444', socGrad:'#fbbf24,#f97316',
+      btnCol:'#dc2626', btnBg:'#1a0808', btnTxt:'#fca5a5',
+      statusCol:'#ef4444', statusBg:'#1a0800',
+      status:'🔥 DTC: High Temperature — T_pack = 52°C เกิน threshold 45°C',
+      vals:'<b style="color:#ef4444">T_max:</b> 52°C 🔥<br><b style="color:#fcd34d">Threshold:</b> 45°C<br><b style="color:#f97316">Action:</b> Limit DC Fast Charge<br><b style="color:#fbbf24">Cooling:</b> เพิ่ม flow rate<br><b style="color:#ef4444">DTC:</b> C2201 High Temp',
+      desc:'อุณหภูมิ Pack เกิน 45°C BMS จำกัด DC Fast Charge rate และสั่งระบบระบายความร้อน (TMS) เพิ่มกำลัง — ถ้าถึง 60°C จะตัด Contactor'
+    },
+    imbalance: {
+      title:'⚡ Cell Imbalance', titleCol:'#a78bfa',
+      cells: Array.from({length:24}, (_,i) => i<8 ? 3.3+Math.random()*0.03 : i<16 ? 3.18+Math.random()*0.02 : 3.05+Math.random()*0.03),
+      soc:65, temp:32, tempCol:'#22d3ee', tempGrad:'#22d3ee,#3b82f6', socGrad:'#a78bfa,#c4b5fd',
+      btnCol:'#7c3aed', btnBg:'#130d2a', btnTxt:'#c4b5fd',
+      statusCol:'#a78bfa', statusBg:'#0d0a1a',
+      status:'⚡ Warning: Cell Imbalance — ΔV = 0.25V เกิน limit 0.1V → Cell Balancing Active',
+      vals:'<b style="color:#c4b5fd">V_group1 (1-8):</b> ~3.30–3.33V<br><b style="color:#94a3b8">V_group2 (9-16):</b> ~3.18–3.20V<br><b style="color:#fca5a5">V_group3 (17-24):</b> ~3.05–3.08V<br><b style="color:#a78bfa">ΔV_total:</b> 0.25V ⚠️<br><b style="color:#fbbf24">DTC:</b> C1145 Cell Imbalance',
+      desc:'BMS ตรวจพบความต่างแรงดันระหว่างกลุ่มเซลล์ 0.25V (limit 0.1V) → สั่ง Passive Balancing (ต้านทานทอนพลังงานเซลล์สูง) ทำงานขณะชาร์จ'
+    }
+  };
+
+  var BMS_BTNS = ['normal','lowcell','hotpack','imbalance'];
+  var bmsRaf = null;
+  var bmsPhase = 0;
+
+  function renderCells(cells, state) {
+    var container = document.getElementById('bms-cells');
+    if (!container) return;
+    container.innerHTML = '';
+    cells.forEach(function(v, i){
+      var pct = Math.max(0, Math.min(100, (v - 2.5) / (3.65 - 2.5) * 100));
+      var col = v < 3.0 ? '#ef4444' : v > 3.35 ? '#f59e0b' : v > 3.25 ? '#a78bfa' : '#22c55e';
+      var wrapper = document.createElement('div');
+      wrapper.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:2px;';
+      wrapper.innerHTML =
+        '<div style="width:100%;height:38px;background:#0f172a;border-radius:3px;position:relative;overflow:hidden;border:1px solid #1e293b;">' +
+          '<div style="position:absolute;bottom:0;left:0;right:0;height:'+pct+'%;background:'+col+';transition:height 0.5s ease;opacity:0.9;"></div>' +
+        '</div>' +
+        '<div style="font-size:0.56rem;color:'+col+';font-weight:700;font-family:monospace;">'+v.toFixed(2)+'</div>';
+      container.appendChild(wrapper);
+    });
+  }
+
+  function addNoise(cells) {
+    return cells.map(function(v){ return +(v + (Math.random()-0.5)*0.005).toFixed(3); });
+  }
+
+  function startBmsAnim(state) {
+    if (bmsRaf) cancelAnimationFrame(bmsRaf);
+    var base = BMS_STATES[state].cells.slice();
+    var tick = 0;
+    function step(){
+      if (tick++ % 60 === 0) {
+        renderCells(addNoise(base), state);
+      }
+      bmsRaf = requestAnimationFrame(step);
+    }
+    bmsRaf = requestAnimationFrame(step);
+  }
+
+  window.bmsState = function(s){
+    if (!BMS_STATES[s]) return;
+    var md = BMS_STATES[s];
+
+    // Reset buttons
+    BMS_BTNS.forEach(function(b){
+      var el = document.getElementById('bms-btn-'+b);
+      if (!el) return;
+      el.style.borderColor = '#475569';
+      el.style.background  = '#0f172a';
+      el.style.color       = '#64748b';
+    });
+    var ab = document.getElementById('bms-btn-'+s);
+    if (ab){ ab.style.borderColor=md.btnCol; ab.style.background=md.btnBg; ab.style.color=md.btnTxt; }
+
+    // Render cells
+    renderCells(md.cells, s);
+    startBmsAnim(s);
+
+    // SOC bar
+    var socPct = md.soc;
+    document.getElementById('bms-soc-bar').style.width  = socPct+'%';
+    document.getElementById('bms-soc-bar').style.background = 'linear-gradient(90deg,'+md.socGrad+')';
+    document.getElementById('bms-soc-val').style.color   = md.socGrad.split(',')[1];
+    document.getElementById('bms-soc-val').textContent    = socPct+'%';
+
+    // Temp bar
+    var tempPct = Math.min(100, (md.temp - 10) / (70 - 10) * 100);
+    document.getElementById('bms-temp-bar').style.width      = tempPct+'%';
+    document.getElementById('bms-temp-bar').style.background = 'linear-gradient(90deg,'+md.tempGrad+')';
+    document.getElementById('bms-temp-val').style.color      = md.tempCol;
+    document.getElementById('bms-temp-val').textContent       = md.temp+'°C';
+
+    // Status
+    var st = document.getElementById('bms-status');
+    st.textContent = md.status;
+    st.style.color       = md.statusCol;
+    st.style.background  = md.statusBg;
+    st.style.borderColor = md.statusCol;
+
+    // Panel
+    document.getElementById('bms-panel-title').textContent  = md.title;
+    document.getElementById('bms-panel-title').style.color  = md.titleCol;
+    document.getElementById('bms-panel-vals').innerHTML  = md.vals;
+    document.getElementById('bms-panel-desc').textContent = md.desc;
+  };
+
+  // Init
+  window.bmsState('normal');
+})();
+
 /* ===== HV POWER FLOW ===== */
 (function(){
   var MODES = {
