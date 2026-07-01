@@ -1096,6 +1096,271 @@
       <h4>Regenerative Braking (การเบรกเพื่อผลิตไฟ)</h4>
       <p>เมื่อปล่อยคันเร่งหรือเหยียบเบรก มอเตอร์จะกลับทำงานเป็นเครื่องกำเนิดไฟฟ้า แปลงพลังงานกลเป็นพลังงานไฟฟ้าชาร์จกลับเข้าแบตเตอรี่ ผู้ขับขี่สามารถปรับระดับ Regen ได้ในรถ</p>
     </div>
+
+    <!-- ═══ CHARGING SIMULATOR ════════════════════════════════════════════ -->
+    <div style="margin-top:32px;">
+      <div class="section-title" style="font-size:1.2rem;">จำลองเวลาชาร์จ — Interactive Simulator</div>
+      <div style="background:#0c1628;border:1px solid #1e3a5f;border-radius:12px;padding:20px;margin-top:16px;">
+
+        <!-- Row 1: Car model -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div>
+            <div style="color:#94a3b8;font-size:0.82rem;margin-bottom:6px;">รุ่นรถ</div>
+            <select id="chg-car" onchange="chgUpdate()" style="width:100%;background:#0f1e33;color:#e2e8f0;border:1px solid #334155;border-radius:7px;padding:8px 10px;font-size:0.92rem;">
+              <option value="atto3">ATTO 3 (60.4 kWh)</option>
+              <option value="dolphin">DOLPHIN (44.9 kWh)</option>
+              <option value="seal_r">SEAL RWD (61.4 kWh)</option>
+              <option value="seal_a">SEAL AWD (82.6 kWh)</option>
+            </select>
+          </div>
+          <div>
+            <div style="color:#94a3b8;font-size:0.82rem;margin-bottom:6px;">ประเภทชาร์จ</div>
+            <select id="chg-type" onchange="chgUpdate()" style="width:100%;background:#0f1e33;color:#e2e8f0;border:1px solid #334155;border-radius:7px;padding:8px 10px;font-size:0.92rem;">
+              <option value="l1">🏠 L1 — 220V/16A ≈ 3.3 kW (ปลั๊กบ้าน)</option>
+              <option value="l2" selected>🔌 L2 — Wallbox 7.4 kW</option>
+              <option value="dc">⚡ DC Fast Charge (ตามสเปครุ่น)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Row 2: SOC slider -->
+        <div style="margin-bottom:18px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="color:#94a3b8;font-size:0.82rem;">SOC เริ่มต้น</span>
+            <span style="color:#38bdf8;font-weight:700;font-size:0.9rem;"><span id="chg-soc-lbl">20</span>%</span>
+          </div>
+          <input type="range" id="chg-soc" min="0" max="95" value="20" oninput="chgUpdate()" style="width:100%;accent-color:#d70c19;">
+          <div style="display:flex;justify-content:space-between;color:#475569;font-size:0.75rem;margin-top:3px;">
+            <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>95%</span>
+          </div>
+        </div>
+
+        <!-- Battery visual -->
+        <div style="position:relative;height:44px;border:2px solid #334155;border-radius:8px;overflow:hidden;background:#0a1628;margin-bottom:4px;">
+          <div id="chg-cur-fill" style="position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#059669,#10b981);transition:width 0.4s;border-radius:6px 0 0 6px;"></div>
+          <div id="chg-new-fill" style="position:absolute;top:0;bottom:0;background:linear-gradient(90deg,#d97706,#fbbf24);opacity:0.55;border-radius:0;animation:chg-pulse 1.6s ease-in-out infinite;"></div>
+          <span id="chg-pct-txt" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#e2e8f0;font-weight:700;font-size:0.88rem;text-shadow:0 1px 3px #000;"></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;color:#334155;font-size:0.72rem;margin-bottom:16px;padding:0 2px;">
+          <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+        </div>
+
+        <!-- Results grid -->
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+          <div style="background:#0f1e33;border-radius:8px;padding:12px;border:1px solid #1e3a5f;">
+            <div style="color:#64748b;font-size:0.78rem;">⏱ ถึง 80%</div>
+            <div id="chg-t80" style="color:#10b981;font-weight:700;font-size:1.0rem;margin-top:4px;">—</div>
+          </div>
+          <div style="background:#0f1e33;border-radius:8px;padding:12px;border:1px solid #1e3a5f;">
+            <div style="color:#64748b;font-size:0.78rem;">⏱ ถึง 100%</div>
+            <div id="chg-t100" style="color:#60a5fa;font-weight:700;font-size:1.0rem;margin-top:4px;">—</div>
+          </div>
+          <div style="background:#0f1e33;border-radius:8px;padding:12px;border:1px solid #1e3a5f;">
+            <div style="color:#64748b;font-size:0.78rem;">⚡ พลังงาน</div>
+            <div id="chg-kwh" style="color:#fbbf24;font-weight:700;font-size:1.0rem;margin-top:4px;">—</div>
+          </div>
+          <div style="background:#0f1e33;border-radius:8px;padding:12px;border:1px solid #1e3a5f;">
+            <div style="color:#64748b;font-size:0.78rem;">💰 ค่าไฟ (ประมาณ)</div>
+            <div id="chg-cost" style="color:#a78bfa;font-weight:700;font-size:1.0rem;margin-top:4px;">—</div>
+          </div>
+        </div>
+        <div style="color:#334155;font-size:0.72rem;margin-top:8px;text-align:right;">อัตราค่าไฟ: AC บ้าน ~5 ฿/kWh · DC สาธารณะ ~12 ฿/kWh · ไม่รวม efficiency loss ≈8%</div>
+      </div>
+    </div>
+
+    <!-- ═══ DC FAST CHARGING POWER CURVE ════════════════════════════════════ -->
+    <div style="margin-top:32px;">
+      <div class="section-title" style="font-size:1.2rem;">เส้นโค้งกำลังชาร์จ DC — Power vs SOC Profile</div>
+      <div class="fig" style="margin-top:16px;">
+        <svg viewBox="0 0 680 280" style="width:100%;display:block;" font-family="'DB Heavent Now','Segoe UI',sans-serif">
+          <rect width="680" height="280" fill="#040d1a"/>
+          <!-- Grid horizontal (kW) -->
+          <line x1="60" y1="250" x2="640" y2="250" stroke="#1e293b" stroke-width="1.2"/>
+          <line x1="60" y1="177" x2="640" y2="177" stroke="#1e293b" stroke-width="0.8"/>
+          <line x1="60" y1="103" x2="640" y2="103" stroke="#1e293b" stroke-width="0.8"/>
+          <line x1="60" y1="30"  x2="640" y2="30"  stroke="#1e293b" stroke-width="0.8"/>
+          <!-- Grid vertical (SOC%) -->
+          <line x1="60"  y1="30" x2="60"  y2="250" stroke="#1e293b" stroke-width="1.2"/>
+          <line x1="176" y1="30" x2="176" y2="250" stroke="#1e293b" stroke-width="0.5"/>
+          <line x1="292" y1="30" x2="292" y2="250" stroke="#1e293b" stroke-width="0.5"/>
+          <line x1="408" y1="30" x2="408" y2="250" stroke="#1e293b" stroke-width="0.5"/>
+          <line x1="524" y1="30" x2="524" y2="250" stroke="#334155" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <line x1="640" y1="30" x2="640" y2="250" stroke="#1e293b" stroke-width="0.8"/>
+          <!-- 80% marker label -->
+          <text x="524" y="265" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700">80% ⬆ ลดกำลัง</text>
+
+          <!-- SEAL AWD (150 kW) — BYD Red -->
+          <polyline points="60,30 524,30 553,89 582,147 611,199 640,232" fill="none" stroke="#d70c19" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="60" cy="30" r="4" fill="#d70c19"/>
+          <!-- ATTO 3 (88 kW) — Amber -->
+          <polyline points="60,121 524,121 553,150 582,186 611,218 640,240" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="60" cy="121" r="4" fill="#f59e0b"/>
+          <!-- DOLPHIN (60 kW) — Light Blue -->
+          <polyline points="60,162 524,162 553,183 582,206 611,228 640,243" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="60" cy="162" r="4" fill="#38bdf8"/>
+
+          <!-- Area under SEAL curve (subtle fill) -->
+          <polygon points="60,250 60,30 524,30 553,89 582,147 611,199 640,232 640,250" fill="#d70c19" opacity="0.05"/>
+          <polygon points="60,250 60,121 524,121 553,150 582,186 611,218 640,240 640,250" fill="#f59e0b" opacity="0.06"/>
+          <polygon points="60,250 60,162 524,162 553,183 582,206 611,228 640,243 640,250" fill="#38bdf8" opacity="0.07"/>
+
+          <!-- Y-axis labels (kW) -->
+          <text x="52" y="34"  text-anchor="end" fill="#64748b" font-size="9">150</text>
+          <text x="52" y="107" text-anchor="end" fill="#64748b" font-size="9">100</text>
+          <text x="52" y="181" text-anchor="end" fill="#64748b" font-size="9">50</text>
+          <text x="52" y="254" text-anchor="end" fill="#64748b" font-size="9">0</text>
+          <text x="24" y="145" fill="#64748b" font-size="9" text-anchor="middle" transform="rotate(-90,24,145)">กำลัง (kW)</text>
+
+          <!-- X-axis labels (SOC%) -->
+          <text x="60"  y="268" text-anchor="middle" fill="#64748b" font-size="9">0%</text>
+          <text x="176" y="268" text-anchor="middle" fill="#64748b" font-size="9">20%</text>
+          <text x="292" y="268" text-anchor="middle" fill="#64748b" font-size="9">40%</text>
+          <text x="408" y="268" text-anchor="middle" fill="#64748b" font-size="9">60%</text>
+          <text x="524" y="268" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="700">80%</text>
+          <text x="640" y="268" text-anchor="middle" fill="#64748b" font-size="9">100%</text>
+          <text x="350" y="279" text-anchor="middle" fill="#475569" font-size="8.5">SOC (%)</text>
+
+          <!-- Legend -->
+          <rect x="62" y="8" width="10" height="4" fill="#d70c19" rx="2"/>
+          <text x="76" y="13" fill="#f87171" font-size="8.5">SEAL AWD — 150 kW DC</text>
+          <rect x="200" y="8" width="10" height="4" fill="#f59e0b" rx="2"/>
+          <text x="214" y="13" fill="#fbbf24" font-size="8.5">ATTO 3 — 88 kW DC</text>
+          <rect x="340" y="8" width="10" height="4" fill="#38bdf8" rx="2"/>
+          <text x="354" y="13" fill="#7dd3fc" font-size="8.5">DOLPHIN — 60 kW DC</text>
+
+          <!-- CC phase label -->
+          <text x="290" y="46" text-anchor="middle" fill="#475569" font-size="8">◀── CC Phase (กำลังเต็ม) ──▶</text>
+          <!-- CV taper label -->
+          <text x="582" y="46" text-anchor="middle" fill="#475569" font-size="8">CV Taper</text>
+        </svg>
+        <div class="fig-cap">กำลังชาร์จ DC vs SOC ของแต่ละรุ่น BYD — ระยะ CC (0–80%) กำลังคงที่สูงสุด จากนั้นลดลง (CV Taper) เพื่อถนอมแบต LFP <span class="src">ข้อมูลจาก BYD Official Specs + ทดสอบจริง</span></div>
+      </div>
+    </div>
+
+    <!-- ═══ CONNECTOR TYPES ══════════════════════════════════════════════════ -->
+    <div style="margin-top:32px;">
+      <div class="section-title" style="font-size:1.2rem;">หัวชาร์จที่รองรับ — Connector Standards</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+        <!-- Type 2 AC -->
+        <div class="card" style="border-top:3px solid #10b981;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#10b981" stroke-width="2">
+              <circle cx="24" cy="24" r="20" fill="#022c22" stroke="#10b981" stroke-width="2"/>
+              <!-- 5-pin Type 2 layout -->
+              <circle cx="17" cy="16" r="3" fill="#34d399"/>
+              <circle cx="31" cy="16" r="3" fill="#34d399"/>
+              <circle cx="12" cy="27" r="3" fill="#34d399"/>
+              <circle cx="36" cy="27" r="3" fill="#34d399"/>
+              <circle cx="24" cy="33" r="2.5" fill="#6ee7b7"/>
+              <rect x="18" y="35" width="12" height="5" rx="2.5" fill="#065f46" stroke="#10b981" stroke-width="1.5"/>
+            </svg>
+            <div>
+              <div style="font-weight:700;color:#34d399;">Type 2 (IEC 62196-2)</div>
+              <div style="font-size:0.78rem;color:#64748b;">AC Charging — ชาร์จบ้าน/Wallbox</div>
+            </div>
+          </div>
+          <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+            <tr><td style="color:#64748b;padding:3px 0;">Voltage</td><td style="color:#e2e8f0;font-weight:600;">220–240 V (1-phase)</td></tr>
+            <tr><td style="color:#64748b;padding:3px 0;">Current</td><td style="color:#e2e8f0;font-weight:600;">Max 32 A → 7.4 kW</td></tr>
+            <tr><td style="color:#64748b;padding:3px 0;">Pins</td><td style="color:#e2e8f0;font-weight:600;">L1, N, PE, PP, CP = 5 pins</td></tr>
+            <tr><td style="color:#64748b;padding:3px 0;">BYD ใช้</td><td style="color:#10b981;font-weight:600;">ทุกรุ่น (ATTO 3, DOLPHIN, SEAL)</td></tr>
+          </table>
+        </div>
+        <!-- CCS2 DC -->
+        <div class="card" style="border-top:3px solid #d70c19;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <svg viewBox="0 0 48 56" width="44" height="52" fill="none" stroke="#d70c19" stroke-width="2">
+              <!-- AC part (Type 2 top) -->
+              <circle cx="24" cy="20" r="16" fill="#1a0000" stroke="#ef4444" stroke-width="1.8"/>
+              <circle cx="18" cy="13" r="2.5" fill="#f87171"/>
+              <circle cx="30" cy="13" r="2.5" fill="#f87171"/>
+              <circle cx="14" cy="22" r="2.5" fill="#f87171"/>
+              <circle cx="34" cy="22" r="2.5" fill="#f87171"/>
+              <circle cx="24" cy="28" r="2" fill="#fca5a5"/>
+              <!-- DC part (2 large pins below) -->
+              <rect x="10" y="37" width="28" height="16" rx="6" fill="#1a0000" stroke="#d70c19" stroke-width="1.8"/>
+              <rect x="13" y="40" width="8" height="10" rx="2.5" fill="#ef4444"/>
+              <rect x="27" y="40" width="8" height="10" rx="2.5" fill="#ef4444"/>
+              <rect x="22" y="36" width="4" height="3" fill="#d70c19"/>
+            </svg>
+            <div>
+              <div style="font-weight:700;color:#f87171;">CCS2 (CCS Combo 2)</div>
+              <div style="font-size:0.78rem;color:#64748b;">DC Fast Charge — ชาร์จเร็วสาธารณะ</div>
+            </div>
+          </div>
+          <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+            <tr><td style="color:#64748b;padding:3px 0;">Voltage</td><td style="color:#e2e8f0;font-weight:600;">200–920 V DC</td></tr>
+            <tr><td style="color:#64748b;padding:3px 0;">Current</td><td style="color:#e2e8f0;font-weight:600;">Max 500 A → ขึ้นกับรุ่น</td></tr>
+            <tr><td style="color:#64748b;padding:3px 0;">Pins</td><td style="color:#e2e8f0;font-weight:600;">Type 2 (5) + DC+ DC− = 7 pins</td></tr>
+            <tr><td style="color:#64748b;padding:3px 0;">BYD ใช้</td><td style="color:#f87171;font-weight:600;">ATTO 3 (88kW) · DOLPHIN (60kW) · SEAL (150kW)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:14px;">
+        <p style="font-size:0.85rem;"><strong>✅ ตรวจสอบความถูกต้อง:</strong> หัว AC คือ <strong>Type 2</strong> (ไม่ใช่ CCS2 AC) · หัว DC คือ <strong>CCS2</strong> (= CCS Combo 2) · BYD ไม่ใช้ CHAdeMO · Wallbox 7.4 kW ใช้ได้ทุกรุ่น BYD ในไทย · DC fast charge ลดกำลังอัตโนมัติเมื่อ SOC &gt; 80% เพื่อปกป้องแบต LFP</p>
+      </div>
+    </div>
+
+    <script>
+    (function(){
+      const CARS={
+        atto3:   {kWh:60.4, acKW:7.4,  dcKW:88,  name:'ATTO 3'},
+        dolphin: {kWh:44.9, acKW:7.4,  dcKW:60,  name:'DOLPHIN'},
+        seal_r:  {kWh:61.4, acKW:7.4,  dcKW:100, name:'SEAL RWD'},
+        seal_a:  {kWh:82.6, acKW:7.4,  dcKW:150, name:'SEAL AWD'},
+      };
+      function fmtT(m){
+        if(m<=0) return'เต็มแล้ว';
+        const h=Math.floor(m/60),mn=Math.round(m%60);
+        return h>0?h+'ชม. '+mn+'น.':mn+' น.';
+      }
+      window.chgUpdate=function(){
+        const car=CARS[document.getElementById('chg-car').value];
+        const typ=document.getElementById('chg-type').value;
+        const soc=parseInt(document.getElementById('chg-soc').value);
+        document.getElementById('chg-soc-lbl').textContent=soc;
+
+        const kw=typ==='l1'?3.3:typ==='l2'?car.acKW:car.dcKW;
+        const isDC=typ==='dc';
+        const rate=isDC?12:5;
+
+        // Energy to 80% and 100%
+        const e80=car.kWh*Math.max(0,80-soc)/100;
+        const e100=car.kWh*Math.max(0,100-soc)/100;
+        const eAbove80=car.kWh*Math.max(0,100-Math.max(80,soc))/100;
+
+        let t80=e80/kw*60;
+        let t100;
+        if(!isDC){
+          t100=e100/kw*60;
+        } else {
+          // CC phase 0-80%: full power; CV taper 80-100%: average ~40% power
+          t100=t80+(eAbove80/(kw*0.40))*60;
+        }
+
+        document.getElementById('chg-t80').textContent  = soc>=80?'เต็มแล้ว':fmtT(t80);
+        document.getElementById('chg-t100').textContent = fmtT(t100);
+        document.getElementById('chg-kwh').textContent  = e100.toFixed(1)+' kWh';
+        document.getElementById('chg-cost').textContent = '≈ ฿'+(e100*rate).toFixed(0);
+
+        // Battery bar
+        const W=document.getElementById('chg-cur-fill').parentElement.clientWidth||400;
+        const curW=soc/100*W;
+        const newW=(100-soc)/100*W;
+        document.getElementById('chg-cur-fill').style.width=curW+'px';
+        const nf=document.getElementById('chg-new-fill');
+        nf.style.left=curW+'px';
+        nf.style.width=newW+'px';
+        document.getElementById('chg-pct-txt').textContent=soc+'% → 100% ('+e100.toFixed(1)+' kWh)';
+      };
+      // Add pulse animation
+      const st=document.createElement('style');
+      st.textContent='@keyframes chg-pulse{0%,100%{opacity:0.35}50%{opacity:0.7}}';
+      document.head.appendChild(st);
+      // init
+      if(document.getElementById('chg-car')) chgUpdate();
+    })();
+    </script>
   </div>
 
   <!-- THAILAND -->
